@@ -2,9 +2,9 @@
 
 Implement repositories here using `createSupabaseServerClient()`.
 
-**Done:** `home_items`, `contracts`, `reminders` (+ user/household via auth).
+**Done:** `home_items`, `contracts`, `reminders`, `documents` (+ user/household via auth).
 
-**Todo:** `documents`, Storage.
+**Storage:** private bucket `life-admin-documents` — see `src/lib/supabase/storage/documents.ts` and migration `20260924120200_documents_storage.sql`.
 
 Map DB rows (snake_case) ↔ domain types (`src/lib/domain/types.ts`).
 

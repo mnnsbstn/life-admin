@@ -57,7 +57,7 @@ export function getRepositoryDiagnostics() {
     supabaseEnvPresent: isSupabaseEnvConfigured(),
     homeItemsBackend: moduleBackend(supabase),
     contractsBackend: moduleBackend(supabase),
-    documentsBackend: "mock" as const,
+    documentsBackend: moduleBackend(supabase),
     remindersBackend: moduleBackend(supabase),
   };
 }
