@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { ProfileView } from "@/features/profile/components/profile-view";
 import { getDemoSession } from "@/lib/auth/demo-session";
 
 export const metadata: Metadata = {
@@ -10,10 +10,5 @@ export const metadata: Metadata = {
 export default async function ProfilePage() {
   const { user } = await getDemoSession();
 
-  return (
-    <ModulePlaceholder
-      title="Profile"
-      description={`Angemeldet als ${user.displayName} (${user.email}) — Demo-Session ohne Auth.`}
-    />
-  );
+  return <ProfileView user={user} />;
 }

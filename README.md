@@ -45,6 +45,12 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 | Server Actions | `src/lib/actions` |
 | Mock Data | `src/lib/repositories/mock` |
 
+## Supabase (V0.2 Prep)
+
+- SQL-Migration: `supabase/migrations/20260924120000_household_core.sql`
+- Anleitung: [docs/SUPABASE.md](docs/SUPABASE.md)
+- Status in der App unter **Einstellungen**
+
 ## Bewusst nicht in V0.1
 
-Auth, File Upload, KI-Eingabe, Banking/Kalender/E-Mail, Vehicles/Money/Family
+Auth, live Supabase-Repositories, File Upload, KI-Eingabe, Banking/Kalender/E-Mail, Vehicles/Money/Family
