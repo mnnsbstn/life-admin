@@ -28,5 +28,15 @@ export default async function DocumentDetailPage({
   const { homeItems, contracts } = await getHouseholdContextData();
   const link = resolveDocumentLink(document.link, homeItems, contracts);
 
-  return <DocumentDetailView document={document} link={link} />;
+  const downloadHref = document.storagePath
+    ? `/documents/${document.id}/download`
+    : undefined;
+
+  return (
+    <DocumentDetailView
+      document={document}
+      link={link}
+      downloadHref={downloadHref}
+    />
+  );
 }

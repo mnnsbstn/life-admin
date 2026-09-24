@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
+import { useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -16,6 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -32,7 +33,10 @@ import {
   createDocumentAction,
   updateDocumentAction,
 } from "@/lib/actions/documents";
+import { documentValuesToFormData } from "@/lib/forms/document-form-data";
+import { shouldUseSupabaseBackend } from "@/lib/supabase/env";
 import type { Contract, HomeItem } from "@/lib/domain/types";
+import { Input } from "@/components/ui/input";
 
 interface DocumentFormProps {
   defaultValues: DocumentFormValues;
@@ -48,6 +52,8 @@ export function DocumentForm({
   contracts,
 }: DocumentFormProps) {
   const [pending, startTransition] = useTransition();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const storageEnabled = shouldUseSupabaseBackend();
   const form = useForm<DocumentFormValues>({
     resolver: zodResolver(documentSchema),
     defaultValues,
@@ -56,12 +62,15 @@ export function DocumentForm({
   const linkType = form.watch("linkType");
 
   const onSubmit = (values: DocumentFormValues) => {
+    const file = fileInputRef.current?.files?.[0] ?? null;
+    const formData = documentValuesToFormData(values, file);
+
     startTransition(async () => {
       try {
         if (documentId) {
-          await updateDocumentAction(documentId, values);
+          await updateDocumentAction(documentId, formData);
         } else {
-          await createDocumentAction(values);
+          await createDocumentAction(formData);
         }
       } catch {
         toast.error("Speichern fehlgeschlagen.");
@@ -99,12 +108,29 @@ export function DocumentForm({
             )}
           />
           <FormFieldText control={form.control} name="issuedAt" label="Datum" type="date" />
-          <FormFieldText
-            control={form.control}
-            name="mockFileName"
-            label="Dateiname (Demo)"
-            placeholder="rechnung.pdf"
-          />
+          {!storageEnabled ? (
+            <FormFieldText
+              control={form.control}
+              name="mockFileName"
+              label="Dateiname (Demo)"
+              placeholder="rechnung.pdf"
+            />
+          ) : (
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="document-file">Datei</Label>
+              <Input
+                id="document-file"
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx"
+              />
+              <p className="text-xs text-muted-foreground">
+                Optional. Datei wird im Supabase Storage Bucket{" "}
+                <code className="rounded bg-muted px-1">life-admin-documents</code>{" "}
+                gespeichert.
+              </p>
+            </div>
+          )}
           <FormField
             control={form.control}
             name="linkType"
