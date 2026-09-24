@@ -13,7 +13,7 @@ interface SettingsViewProps {
 
 const backendLabels: Record<RuntimeDataBackend, string> = {
   mock: "Mock (In-Memory)",
-  "supabase-configured": "Supabase (Env OK — Repos folgen)",
+  "supabase-hybrid": "Supabase — Home + Auth; andere Module Mock",
   "supabase-missing-env": "Supabase (Env unvollständig)",
 };
 
@@ -56,6 +56,14 @@ export function SettingsView({ householdName }: SettingsViewProps) {
           <DetailField
             label="Supabase Env"
             value={diagnostics.supabaseEnvPresent ? "Vorhanden" : "Nicht gesetzt"}
+          />
+          <DetailField
+            label="Home Items"
+            value={diagnostics.homeItemsBackend}
+          />
+          <DetailField
+            label="Verträge/Dokumente/Erinnerungen"
+            value={diagnostics.otherModulesBackend}
           />
         </DetailFieldList>
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
