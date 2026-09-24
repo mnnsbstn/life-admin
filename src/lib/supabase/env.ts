@@ -31,3 +31,14 @@ export function getRuntimeDataBackend(): RuntimeDataBackend {
   }
   return "supabase-hybrid";
 }
+
+export function getRuntimeDataBackendLabel(): string {
+  switch (getRuntimeDataBackend()) {
+    case "mock":
+      return "Mock (In-Memory)";
+    case "supabase-hybrid":
+      return "Supabase — Home & Verträge; Dokumente/Erinnerungen Mock";
+    case "supabase-missing-env":
+      return "Supabase (Env unvollständig)";
+  }
+}
