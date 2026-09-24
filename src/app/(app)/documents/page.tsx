@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { DocumentListView } from "@/features/documents/components/document-list-view";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 
 export const metadata: Metadata = {
@@ -8,12 +8,13 @@ export const metadata: Metadata = {
 };
 
 export default async function DocumentsPage() {
-  const { documents } = await getHouseholdContextData();
+  const { documents, homeItems, contracts } = await getHouseholdContextData();
 
   return (
-    <ModulePlaceholder
-      title="Documents"
-      description={`${documents.length} Dokumente in Mock-Daten — Modul-UI folgt in Step 6.`}
+    <DocumentListView
+      items={documents}
+      homeItems={homeItems}
+      contracts={contracts}
     />
   );
 }

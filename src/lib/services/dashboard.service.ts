@@ -151,12 +151,25 @@ export function buildAttentionItems(input: DashboardInput): AttentionItem[] {
     });
   }
 
-  items.sort((a, b) => {
+  const deduped = dedupeAttentionItems(items);
+
+  deduped.sort((a, b) => {
     if (a.urgencyDays !== b.urgencyDays) return a.urgencyDays - b.urgencyDays;
     return a.dueDate.localeCompare(b.dueDate);
   });
 
-  return items;
+  return deduped;
+}
+
+function dedupeAttentionItems(items: AttentionItem[]): AttentionItem[] {
+  const map = new Map<string, AttentionItem>();
+  for (const item of items) {
+    const existing = map.get(item.id);
+    if (!existing || item.urgencyDays < existing.urgencyDays) {
+      map.set(item.id, item);
+    }
+  }
+  return [...map.values()];
 }
 
 export function buildUpcomingItems(input: DashboardInput): UpcomingItem[] {

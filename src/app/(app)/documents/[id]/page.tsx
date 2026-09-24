@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { DocumentDetailView } from "@/features/documents/components/document-detail-view";
+import { resolveDocumentLink } from "@/lib/data/resolve-links";
+import { getHouseholdContextData } from "@/lib/data/household-data";
 import { getRepositories } from "@/lib/repositories";
 
 interface DocumentDetailPageProps {
@@ -13,7 +15,7 @@ export async function generateMetadata({
 }: DocumentDetailPageProps): Promise<Metadata> {
   const { id } = await params;
   const document = await getRepositories().documents.getById(id);
-  return { title: document?.title ?? "Document" };
+  return { title: document?.title ?? "Dokument" };
 }
 
 export default async function DocumentDetailPage({
@@ -23,10 +25,8 @@ export default async function DocumentDetailPage({
   const document = await getRepositories().documents.getById(id);
   if (!document) notFound();
 
-  return (
-    <ModulePlaceholder
-      title={document.title}
-      description="Detailansicht wird in Step 7 implementiert."
-    />
-  );
+  const { homeItems, contracts } = await getHouseholdContextData();
+  const link = resolveDocumentLink(document.link, homeItems, contracts);
+
+  return <DocumentDetailView document={document} link={link} />;
 }

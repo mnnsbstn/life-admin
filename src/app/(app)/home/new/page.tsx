@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
-import { AddPlaceholder } from "@/components/shell/add-placeholder";
+import { HomeItemForm } from "@/features/home/components/home-item-form";
+import { emptyHomeItemFormValues } from "@/features/home/lib/map-form";
 
 export const metadata: Metadata = {
   title: "Home Item anlegen",
@@ -8,6 +9,9 @@ export const metadata: Metadata = {
 
 export default function NewHomeItemPage() {
   return (
-    <AddPlaceholder title="Home Item anlegen" backHref="/home" />
+    <div className="space-y-6">
+      <h1 className="text-2xl font-semibold tracking-tight">Home Item anlegen</h1>
+      <HomeItemForm defaultValues={emptyHomeItemFormValues} />
+    </div>
   );
 }
