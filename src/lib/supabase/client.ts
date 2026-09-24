@@ -1,7 +1,4 @@
 /**
- * Supabase browser client — placeholder for V0.2+.
- * Replace mock repositories when NEXT_PUBLIC_DATA_SOURCE=supabase.
+ * @deprecated Use `createSupabaseBrowserClient` or `createSupabaseServerClient`.
  */
-export function createSupabaseBrowserClient(): null {
-  return null;
-}
+export { createSupabaseBrowserClient as createSupabaseBrowserClientLegacy } from "@/lib/supabase/browser-client";

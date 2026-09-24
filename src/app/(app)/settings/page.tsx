@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { SettingsView } from "@/features/settings/components/settings-view";
+import { getDemoSession } from "@/lib/auth/demo-session";
 
 export const metadata: Metadata = {
   title: "Einstellungen",
 };
 
-export default function SettingsPage() {
-  return (
-    <ModulePlaceholder
-      title="Settings"
-      description="Einstellungen und Haushalt-Verwaltung folgen nach V0.1 Core."
-    />
-  );
+export default async function SettingsPage() {
+  const { household } = await getDemoSession();
+
+  return <SettingsView householdName={household.name} />;
 }

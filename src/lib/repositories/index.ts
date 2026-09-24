@@ -5,29 +5,51 @@ import { mockHouseholdRepository } from "@/lib/repositories/mock/household.repos
 import { mockReminderRepository } from "@/lib/repositories/mock/reminder.repository";
 import { mockUserRepository } from "@/lib/repositories/mock/user.repository";
 import type { Repositories } from "@/lib/repositories/types";
+import {
+  getConfiguredDataSource,
+  getRuntimeDataBackend,
+  isSupabaseEnvConfigured,
+} from "@/lib/supabase/env";
 
 let repositories: Repositories | null = null;
 
-export function getRepositories(): Repositories {
-  const source = process.env.NEXT_PUBLIC_DATA_SOURCE ?? "mock";
+function createMockRepositories(): Repositories {
+  return {
+    users: mockUserRepository,
+    households: mockHouseholdRepository,
+    homeItems: mockHomeItemRepository,
+    contracts: mockContractRepository,
+    documents: mockDocumentRepository,
+    reminders: mockReminderRepository,
+  };
+}
 
-  if (source !== "mock") {
-    // Supabase implementation will plug in here (V0.2+)
-    console.warn(
-      `[life-admin] DATA_SOURCE "${source}" not implemented; falling back to mock.`,
-    );
+export function getRepositories(): Repositories {
+  const source = getConfiguredDataSource();
+
+  if (source === "supabase") {
+    if (!isSupabaseEnvConfigured()) {
+      console.warn(
+        "[life-admin] NEXT_PUBLIC_DATA_SOURCE=supabase but URL/anon key missing — using mock.",
+      );
+    } else {
+      console.warn(
+        "[life-admin] Supabase repositories not wired yet (Auth + adapters) — using mock.",
+      );
+    }
   }
 
   if (!repositories) {
-    repositories = {
-      users: mockUserRepository,
-      households: mockHouseholdRepository,
-      homeItems: mockHomeItemRepository,
-      contracts: mockContractRepository,
-      documents: mockDocumentRepository,
-      reminders: mockReminderRepository,
-    };
+    repositories = createMockRepositories();
   }
 
   return repositories;
+}
+
+export function getRepositoryDiagnostics() {
+  return {
+    configuredSource: getConfiguredDataSource(),
+    runtimeBackend: getRuntimeDataBackend(),
+    supabaseEnvPresent: isSupabaseEnvConfigured(),
+  };
 }
