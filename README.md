@@ -55,7 +55,8 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 ## Supabase & Deployment
 
 - Backend: [docs/SUPABASE.md](docs/SUPABASE.md) (Migrationen, Auth, Storage)
-- Go-live: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (Vercel, Hostinger, Env-Vars)
+- Go-live: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (Übersicht)
+- **Vercel + Supabase (volle App):** [docs/VERCEL_SUPABASE.md](docs/VERCEL_SUPABASE.md)
 - Status in der App unter **Einstellungen**
 
 ## Bewusst noch nicht drin
