@@ -1,19 +1,32 @@
 import type { Metadata } from "next";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { ReminderListView } from "@/features/reminders/components/reminder-list-view";
 import { getHouseholdContextData } from "@/lib/data/household-data";
+import { sortReminders } from "@/lib/domain/list-sort";
 
 export const metadata: Metadata = {
   title: "Erinnerungen",
 };
 
-export default async function RemindersPage() {
-  const { reminders } = await getHouseholdContextData();
+interface RemindersPageProps {
+  searchParams: Promise<{ status?: string }>;
+}
+
+export default async function RemindersPage({ searchParams }: RemindersPageProps) {
+  const { status } = await searchParams;
+  const { reminders, homeItems, contracts } = await getHouseholdContextData();
+
+  const statusFilter =
+    status === "due" || status === "upcoming" || status === "completed"
+      ? status
+      : "all";
 
   return (
-    <ModulePlaceholder
-      title="Reminders"
-      description={`${reminders.length} Reminder in Mock-Daten — Modul-UI folgt in Step 6.`}
+    <ReminderListView
+      items={sortReminders(reminders)}
+      homeItems={homeItems}
+      contracts={contracts}
+      statusFilter={statusFilter}
     />
   );
 }

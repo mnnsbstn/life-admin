@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { ReminderDetailView } from "@/features/reminders/components/reminder-detail-view";
+import { resolveReminderLink } from "@/lib/data/resolve-links";
+import { getHouseholdContextData } from "@/lib/data/household-data";
 import { getRepositories } from "@/lib/repositories";
 
 interface ReminderDetailPageProps {
@@ -13,7 +15,7 @@ export async function generateMetadata({
 }: ReminderDetailPageProps): Promise<Metadata> {
   const { id } = await params;
   const reminder = await getRepositories().reminders.getById(id);
-  return { title: reminder?.title ?? "Reminder" };
+  return { title: reminder?.title ?? "Erinnerung" };
 }
 
 export default async function ReminderDetailPage({
@@ -23,10 +25,8 @@ export default async function ReminderDetailPage({
   const reminder = await getRepositories().reminders.getById(id);
   if (!reminder) notFound();
 
-  return (
-    <ModulePlaceholder
-      title={reminder.title}
-      description="Detailansicht wird in Step 7 implementiert."
-    />
-  );
+  const { homeItems, contracts } = await getHouseholdContextData();
+  const link = resolveReminderLink(reminder.link, homeItems, contracts);
+
+  return <ReminderDetailView reminder={reminder} link={link} />;
 }

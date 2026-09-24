@@ -1,19 +1,28 @@
 import type { Metadata } from "next";
 
-import { ModulePlaceholder } from "@/components/shell/module-placeholder";
+import { ContractListView } from "@/features/contracts/components/contract-list-view";
+import type { ContractCategory } from "@/lib/domain/types";
 import { getHouseholdContextData } from "@/lib/data/household-data";
+import { sortContracts } from "@/lib/domain/list-sort";
 
 export const metadata: Metadata = {
   title: "Verträge",
 };
 
-export default async function ContractsPage() {
+interface ContractsPageProps {
+  searchParams: Promise<{ category?: string }>;
+}
+
+export default async function ContractsPage({ searchParams }: ContractsPageProps) {
+  const { category } = await searchParams;
   const { contracts } = await getHouseholdContextData();
+  const activeCategory =
+    category && category !== "all" ? (category as ContractCategory) : "all";
 
   return (
-    <ModulePlaceholder
-      title="Contracts"
-      description={`${contracts.length} Verträge in Mock-Daten — Modul-UI folgt in Step 6.`}
+    <ContractListView
+      items={sortContracts(contracts)}
+      activeCategory={activeCategory}
     />
   );
 }

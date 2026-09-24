@@ -1,13 +1,24 @@
 import type { Metadata } from "next";
 
-import { AddPlaceholder } from "@/components/shell/add-placeholder";
+import { ReminderForm } from "@/features/reminders/components/reminder-form";
+import { emptyReminderFormValues } from "@/features/reminders/lib/map-form";
+import { getHouseholdContextData } from "@/lib/data/household-data";
 
 export const metadata: Metadata = {
   title: "Erinnerung anlegen",
 };
 
-export default function NewReminderPage() {
+export default async function NewReminderPage() {
+  const { homeItems, contracts } = await getHouseholdContextData();
+
   return (
-    <AddPlaceholder title="Erinnerung anlegen" backHref="/reminders" />
+    <div className="space-y-6">
+      <h1 className="text-2xl font-semibold tracking-tight">Erinnerung anlegen</h1>
+      <ReminderForm
+        defaultValues={emptyReminderFormValues}
+        homeItems={homeItems}
+        contracts={contracts}
+      />
+    </div>
   );
 }

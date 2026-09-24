@@ -2,10 +2,12 @@
 
 Life Admin ist das zentrale Dashboard für die Organisation des privaten Lebens — Haushalt, Verträge, Dokumente, Erinnerungen und mehr.
 
-## V0.1 Status
+## V0.1 — Was funktioniert
 
-- **Step 2 (Project Setup):** Next.js, TypeScript, Tailwind, shadcn/ui, Domain-Modell, Mock-Repositories, Demo-Daten, Routing-Grundgerüst
-- **Als Nächstes:** Design System, Application Shell, Today Dashboard (Steps 3–5)
+- **Heute:** Begrüßung, Attention Cards, Demnächst-Timeline (aus Mock-Daten generiert)
+- **Home / Verträge / Dokumente / Erinnerungen:** Listen, Detailansichten, Anlegen & Bearbeiten
+- **Quick Add:** ⌘/Ctrl+K oder „Hinzufügen“
+- **Daten:** In-Memory Mock-Repositories (Session), vorbereitet für Supabase
 
 ## Lokal starten
 
@@ -14,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Öffne [http://localhost:3000](http://localhost:3000) — Redirect nach `/today`.
+→ [http://localhost:3000/today](http://localhost:3000/today)
 
 ## Skripte
 
@@ -24,18 +26,25 @@ npm run dev
 | `npm run build` | Production Build |
 | `npm run start` | Production Server |
 | `npm run lint` | ESLint |
+| `npm run test` | Unit-Tests (Dashboard & Reminder-Status) |
 
 ## Konfiguration
-
-Kopiere `.env.example` nach `.env.local` (optional). Standard:
 
 ```env
 NEXT_PUBLIC_DATA_SOURCE=mock
 ```
 
-## Architektur (Kurz)
+## Architektur
 
-- **Domain:** `src/lib/domain`
-- **Datenzugriff:** `src/lib/repositories` (Mock; Supabase-Stub unter `src/lib/supabase`)
-- **Dashboard-Logik:** `src/lib/services/dashboard.service.ts`
-- **UI:** App Router unter `src/app/(app)/…`
+| Schicht | Pfad |
+|--------|------|
+| UI / Routing | `src/app/(app)/…` |
+| Features | `src/features/*` |
+| Domain | `src/lib/domain` |
+| Services | `src/lib/services` |
+| Server Actions | `src/lib/actions` |
+| Mock Data | `src/lib/repositories/mock` |
+
+## Bewusst nicht in V0.1
+
+Auth, File Upload, KI-Eingabe, Banking/Kalender/E-Mail, Vehicles/Money/Family

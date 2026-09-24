@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
 
-import { AddPlaceholder } from "@/components/shell/add-placeholder";
+import { DocumentForm } from "@/features/documents/components/document-form";
+import { emptyDocumentFormValues } from "@/features/documents/lib/map-form";
+import { getHouseholdContextData } from "@/lib/data/household-data";
 
 export const metadata: Metadata = {
   title: "Dokument anlegen",
 };
 
-export default function NewDocumentPage() {
-  return <AddPlaceholder title="Dokument anlegen" backHref="/documents" />;
+export default async function NewDocumentPage() {
+  const { homeItems, contracts } = await getHouseholdContextData();
+
+  return (
+    <div className="space-y-6">
+      <h1 className="text-2xl font-semibold tracking-tight">Dokument anlegen</h1>
+      <DocumentForm
+        defaultValues={emptyDocumentFormValues}
+        homeItems={homeItems}
+        contracts={contracts}
+      />
+    </div>
+  );
 }
