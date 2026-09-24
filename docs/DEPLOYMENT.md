@@ -89,6 +89,8 @@ npm run start
 
 No custom domain required for testing.
 
+Schritt-für-Schritt (Supabase + Vercel + Smoke-Test): [VERCEL_SUPABASE.md](./VERCEL_SUPABASE.md)
+
 **After deploy:** open `/today`, `/login`, and test sign-up + one CRUD flow.
 
 ## Option B — Hostinger Node.js
