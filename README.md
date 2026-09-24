@@ -33,6 +33,7 @@ npm run dev
 | `npm run start` | Production Server |
 | `npm run lint` | ESLint |
 | `npm run test` | Unit-Tests (Dashboard, Mapper) |
+| `npm run build:gh-pages` | Statischer Export für GitHub Pages |
 
 ## Konfiguration
 

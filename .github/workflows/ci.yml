@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Production build
+        run: npm run build
+
+  github-pages-export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Prepare static export
+        run: bash scripts/prepare-gh-pages-export.sh
+
+      - name: Build GitHub Pages bundle
+        run: npm run build:gh-pages
+        env:
+          NEXT_PUBLIC_GITHUB_PAGES_ORIGIN: https://${{ github.repository_owner }}.github.io/life-admin
+
+      - name: Restore sources after export prep
+        run: bash scripts/restore-gh-pages-export.sh

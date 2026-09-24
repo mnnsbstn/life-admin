@@ -71,12 +71,23 @@ npm run start
 
 ## Option A — Vercel (recommended for Next.js)
 
-1. Import the GitHub repo in [Vercel](https://vercel.com/new).
-2. Framework preset: **Next.js** (default).
-3. Add the three env vars above for **Production** (and Preview if you use Supabase there).
-4. Deploy from `main` after merging PRs.
+1. Import the GitHub repo in [Vercel](https://vercel.com/new) (monorepo root = repository root).
+2. Framework preset: **Next.js** (default). Optional: `vercel.json` in the repo pins `npm ci` + `npm run build`.
+3. **Environment variables** (Production + Preview if you use Supabase on previews):
 
-No extra config file is required; `next build` is the build command Vercel detects from `package.json`.
+   | Name | Example |
+   |------|---------|
+   | `NEXT_PUBLIC_DATA_SOURCE` | `supabase` |
+   | `NEXT_PUBLIC_SUPABASE_URL` | `https://xxxx.supabase.co` |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | *(anon key)* |
+
+4. Deploy from `main`. You get a URL like `https://life-admin-xxx.vercel.app` without buying a domain.
+
+5. In Supabase **Authentication → URL configuration**, add:
+   - Site URL: your Vercel production URL
+   - Redirect: `https://<your-vercel-host>/auth/callback`
+
+No custom domain required for testing.
 
 **After deploy:** open `/today`, `/login`, and test sign-up + one CRUD flow.
 
