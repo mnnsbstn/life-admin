@@ -7,6 +7,7 @@ import {
 import { DeleteEntityButton } from "@/components/domain/delete-entity-button";
 import { EntityHeader } from "@/components/domain/entity-header";
 import { deleteHomeItemAction } from "@/lib/actions/home-items";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { LinkedItemsList } from "@/components/domain/linked-items-list";
 import { homeItemCategoryLabels } from "@/config/categories";
 import { documentTypeLabels } from "@/config/document-types";
@@ -26,6 +27,8 @@ export function HomeDetailView({
   documents,
   reminders,
 }: HomeDetailViewProps) {
+  const readOnly = isGitHubPagesPreview();
+
   return (
     <div className="flex flex-col gap-8">
       <EntityHeader
@@ -36,13 +39,15 @@ export function HomeDetailView({
         badges={
           <CategoryBadge label={homeItemCategoryLabels[item.category]} />
         }
-        editHref={`/home/${item.id}/edit`}
+        editHref={readOnly ? undefined : `/home/${item.id}/edit`}
         actions={
-          <DeleteEntityButton
-            title="Home Item löschen?"
-            description="Das Item und Verknüpfungen in Listen verschwinden. Diese Aktion kann nicht rückgängig gemacht werden."
-            deleteAction={deleteHomeItemAction.bind(null, item.id)}
-          />
+          readOnly ? undefined : (
+            <DeleteEntityButton
+              title="Home Item löschen?"
+              description="Das Item und Verknüpfungen in Listen verschwinden. Diese Aktion kann nicht rückgängig gemacht werden."
+              deleteAction={deleteHomeItemAction.bind(null, item.id)}
+            />
+          )
         }
       />
 

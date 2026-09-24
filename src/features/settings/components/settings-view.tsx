@@ -12,6 +12,7 @@ import type {
   HouseholdMemberView,
 } from "@/lib/domain/types";
 import { getRepositoryDiagnostics } from "@/lib/repositories";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { getRuntimeDataBackendLabel } from "@/lib/supabase/env";
 
 interface SettingsViewProps {
@@ -37,6 +38,7 @@ export function SettingsView({
 }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
   const isOwner = memberRole === "owner";
+  const readOnlyDemo = isGitHubPagesPreview();
 
   return (
     <div className="flex flex-col gap-8">
@@ -48,7 +50,10 @@ export function SettingsView({
       </div>
 
       <DetailSection title="Haushalt">
-        <HouseholdNameForm defaultName={householdName} disabled={!isOwner} />
+        <HouseholdNameForm
+          defaultName={householdName}
+          disabled={!isOwner || readOnlyDemo}
+        />
         {!isOwner ? (
           <p className="mt-3 text-xs text-muted-foreground">
             Nur Owner können den Haushaltsnamen ändern.
@@ -75,7 +80,7 @@ export function SettingsView({
         </ul>
       </DetailSection>
 
-      {isOwner ? (
+      {isOwner && !readOnlyDemo ? (
         <DetailSection title="Einladungen">
           <HouseholdInvitationsPanel
             appOrigin={appOrigin}

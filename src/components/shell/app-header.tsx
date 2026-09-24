@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 
 import { QuickAdd } from "@/components/shell/quick-add";
 import { getNavTitle } from "@/config/navigation";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -16,7 +17,7 @@ export function AppHeader() {
           {title}
         </p>
       </div>
-      <QuickAdd />
+      {isGitHubPagesPreview() ? null : <QuickAdd />}
     </header>
   );
 }

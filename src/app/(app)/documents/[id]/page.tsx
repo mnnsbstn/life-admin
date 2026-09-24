@@ -5,6 +5,12 @@ import { DocumentDetailView } from "@/features/documents/components/document-det
 import { resolveDocumentLink } from "@/lib/data/resolve-links";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 import { getRepositories } from "@/lib/repositories";
+import { staticDocumentParams } from "@/lib/static-export-params";
+import { staticIdParams } from "@/lib/static-generate-params";
+
+export function generateStaticParams() {
+  return staticIdParams(staticDocumentParams());
+}
 
 interface DocumentDetailPageProps {
   params: Promise<{ id: string }>;

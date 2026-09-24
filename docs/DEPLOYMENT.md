@@ -1,6 +1,45 @@
 # Deployment (Life Admin)
 
-Life Admin is a **Next.js 16** App Router project. Production needs a Node-capable host (not plain static hosting unless you pre-render everything without server features — this app uses **Server Actions**, **middleware**, and optional **Supabase**).
+Life Admin is a **Next.js 16** App Router project. The **full app** (Auth, Supabase, CRUD) needs a **Node-capable host** (Server Actions, **middleware**, and optional **Supabase** — not plain static hosting unless you pre-render everything without server features). For a **free demo URL without a custom domain**, use **GitHub Pages** (read-only) or a free **\*.vercel.app** subdomain (full app).
+
+## Option 0 — GitHub Pages (read-only demo, no domain)
+
+**URL (after setup):** `https://<github-user>.github.io/life-admin/`
+
+What works: Mock seed data, Today dashboard, lists & detail pages (browse only).  
+What does **not** work: Login, Supabase, forms, uploads, invites, delete — no server on GitHub Pages.
+
+### One-time repo settings
+
+1. GitHub → **Settings → Pages → Build and deployment**
+2. **Source:** GitHub Actions (not “Deploy from branch”)
+3. Merge a branch that includes `.github/workflows/deploy-github-pages.yml`
+4. After the workflow succeeds, open the URL shown under **Pages**
+
+### How it is built
+
+- Workflow: `.github/workflows/deploy-github-pages.yml` on push to `main`
+- Script: `npm run build:gh-pages` (`output: 'export'`, `basePath: /life-admin`)
+- Server-only files are stripped before export (`scripts/prepare-gh-pages-export.sh`)
+
+Local preview:
+
+```bash
+bash scripts/prepare-gh-pages-export.sh   # removes middleware & route handlers temporarily
+npm run build:gh-pages
+npx serve out
+# open http://localhost:3000/life-admin/ (serve may need -s for SPA; use `npx serve out -l 3000`)
+```
+
+Restore removed files with:
+
+```bash
+bash scripts/restore-gh-pages-export.sh
+```
+
+after testing locally.
+
+For the **real product**, use Vercel/Hostinger below.
 
 ## Environment variables
 

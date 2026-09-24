@@ -8,6 +8,7 @@ import {
 import { DeleteEntityButton } from "@/components/domain/delete-entity-button";
 import { EntityHeader } from "@/components/domain/entity-header";
 import { deleteReminderAction } from "@/lib/actions/reminders";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { PriorityBadge } from "@/components/domain/priority-badge";
 import { ReminderStatusBadge } from "@/components/domain/reminder-status-badge";
 import { ReminderStatusActions } from "@/features/reminders/components/reminder-status-actions";
@@ -22,6 +23,7 @@ interface ReminderDetailViewProps {
 }
 
 export function ReminderDetailView({ reminder, link }: ReminderDetailViewProps) {
+  const readOnly = isGitHubPagesPreview();
   const enriched = withDerivedReminderStatus(reminder);
 
   return (
@@ -35,16 +37,18 @@ export function ReminderDetailView({ reminder, link }: ReminderDetailViewProps) 
             <PriorityBadge priority={reminder.priority} />
           </>
         }
-        editHref={`/reminders/${reminder.id}/edit`}
+        editHref={readOnly ? undefined : `/reminders/${reminder.id}/edit`}
         actions={
-          <>
-            <ReminderStatusActions reminder={enriched} />
-            <DeleteEntityButton
-              title="Erinnerung löschen?"
-              description="Die Erinnerung wird dauerhaft entfernt."
-              deleteAction={deleteReminderAction.bind(null, reminder.id)}
-            />
-          </>
+          readOnly ? undefined : (
+            <>
+              <ReminderStatusActions reminder={enriched} />
+              <DeleteEntityButton
+                title="Erinnerung löschen?"
+                description="Die Erinnerung wird dauerhaft entfernt."
+                deleteAction={deleteReminderAction.bind(null, reminder.id)}
+              />
+            </>
+          )
         }
       />
 

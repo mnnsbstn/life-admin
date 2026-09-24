@@ -5,6 +5,12 @@ import { ReminderDetailView } from "@/features/reminders/components/reminder-det
 import { resolveReminderLink } from "@/lib/data/resolve-links";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 import { getRepositories } from "@/lib/repositories";
+import { staticReminderParams } from "@/lib/static-export-params";
+import { staticIdParams } from "@/lib/static-generate-params";
+
+export function generateStaticParams() {
+  return staticIdParams(staticReminderParams());
+}
 
 interface ReminderDetailPageProps {
   params: Promise<{ id: string }>;

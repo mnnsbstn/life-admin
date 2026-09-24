@@ -10,6 +10,7 @@ import type {
   User,
 } from "@/lib/domain/types";
 import { SEED_IDS } from "@/lib/repositories/mock/ids";
+import { STATIC_INVITE_DEMO_TOKEN } from "@/lib/static-export-params";
 
 const now = "2026-09-24T08:00:00.000Z";
 
@@ -267,7 +268,17 @@ export function createSeedData(): MockSeedData {
     user: structuredClone(seedUser),
     household: structuredClone(seedHousehold),
     householdMember: structuredClone(seedHouseholdMember),
-    invitations: [],
+    invitations: [
+      {
+        id: "88888888-8888-8888-8888-888888888801",
+        householdId: DEMO_HOUSEHOLD_ID,
+        email: "partner@example.com",
+        role: "member",
+        token: STATIC_INVITE_DEMO_TOKEN,
+        expiresAt: "2027-12-31T23:59:59.000Z",
+        createdAt: now,
+      },
+    ],
     homeItems: structuredClone(seedHomeItems),
     contracts: structuredClone(seedContracts),
     documents: structuredClone(seedDocuments),
