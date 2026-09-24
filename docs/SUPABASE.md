@@ -35,13 +35,29 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
 **Niemals** `service_role` oder Secret Keys in `NEXT_PUBLIC_*` oder Client-Code legen.
 
-## Nächste Implementierungsschritte
+## Auth (V0.2)
 
-1. Supabase Auth (Login) + Session in Next.js (`@supabase/ssr`)
-2. Repository-Implementierungen unter `src/lib/repositories/supabase/`
-3. `getRepositories()` → Mock oder Supabase je nach Env + Session
-4. Storage Bucket für Dokumente (`documents` Pfad pro Household)
-5. Demo-Seed als SQL oder Dashboard-Script
+1. Migrationen anwenden (inkl. `20260924120100_on_auth_user_created.sql`)
+2. `.env.local`:
+
+```env
+NEXT_PUBLIC_DATA_SOURCE=supabase
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+```
+
+3. Im Supabase Dashboard → **Authentication → Providers**: E-Mail aktivieren.  
+   Für lokale Entwicklung oft **Confirm email** deaktivieren, damit Sign-up sofort eine Session erzeugt.
+
+4. App: `/login` — Registrierung legt Profil + Haushalt per Trigger an.
+
+5. **Hybrid-Modus:** Home Items + User/Household → Supabase; Verträge, Dokumente, Erinnerungen → weiter Mock (bis Repos folgen).
+
+## Nächste Schritte
+
+1. Supabase-Repositories für Contracts, Documents, Reminders
+2. Storage Bucket für Dokumente
+3. Optional: Demo-Seed SQL für neue Haushalte
 
 ## Mock vs. Supabase
 

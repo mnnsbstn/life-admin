@@ -12,12 +12,16 @@ export function isSupabaseEnvConfigured(): boolean {
   );
 }
 
+export function shouldUseSupabaseBackend(): boolean {
+  return getConfiguredDataSource() === "supabase" && isSupabaseEnvConfigured();
+}
+
 export type RuntimeDataBackend =
   | "mock"
-  | "supabase-configured"
+  | "supabase-hybrid"
   | "supabase-missing-env";
 
-/** Effective backend for UI/diagnostics (Auth wiring still required for live Supabase). */
+/** Effective backend for UI/diagnostics */
 export function getRuntimeDataBackend(): RuntimeDataBackend {
   if (getConfiguredDataSource() !== "supabase") {
     return "mock";
@@ -25,5 +29,5 @@ export function getRuntimeDataBackend(): RuntimeDataBackend {
   if (!isSupabaseEnvConfigured()) {
     return "supabase-missing-env";
   }
-  return "supabase-configured";
+  return "supabase-hybrid";
 }

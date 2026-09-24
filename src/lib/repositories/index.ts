@@ -4,14 +4,16 @@ import { mockHomeItemRepository } from "@/lib/repositories/mock/home-item.reposi
 import { mockHouseholdRepository } from "@/lib/repositories/mock/household.repository";
 import { mockReminderRepository } from "@/lib/repositories/mock/reminder.repository";
 import { mockUserRepository } from "@/lib/repositories/mock/user.repository";
+import { createSupabaseRepositories } from "@/lib/repositories/supabase";
 import type { Repositories } from "@/lib/repositories/types";
 import {
   getConfiguredDataSource,
   getRuntimeDataBackend,
   isSupabaseEnvConfigured,
+  shouldUseSupabaseBackend,
 } from "@/lib/supabase/env";
 
-let repositories: Repositories | null = null;
+let mockRepositories: Repositories | null = null;
 
 function createMockRepositories(): Repositories {
   return {
@@ -25,25 +27,21 @@ function createMockRepositories(): Repositories {
 }
 
 export function getRepositories(): Repositories {
-  const source = getConfiguredDataSource();
-
-  if (source === "supabase") {
-    if (!isSupabaseEnvConfigured()) {
-      console.warn(
-        "[life-admin] NEXT_PUBLIC_DATA_SOURCE=supabase but URL/anon key missing — using mock.",
-      );
-    } else {
-      console.warn(
-        "[life-admin] Supabase repositories not wired yet (Auth + adapters) — using mock.",
-      );
-    }
+  if (shouldUseSupabaseBackend()) {
+    return createSupabaseRepositories();
   }
 
-  if (!repositories) {
-    repositories = createMockRepositories();
+  if (getConfiguredDataSource() === "supabase" && !isSupabaseEnvConfigured()) {
+    console.warn(
+      "[life-admin] NEXT_PUBLIC_DATA_SOURCE=supabase but URL/anon key missing — using mock.",
+    );
   }
 
-  return repositories;
+  if (!mockRepositories) {
+    mockRepositories = createMockRepositories();
+  }
+
+  return mockRepositories;
 }
 
 export function getRepositoryDiagnostics() {
@@ -51,5 +49,7 @@ export function getRepositoryDiagnostics() {
     configuredSource: getConfiguredDataSource(),
     runtimeBackend: getRuntimeDataBackend(),
     supabaseEnvPresent: isSupabaseEnvConfigured(),
+    homeItemsBackend: shouldUseSupabaseBackend() ? "supabase" : "mock",
+    otherModulesBackend: "mock",
   };
 }

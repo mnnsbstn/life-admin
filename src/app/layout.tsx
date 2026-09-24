@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { getDemoSession } from "@/lib/auth/demo-session";
-import { AppProviders } from "@/providers/app-providers";
-
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,25 +22,15 @@ export const metadata: Metadata = {
     "Zentrales Dashboard für Haushalt, Verträge, Dokumente und Erinnerungen.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: LayoutProps<"/">) {
-  const { user, household } = await getDemoSession();
-
   return (
     <html
       lang="de"
       className={`${geistSans.variable} ${geistMono.variable} h-full`}
     >
-      <body className="min-h-full">
-        <AppProviders
-          householdId={household.id}
-          householdName={household.name}
-          userDisplayName={user.displayName}
-        >
-          {children}
-        </AppProviders>
-      </body>
+      <body className="min-h-full">{children}</body>
     </html>
   );
 }

@@ -7,7 +7,7 @@ Life Admin ist das zentrale Dashboard für die Organisation des privaten Lebens 
 - **Heute:** Begrüßung, Attention Cards, Demnächst-Timeline (aus Mock-Daten generiert)
 - **Home / Verträge / Dokumente / Erinnerungen:** Listen, Detailansichten, Anlegen & Bearbeiten
 - **Quick Add:** ⌘/Ctrl+K oder „Hinzufügen“
-- **Daten:** In-Memory Mock-Repositories (Session), vorbereitet für Supabase
+- **Daten:** Standard Mock; optional **Supabase Auth + Home Items** (hybrid)
 
 ## Lokal starten
 
