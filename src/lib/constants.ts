@@ -1,0 +1,10 @@
+/** Demo household scope for V0.1 */
+export const DEMO_HOUSEHOLD_ID = "22222222-2222-2222-2222-222222222222";
+
+export const DEMO_USER_ID = "11111111-1111-1111-1111-111111111111";
+
+export const ATTENTION_WINDOW_DAYS = 30;
+
+export const UPCOMING_WINDOW_DAYS = 90;
+
+export const UPCOMING_MAX_ITEMS = 15;
