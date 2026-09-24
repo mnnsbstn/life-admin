@@ -4,7 +4,9 @@ import {
   DetailFieldList,
   DetailSection,
 } from "@/components/domain/detail-section";
+import { DeleteEntityButton } from "@/components/domain/delete-entity-button";
 import { EntityHeader } from "@/components/domain/entity-header";
+import { deleteContractAction } from "@/lib/actions/contracts";
 import { LinkedItemsList } from "@/components/domain/linked-items-list";
 import { contractCategoryLabels } from "@/config/categories";
 import { paymentIntervalLabels } from "@/config/payment-intervals";
@@ -38,6 +40,13 @@ export function ContractDetailView({
           <CategoryBadge label={contractCategoryLabels[contract.category]} />
         }
         editHref={`/contracts/${contract.id}/edit`}
+        actions={
+          <DeleteEntityButton
+            title="Vertrag löschen?"
+            description="Der Vertrag wird dauerhaft entfernt. Verknüpfte Dokumente bleiben bestehen."
+            deleteAction={deleteContractAction.bind(null, contract.id)}
+          />
+        }
       />
 
       {getContractListMeta(contract) ? (

@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { getDemoSession } from "@/lib/auth/demo-session";
+import { getAppSession } from "@/lib/auth/session";
+import { assertEntityInHousehold } from "@/lib/actions/entity-guard";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
 import {
   contractSchema,
@@ -42,7 +43,7 @@ function toEntity(values: ContractFormValues, householdId: string) {
 
 export async function createContractAction(values: ContractFormValues) {
   const parsed = contractSchema.parse(values);
-  const { householdId } = await getDemoSession();
+  const { householdId } = await getAppSession();
   const created = await getRepositories().contracts.create(
     toEntity(parsed, householdId),
   );
@@ -57,8 +58,21 @@ export async function updateContractAction(
   const parsed = contractSchema.parse(values);
   await getRepositories().contracts.update(
     id,
-    toEntity(parsed, (await getDemoSession()).householdId),
+    toEntity(parsed, (await getAppSession()).householdId),
   );
   revalidateLifeAdminCore();
   redirect(`/contracts/${id}`);
+}
+
+export async function deleteContractAction(id: string) {
+  const { householdId } = await getAppSession();
+  const repos = getRepositories();
+  await assertEntityInHousehold(
+    (entityId) => repos.contracts.getById(entityId),
+    id,
+    householdId,
+  );
+  await repos.contracts.delete(id);
+  revalidateLifeAdminCore();
+  redirect("/contracts");
 }

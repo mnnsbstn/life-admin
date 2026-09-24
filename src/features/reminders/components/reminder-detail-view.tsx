@@ -5,7 +5,9 @@ import {
   DetailFieldList,
   DetailSection,
 } from "@/components/domain/detail-section";
+import { DeleteEntityButton } from "@/components/domain/delete-entity-button";
 import { EntityHeader } from "@/components/domain/entity-header";
+import { deleteReminderAction } from "@/lib/actions/reminders";
 import { PriorityBadge } from "@/components/domain/priority-badge";
 import { ReminderStatusBadge } from "@/components/domain/reminder-status-badge";
 import { ReminderStatusActions } from "@/features/reminders/components/reminder-status-actions";
@@ -34,7 +36,16 @@ export function ReminderDetailView({ reminder, link }: ReminderDetailViewProps) 
           </>
         }
         editHref={`/reminders/${reminder.id}/edit`}
-        actions={<ReminderStatusActions reminder={enriched} />}
+        actions={
+          <>
+            <ReminderStatusActions reminder={enriched} />
+            <DeleteEntityButton
+              title="Erinnerung löschen?"
+              description="Die Erinnerung wird dauerhaft entfernt."
+              deleteAction={deleteReminderAction.bind(null, reminder.id)}
+            />
+          </>
+        }
       />
 
       <DetailSection title="Details">

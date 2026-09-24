@@ -65,10 +65,25 @@ Zusätzliche Migration:
 
 Downloads laufen über `/documents/[id]/download` (signierte URL, 10 Minuten gültig).
 
+## Haushalt & Einladungen
+
+Migration `supabase/migrations/20260924120300_household_management.sql`:
+
+- Haushaltsnamen ändern (Owner)
+- Tabelle `household_invitations` + Einladungslinks `/invite/[token]`
+- RPC `accept_household_invitation` zum Beitreten
+
+## Deployment (Kurz)
+
+1. Hosting (z. B. Vercel) mit Env: `NEXT_PUBLIC_DATA_SOURCE=supabase`, URL, Anon Key  
+2. Supabase → **Authentication → URL configuration**: Site URL und Redirect URLs auf deine Domain (inkl. `/auth/callback`)  
+3. Alle Migrationen in Reihenfolge ausführen  
+
 ## Nächste Schritte
 
-1. Optional: Demo-Seed SQL für neue Haushalte
-2. Optional: Middleware → Proxy (Next.js Hinweis)
+1. Optional: Demo-Seed SQL für neue Haushalte  
+2. Optional: Middleware → Proxy (Next.js Hinweis)  
+3. E2E-Tests gegen ein Test-Projekt  
 
 ## Mock vs. Supabase
 

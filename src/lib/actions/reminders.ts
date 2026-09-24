@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { getDemoSession } from "@/lib/auth/demo-session";
+import { getAppSession } from "@/lib/auth/session";
+import { assertEntityInHousehold } from "@/lib/actions/entity-guard";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
 import { getRepositories } from "@/lib/repositories";
 
@@ -32,9 +33,15 @@ export async function reopenReminder(reminderId: string) {
   redirect(`/reminders/${reminderId}`);
 }
 
-export async function deleteReminder(reminderId: string) {
-  // Mock repo has no delete - skip for V0.1 or implement in store
-  void reminderId;
-  const session = await getDemoSession();
-  void session;
+export async function deleteReminderAction(id: string) {
+  const { householdId } = await getAppSession();
+  const repos = getRepositories();
+  await assertEntityInHousehold(
+    (entityId) => repos.reminders.getById(entityId),
+    id,
+    householdId,
+  );
+  await repos.reminders.delete(id);
+  revalidateLifeAdminCore();
+  redirect("/reminders");
 }

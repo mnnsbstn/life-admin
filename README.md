@@ -2,12 +2,14 @@
 
 Life Admin ist das zentrale Dashboard für die Organisation des privaten Lebens — Haushalt, Verträge, Dokumente, Erinnerungen und mehr.
 
-## V0.1 — Was funktioniert
+## V0.2 — Was funktioniert
 
 - **Heute:** Begrüßung, Attention Cards, Demnächst-Timeline (aus Mock-Daten generiert)
 - **Home / Verträge / Dokumente / Erinnerungen:** Listen, Detailansichten, Anlegen & Bearbeiten
 - **Quick Add:** ⌘/Ctrl+K oder „Hinzufügen“
 - **Daten:** Standard Mock; optional **Supabase** (Auth, alle Module, Dokument-Storage)
+- **Haushalt:** Name ändern, Mitgliederliste, Einladungslinks (Owner)
+- **Löschen:** Home, Verträge, Dokumente, Erinnerungen (Detailansicht)
 
 ## Lokal starten
 
@@ -26,7 +28,7 @@ npm run dev
 | `npm run build` | Production Build |
 | `npm run start` | Production Server |
 | `npm run lint` | ESLint |
-| `npm run test` | Unit-Tests (Dashboard & Reminder-Status) |
+| `npm run test` | Unit-Tests (Dashboard, Mapper) |
 
 ## Konfiguration
 
@@ -51,6 +53,6 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 - Anleitung: [docs/SUPABASE.md](docs/SUPABASE.md)
 - Status in der App unter **Einstellungen**
 
-## Bewusst nicht in V0.1
+## Bewusst noch nicht drin
 
-Auth, live Supabase-Repositories, File Upload, KI-Eingabe, Banking/Kalender/E-Mail, Vehicles/Money/Family
+KI-Eingabe, Banking/Kalender/E-Mail, Vehicles/Money/Family, E-Mail-Versand für Einladungen (nur Link kopieren)

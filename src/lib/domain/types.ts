@@ -24,6 +24,27 @@ export interface HouseholdMember {
   joinedAt: string;
 }
 
+/** Member row with profile fields for settings UI */
+export interface HouseholdMemberView {
+  id: UUID;
+  userId: UUID;
+  role: HouseholdMemberRole;
+  email: string;
+  displayName: string;
+  joinedAt: string;
+}
+
+export interface HouseholdInvitation {
+  id: UUID;
+  householdId: UUID;
+  email: string;
+  role: Exclude<HouseholdMemberRole, "owner">;
+  token: string;
+  expiresAt: string;
+  acceptedAt?: string;
+  createdAt: string;
+}
+
 export type HomeItemCategory =
   | "heating"
   | "electricity"

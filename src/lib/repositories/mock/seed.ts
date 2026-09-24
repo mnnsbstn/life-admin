@@ -4,6 +4,7 @@ import type {
   Document,
   HomeItem,
   Household,
+  HouseholdInvitation,
   HouseholdMember,
   Reminder,
   User,
@@ -254,6 +255,7 @@ export interface MockSeedData {
   user: User;
   household: Household;
   householdMember: HouseholdMember;
+  invitations: HouseholdInvitation[];
   homeItems: HomeItem[];
   contracts: Contract[];
   documents: Document[];
@@ -265,6 +267,7 @@ export function createSeedData(): MockSeedData {
     user: structuredClone(seedUser),
     household: structuredClone(seedHousehold),
     householdMember: structuredClone(seedHouseholdMember),
+    invitations: [],
     homeItems: structuredClone(seedHomeItems),
     contracts: structuredClone(seedContracts),
     documents: structuredClone(seedDocuments),

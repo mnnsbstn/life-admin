@@ -38,4 +38,13 @@ export const mockContractRepository: ContractRepository = {
     store.contracts[index] = updated;
     return updated;
   },
+
+  async delete(id) {
+    const store = getMockStore();
+    const index = store.contracts.findIndex((c) => c.id === id);
+    if (index === -1) {
+      throw new Error(`Contract not found: ${id}`);
+    }
+    store.contracts.splice(index, 1);
+  },
 };
