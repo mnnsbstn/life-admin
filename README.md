@@ -20,7 +20,9 @@ npm run dev
 
 → [http://localhost:3000/today](http://localhost:3000/today)
 
-**Demo ohne Domain:** [GitHub Pages](https://mnnsbstn.github.io/life-admin/) (read-only Mock — siehe [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md))
+**Demo ohne Domain:** [GitHub Pages](https://mnnsbstn.github.io/life-admin/) (read-only Mock)
+
+> **Pages noch 404?** Einmalig **Settings → Pages → Source: GitHub Actions** — Anleitung: [docs/GITHUB_PAGES_SETUP.md](docs/GITHUB_PAGES_SETUP.md)
 
 ## Skripte
 
