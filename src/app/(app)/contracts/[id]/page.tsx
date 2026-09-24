@@ -8,6 +8,12 @@ import {
 } from "@/lib/data/resolve-links";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 import { getRepositories } from "@/lib/repositories";
+import { staticContractParams } from "@/lib/static-export-params";
+import { staticIdParams } from "@/lib/static-generate-params";
+
+export function generateStaticParams() {
+  return staticIdParams(staticContractParams());
+}
 
 interface ContractDetailPageProps {
   params: Promise<{ id: string }>;

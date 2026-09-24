@@ -7,6 +7,7 @@ import {
 import { DeleteEntityButton } from "@/components/domain/delete-entity-button";
 import { EntityHeader } from "@/components/domain/entity-header";
 import { deleteContractAction } from "@/lib/actions/contracts";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { LinkedItemsList } from "@/components/domain/linked-items-list";
 import { contractCategoryLabels } from "@/config/categories";
 import { paymentIntervalLabels } from "@/config/payment-intervals";
@@ -30,6 +31,8 @@ export function ContractDetailView({
   documents,
   reminders,
 }: ContractDetailViewProps) {
+  const readOnly = isGitHubPagesPreview();
+
   return (
     <div className="flex flex-col gap-8">
       <EntityHeader
@@ -39,13 +42,15 @@ export function ContractDetailView({
         badges={
           <CategoryBadge label={contractCategoryLabels[contract.category]} />
         }
-        editHref={`/contracts/${contract.id}/edit`}
+        editHref={readOnly ? undefined : `/contracts/${contract.id}/edit`}
         actions={
-          <DeleteEntityButton
-            title="Vertrag löschen?"
-            description="Der Vertrag wird dauerhaft entfernt. Verknüpfte Dokumente bleiben bestehen."
-            deleteAction={deleteContractAction.bind(null, contract.id)}
-          />
+          readOnly ? undefined : (
+            <DeleteEntityButton
+              title="Vertrag löschen?"
+              description="Der Vertrag wird dauerhaft entfernt. Verknüpfte Dokumente bleiben bestehen."
+              deleteAction={deleteContractAction.bind(null, contract.id)}
+            />
+          )
         }
       />
 

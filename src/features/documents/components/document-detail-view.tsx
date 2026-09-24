@@ -9,6 +9,7 @@ import {
 import { DeleteEntityButton } from "@/components/domain/delete-entity-button";
 import { EntityHeader } from "@/components/domain/entity-header";
 import { deleteDocumentAction } from "@/lib/actions/documents";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { documentTypeLabels } from "@/config/document-types";
 import type { Document } from "@/lib/domain/types";
 import type { ResolvedLink } from "@/lib/data/resolve-links";
@@ -28,7 +29,8 @@ export function DocumentDetailView({
   link,
   downloadHref,
 }: DocumentDetailViewProps) {
-  const hasStoredFile = Boolean(downloadHref);
+  const readOnly = isGitHubPagesPreview();
+  const hasStoredFile = Boolean(downloadHref) && !readOnly;
   return (
     <div className="flex flex-col gap-8">
       <EntityHeader
@@ -37,13 +39,15 @@ export function DocumentDetailView({
         badges={
           <CategoryBadge label={documentTypeLabels[document.documentType]} />
         }
-        editHref={`/documents/${document.id}/edit`}
+        editHref={readOnly ? undefined : `/documents/${document.id}/edit`}
         actions={
-          <DeleteEntityButton
-            title="Dokument löschen?"
-            description="Metadaten und gespeicherte Datei (falls vorhanden) werden entfernt."
-            deleteAction={deleteDocumentAction.bind(null, document.id)}
-          />
+          readOnly ? undefined : (
+            <DeleteEntityButton
+              title="Dokument löschen?"
+              description="Metadaten und gespeicherte Datei (falls vorhanden) werden entfernt."
+              deleteAction={deleteDocumentAction.bind(null, document.id)}
+            />
+          )
         }
       />
 

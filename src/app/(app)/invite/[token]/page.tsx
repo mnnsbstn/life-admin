@@ -7,9 +7,15 @@ import { Button } from "@/components/ui/button";
 import { getAppSession } from "@/lib/auth/session";
 import { getRepositories } from "@/lib/repositories";
 import { formatDisplayDate } from "@/lib/format/date";
+import { staticInviteParams } from "@/lib/static-export-params";
+import { staticExportParams } from "@/lib/static-generate-params";
 
 interface InvitePageProps {
   params: Promise<{ token: string }>;
+}
+
+export function generateStaticParams() {
+  return staticExportParams(staticInviteParams());
 }
 
 export async function generateMetadata({

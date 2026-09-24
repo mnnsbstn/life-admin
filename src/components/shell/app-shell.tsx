@@ -1,5 +1,6 @@
 "use client";
 
+import { GitHubPagesBanner } from "@/components/domain/github-pages-banner";
 import { AppHeader } from "@/components/shell/app-header";
 import { AppSidebar } from "@/components/shell/app-sidebar";
 import { MobileNav } from "@/components/shell/mobile-nav";
@@ -14,6 +15,7 @@ export function AppShell({ children }: AppShellProps) {
     <div className="flex min-h-screen bg-[oklch(0.985_0.002_260)]">
       <AppSidebar />
       <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+        <GitHubPagesBanner />
         <AppHeader />
         <main className="flex-1 pb-[calc(4.5rem+env(safe-area-inset-bottom))] md:pb-0">
           <PageContainer>{children}</PageContainer>

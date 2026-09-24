@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { LoginForm } from "@/features/auth/components/login-form";
+import { isStaticExportBuild } from "@/lib/deployment-mode";
 import { shouldUseSupabaseBackend } from "@/lib/supabase/env";
 import { redirect } from "next/navigation";
 
@@ -17,7 +18,9 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     redirect("/today");
   }
 
-  const { next, error } = await searchParams;
+  const { next, error } = isStaticExportBuild()
+    ? {}
+    : await searchParams;
 
   return (
     <LoginForm

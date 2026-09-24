@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --import tsx --test tests/**/*.test.ts"
+    "test": "node --import tsx --test tests/**/*.test.ts",
+    "build:gh-pages": "GITHUB_PAGES=1 NEXT_PUBLIC_GITHUB_PAGES=true NEXT_PUBLIC_DATA_SOURCE=mock next build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",

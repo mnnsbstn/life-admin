@@ -20,6 +20,8 @@ npm run dev
 
 → [http://localhost:3000/today](http://localhost:3000/today)
 
+**Demo ohne Domain:** [GitHub Pages](https://mnnsbstn.github.io/life-admin/) (read-only Mock — siehe [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md))
+
 ## Skripte
 
 | Befehl | Beschreibung |

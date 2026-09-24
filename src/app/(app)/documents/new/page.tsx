@@ -3,12 +3,18 @@ import type { Metadata } from "next";
 import { DocumentForm } from "@/features/documents/components/document-form";
 import { emptyDocumentFormValues } from "@/features/documents/lib/map-form";
 import { getHouseholdContextData } from "@/lib/data/household-data";
+import { ReadOnlyDemoNotice } from "@/components/domain/read-only-demo-notice";
+import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 
 export const metadata: Metadata = {
   title: "Dokument anlegen",
 };
 
 export default async function NewDocumentPage() {
+  if (isGitHubPagesPreview()) {
+    return <ReadOnlyDemoNotice backHref="/documents" />;
+  }
+
   const { homeItems, contracts } = await getHouseholdContextData();
 
   return (

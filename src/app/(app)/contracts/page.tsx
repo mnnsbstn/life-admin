@@ -4,6 +4,7 @@ import { ContractListView } from "@/features/contracts/components/contract-list-
 import type { ContractCategory } from "@/lib/domain/types";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 import { sortContracts } from "@/lib/domain/list-sort";
+import { isStaticExportBuild } from "@/lib/deployment-mode";
 
 export const metadata: Metadata = {
   title: "Verträge",
@@ -14,7 +15,9 @@ interface ContractsPageProps {
 }
 
 export default async function ContractsPage({ searchParams }: ContractsPageProps) {
-  const { category } = await searchParams;
+  const category = isStaticExportBuild()
+    ? undefined
+    : (await searchParams).category;
   const { contracts } = await getHouseholdContextData();
   const activeCategory =
     category && category !== "all" ? (category as ContractCategory) : "all";

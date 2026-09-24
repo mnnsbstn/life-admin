@@ -4,6 +4,10 @@ import { headers } from "next/headers";
 import { SettingsView } from "@/features/settings/components/settings-view";
 import { getAppSession } from "@/lib/auth/session";
 import { getRepositories } from "@/lib/repositories";
+import {
+  githubPagesAppOrigin,
+  isStaticExportBuild,
+} from "@/lib/deployment-mode";
 
 export const metadata: Metadata = {
   title: "Einstellungen",
@@ -26,7 +30,9 @@ export default async function SettingsPage() {
       : Promise.resolve([]),
   ]);
 
-  const appOrigin = resolveAppOrigin(await headers());
+  const appOrigin = isStaticExportBuild()
+    ? githubPagesAppOrigin()
+    : resolveAppOrigin(await headers());
 
   return (
     <SettingsView
