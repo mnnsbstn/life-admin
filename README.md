@@ -1,2 +1,2 @@
 # life-admin
-Life Admin ist das zentrale Dashboard für alles Organisatorische im privaten Leben – Haus, Verträge, Fahrzeuge, Finanzen, Dokumente, Familie und wiederkehrende Verpflichtungen.
+Life Admin is the central dashboard for managing all organizational aspects of your personal life—home, contracts, vehicles, finances, documents, family, and recurring obligations.
