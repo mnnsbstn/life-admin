@@ -4,7 +4,7 @@ import { ModulePlaceholder } from "@/components/shell/module-placeholder";
 import { getDemoSession } from "@/lib/auth/demo-session";
 
 export const metadata: Metadata = {
-  title: "Profile",
+  title: "Profil",
 };
 
 export default async function ProfilePage() {

@@ -8,7 +8,7 @@ export function ModulePlaceholder({
   description,
 }: ModulePlaceholderProps) {
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 px-4 py-10 md:px-8">
+    <div className="flex flex-col gap-2 py-2">
       <h1 className="text-2xl font-semibold tracking-tight text-foreground">
         {title}
       </h1>
