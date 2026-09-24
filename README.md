@@ -47,10 +47,10 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 | Server Actions | `src/lib/actions` |
 | Mock Data | `src/lib/repositories/mock` |
 
-## Supabase (V0.2 Prep)
+## Supabase & Deployment
 
-- SQL-Migration: `supabase/migrations/20260924120000_household_core.sql`
-- Anleitung: [docs/SUPABASE.md](docs/SUPABASE.md)
+- Backend: [docs/SUPABASE.md](docs/SUPABASE.md) (Migrationen, Auth, Storage)
+- Go-live: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (Vercel, Hostinger, Env-Vars)
 - Status in der App unter **Einstellungen**
 
 ## Bewusst noch nicht drin
