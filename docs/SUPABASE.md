@@ -51,11 +51,11 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
 4. App: `/login` — Registrierung legt Profil + Haushalt per Trigger an.
 
-5. **Hybrid-Modus:** User, Household, **Home Items**, **Verträge** → Supabase; Dokumente & Erinnerungen → weiter Mock.
+5. **Hybrid-Modus:** User, Household, **Home Items**, **Verträge**, **Erinnerungen** → Supabase; **Dokumente** → weiter Mock.
 
 ## Nächste Schritte
 
-1. Supabase-Repositories für Documents, Reminders
+1. Supabase-Repository für Documents (+ Storage)
 2. Storage Bucket für Dokumente
 3. Optional: Demo-Seed SQL für neue Haushalte
 
