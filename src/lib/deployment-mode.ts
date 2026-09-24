@@ -11,6 +11,6 @@ export function isStaticExportBuild(): boolean {
 export function githubPagesAppOrigin(): string {
   return (
     process.env.NEXT_PUBLIC_GITHUB_PAGES_ORIGIN ??
-    "https://example.github.io/life-admin"
+    "https://mnnsbstn.github.io/life-admin"
   );
 }

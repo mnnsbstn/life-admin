@@ -33,6 +33,8 @@ jobs:
 
       - name: Build GitHub Pages bundle
         run: npm run build:gh-pages
+        env:
+          NEXT_PUBLIC_GITHUB_PAGES_ORIGIN: https://${{ github.repository_owner }}.github.io/life-admin
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
