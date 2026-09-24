@@ -2,9 +2,9 @@
 
 Implement repositories here using `createSupabaseServerClient()`.
 
-**Done:** `home_items`, `contracts` (+ user/household via auth).
+**Done:** `home_items`, `contracts`, `reminders` (+ user/household via auth).
 
-**Todo:** `documents`, `reminders`, Storage.
+**Todo:** `documents`, Storage.
 
 Map DB rows (snake_case) ↔ domain types (`src/lib/domain/types.ts`).
 

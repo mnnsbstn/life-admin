@@ -37,7 +37,7 @@ export function getRuntimeDataBackendLabel(): string {
     case "mock":
       return "Mock (In-Memory)";
     case "supabase-hybrid":
-      return "Supabase — Home & Verträge; Dokumente/Erinnerungen Mock";
+      return "Supabase — Home, Verträge & Erinnerungen; Dokumente Mock";
     case "supabase-missing-env":
       return "Supabase (Env unvollständig)";
   }

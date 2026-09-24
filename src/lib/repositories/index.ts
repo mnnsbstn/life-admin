@@ -58,6 +58,6 @@ export function getRepositoryDiagnostics() {
     homeItemsBackend: moduleBackend(supabase),
     contractsBackend: moduleBackend(supabase),
     documentsBackend: "mock" as const,
-    remindersBackend: "mock" as const,
+    remindersBackend: moduleBackend(supabase),
   };
 }
