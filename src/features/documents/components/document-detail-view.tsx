@@ -17,9 +17,16 @@ import { Button } from "@/components/ui/button";
 interface DocumentDetailViewProps {
   document: Document;
   link: ResolvedLink;
+  /** When set, user can download the stored file (Supabase Storage). */
+  downloadHref?: string;
 }
 
-export function DocumentDetailView({ document, link }: DocumentDetailViewProps) {
+export function DocumentDetailView({
+  document,
+  link,
+  downloadHref,
+}: DocumentDetailViewProps) {
+  const hasStoredFile = Boolean(downloadHref);
   return (
     <div className="flex flex-col gap-8">
       <EntityHeader
@@ -56,17 +63,30 @@ export function DocumentDetailView({ document, link }: DocumentDetailViewProps) 
         </DetailFieldList>
       </DetailSection>
 
-      <DetailSection title="Datei (Demo)">
+      <DetailSection title={hasStoredFile ? "Datei" : "Datei (Demo)"}>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-medium">{document.mockFileName ?? "—"}</p>
             <p className="text-xs text-muted-foreground">
-              {formatFileSize(document.mockFileSizeBytes)} · Upload folgt in einer späteren Version
+              {formatFileSize(document.mockFileSizeBytes)}
+              {hasStoredFile
+                ? document.mimeType
+                  ? ` · ${document.mimeType}`
+                  : ""
+                : " · Upload nur im Supabase-Modus"}
             </p>
           </div>
-          <Button variant="outline" size="sm" disabled>
-            Download
-          </Button>
+          {hasStoredFile ? (
+            <Button variant="outline" size="sm" asChild>
+              <a href={downloadHref} target="_blank" rel="noopener noreferrer">
+                Download
+              </a>
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" disabled>
+              Download
+            </Button>
+          )}
         </div>
       </DetailSection>
 

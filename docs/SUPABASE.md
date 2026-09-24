@@ -28,7 +28,7 @@ Alternativ: SQL im Supabase Dashboard → SQL Editor ausführen.
 ## Umgebungsvariablen
 
 ```env
-NEXT_PUBLIC_DATA_SOURCE=mock   # oder supabase (Repository-Switch folgt)
+NEXT_PUBLIC_DATA_SOURCE=mock   # oder supabase
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 ```
@@ -51,13 +51,24 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
 4. App: `/login` — Registrierung legt Profil + Haushalt per Trigger an.
 
-5. **Hybrid-Modus:** User, Household, **Home Items**, **Verträge**, **Erinnerungen** → Supabase; **Dokumente** → weiter Mock.
+5. **Supabase-Modus:** User, Household, **Home Items**, **Verträge**, **Erinnerungen** und **Dokumente** (Metadaten in Postgres, Dateien in Storage).
+
+## Dokumente & Storage
+
+Zusätzliche Migration:
+
+`supabase/migrations/20260924120200_documents_storage.sql`
+
+- Bucket `life-admin-documents` (privat, max. 50 MB pro Datei)
+- Pfad: `{household_id}/{document_id}/{filename}`
+- RLS: nur Mitglieder des Haushalts (Ordner = erste Pfadkomponente)
+
+Downloads laufen über `/documents/[id]/download` (signierte URL, 10 Minuten gültig).
 
 ## Nächste Schritte
 
-1. Supabase-Repository für Documents (+ Storage)
-2. Storage Bucket für Dokumente
-3. Optional: Demo-Seed SQL für neue Haushalte
+1. Optional: Demo-Seed SQL für neue Haushalte
+2. Optional: Middleware → Proxy (Next.js Hinweis)
 
 ## Mock vs. Supabase
 

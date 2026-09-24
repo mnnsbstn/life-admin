@@ -18,7 +18,7 @@ export function shouldUseSupabaseBackend(): boolean {
 
 export type RuntimeDataBackend =
   | "mock"
-  | "supabase-hybrid"
+  | "supabase-full"
   | "supabase-missing-env";
 
 /** Effective backend for UI/diagnostics */
@@ -29,15 +29,15 @@ export function getRuntimeDataBackend(): RuntimeDataBackend {
   if (!isSupabaseEnvConfigured()) {
     return "supabase-missing-env";
   }
-  return "supabase-hybrid";
+  return "supabase-full";
 }
 
 export function getRuntimeDataBackendLabel(): string {
   switch (getRuntimeDataBackend()) {
     case "mock":
       return "Mock (In-Memory)";
-    case "supabase-hybrid":
-      return "Supabase — Home, Verträge & Erinnerungen; Dokumente Mock";
+    case "supabase-full":
+      return "Supabase (alle Module + Storage)";
     case "supabase-missing-env":
       return "Supabase (Env unvollständig)";
   }
