@@ -38,4 +38,13 @@ export const mockHomeItemRepository: HomeItemRepository = {
     store.homeItems[index] = updated;
     return updated;
   },
+
+  async delete(id) {
+    const store = getMockStore();
+    const index = store.homeItems.findIndex((i) => i.id === id);
+    if (index === -1) {
+      throw new Error(`HomeItem not found: ${id}`);
+    }
+    store.homeItems.splice(index, 1);
+  },
 };

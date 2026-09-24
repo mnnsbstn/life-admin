@@ -5,6 +5,7 @@ import {
   type DocumentRow,
 } from "@/lib/repositories/supabase/mappers/document";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { deleteDocumentStorageFile } from "@/lib/supabase/storage/documents";
 
 export const supabaseDocumentRepository: DocumentRepository = {
   async list({ householdId }) {
@@ -71,5 +72,18 @@ export const supabaseDocumentRepository: DocumentRepository = {
 
     if (error) throw new Error(error.message);
     return mapDocumentRow(data as DocumentRow);
+  },
+
+  async delete(id) {
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) throw new Error("Supabase client unavailable");
+
+    const existing = await this.getById(id);
+    if (existing?.storagePath) {
+      await deleteDocumentStorageFile(existing.storagePath);
+    }
+
+    const { error } = await supabase.from("documents").delete().eq("id", id);
+    if (error) throw new Error(error.message);
   },
 };

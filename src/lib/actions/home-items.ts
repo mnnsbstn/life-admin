@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { getDemoSession } from "@/lib/auth/demo-session";
+import { getAppSession } from "@/lib/auth/session";
+import { assertEntityInHousehold } from "@/lib/actions/entity-guard";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
 import {
   homeItemSchema,
@@ -38,7 +39,7 @@ function toEntity(values: HomeItemFormValues, householdId: string) {
 
 export async function createHomeItemAction(values: HomeItemFormValues) {
   const parsed = homeItemSchema.parse(values);
-  const { householdId } = await getDemoSession();
+  const { householdId } = await getAppSession();
   const created = await getRepositories().homeItems.create(
     toEntity(parsed, householdId),
   );
@@ -50,8 +51,21 @@ export async function updateHomeItemAction(id: string, values: HomeItemFormValue
   const parsed = homeItemSchema.parse(values);
   await getRepositories().homeItems.update(
     id,
-    toEntity(parsed, (await getDemoSession()).householdId),
+    toEntity(parsed, (await getAppSession()).householdId),
   );
   revalidateLifeAdminCore();
   redirect(`/home/${id}`);
+}
+
+export async function deleteHomeItemAction(id: string) {
+  const { householdId } = await getAppSession();
+  const repos = getRepositories();
+  await assertEntityInHousehold(
+    (entityId) => repos.homeItems.getById(entityId),
+    id,
+    householdId,
+  );
+  await repos.homeItems.delete(id);
+  revalidateLifeAdminCore();
+  redirect("/home");
 }

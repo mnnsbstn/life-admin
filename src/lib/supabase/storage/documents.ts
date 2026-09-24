@@ -69,3 +69,16 @@ export async function createDocumentDownloadUrl(storagePath: string) {
 
   return data.signedUrl;
 }
+
+export async function deleteDocumentStorageFile(storagePath: string) {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return;
+
+  const { error } = await supabase.storage
+    .from(DOCUMENTS_BUCKET)
+    .remove([storagePath]);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}

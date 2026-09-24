@@ -15,11 +15,15 @@ export async function getAppSession() {
       throw new Error("No household found for demo user.");
     }
 
+    const role =
+      (await repos.households.getMemberRole(household.id, user.id)) ?? "owner";
+
     return {
       user,
       household,
       userId: DEMO_USER_ID,
       householdId: household.id,
+      role,
       mode: "mock" as const,
     };
   }
@@ -34,11 +38,15 @@ export async function getAppSession() {
     );
   }
 
+  const role =
+    (await repos.households.getMemberRole(household.id, user.id)) ?? "member";
+
   return {
     user,
     household,
     userId: user.id,
     householdId: household.id,
+    role,
     mode: "supabase" as const,
   };
 }

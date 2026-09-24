@@ -72,4 +72,12 @@ export const supabaseContractRepository: ContractRepository = {
     if (error) throw new Error(error.message);
     return mapContractRow(data as ContractRow);
   },
+
+  async delete(id) {
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) throw new Error("Supabase client unavailable");
+
+    const { error } = await supabase.from("contracts").delete().eq("id", id);
+    if (error) throw new Error(error.message);
+  },
 };

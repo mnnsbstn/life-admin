@@ -88,4 +88,12 @@ export const supabaseReminderRepository: ReminderRepository = {
     if (error) throw new Error(error.message);
     return mapReminderRow(data as ReminderRow);
   },
+
+  async delete(id) {
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) throw new Error("Supabase client unavailable");
+
+    const { error } = await supabase.from("reminders").delete().eq("id", id);
+    if (error) throw new Error(error.message);
+  },
 };

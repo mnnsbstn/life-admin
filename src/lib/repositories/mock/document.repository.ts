@@ -38,4 +38,13 @@ export const mockDocumentRepository: DocumentRepository = {
     store.documents[index] = updated;
     return updated;
   },
+
+  async delete(id) {
+    const store = getMockStore();
+    const index = store.documents.findIndex((d) => d.id === id);
+    if (index === -1) {
+      throw new Error(`Document not found: ${id}`);
+    }
+    store.documents.splice(index, 1);
+  },
 };

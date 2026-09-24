@@ -42,4 +42,13 @@ export const mockReminderRepository: ReminderRepository = {
     store.reminders[index] = updated;
     return updated;
   },
+
+  async delete(id) {
+    const store = getMockStore();
+    const index = store.reminders.findIndex((r) => r.id === id);
+    if (index === -1) {
+      throw new Error(`Reminder not found: ${id}`);
+    }
+    store.reminders.splice(index, 1);
+  },
 };

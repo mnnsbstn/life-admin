@@ -72,4 +72,12 @@ export const supabaseHomeItemRepository: HomeItemRepository = {
     if (error) throw new Error(error.message);
     return mapHomeItemRow(data as HomeItemRow);
   },
+
+  async delete(id) {
+    const supabase = await createSupabaseServerClient();
+    if (!supabase) throw new Error("Supabase client unavailable");
+
+    const { error } = await supabase.from("home_items").delete().eq("id", id);
+    if (error) throw new Error(error.message);
+  },
 };

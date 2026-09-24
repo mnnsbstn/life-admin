@@ -3,6 +3,9 @@ import type {
   Document,
   HomeItem,
   Household,
+  HouseholdInvitation,
+  HouseholdMemberRole,
+  HouseholdMemberView,
   Reminder,
   User,
   UUID,
@@ -19,6 +22,25 @@ export interface UserRepository {
 export interface HouseholdRepository {
   getById(id: UUID): Promise<Household | null>;
   getForUser(userId: UUID): Promise<Household[]>;
+  update(id: UUID, patch: Partial<Pick<Household, "name">>): Promise<Household>;
+  getMemberRole(
+    householdId: UUID,
+    userId: UUID,
+  ): Promise<HouseholdMemberRole | null>;
+  listMembers(householdId: UUID): Promise<HouseholdMemberView[]>;
+  listInvitations(householdId: UUID): Promise<HouseholdInvitation[]>;
+  createInvitation(input: {
+    householdId: UUID;
+    email: string;
+    role: HouseholdInvitation["role"];
+    createdByUserId: UUID;
+  }): Promise<HouseholdInvitation>;
+  revokeInvitation(id: UUID): Promise<void>;
+  acceptInvitation(token: string, userId: UUID): Promise<UUID>;
+  getInvitationByToken(token: string): Promise<{
+    invitation: HouseholdInvitation;
+    householdName: string;
+  } | null>;
 }
 
 export interface HomeItemRepository {
@@ -26,6 +48,7 @@ export interface HomeItemRepository {
   getById(id: UUID): Promise<HomeItem | null>;
   create(item: Omit<HomeItem, "id" | "createdAt" | "updatedAt">): Promise<HomeItem>;
   update(id: UUID, patch: Partial<HomeItem>): Promise<HomeItem>;
+  delete(id: UUID): Promise<void>;
 }
 
 export interface ContractRepository {
@@ -35,6 +58,7 @@ export interface ContractRepository {
     item: Omit<Contract, "id" | "createdAt" | "updatedAt">,
   ): Promise<Contract>;
   update(id: UUID, patch: Partial<Contract>): Promise<Contract>;
+  delete(id: UUID): Promise<void>;
 }
 
 export interface DocumentRepository {
@@ -44,6 +68,7 @@ export interface DocumentRepository {
     item: Omit<Document, "id" | "createdAt" | "updatedAt">,
   ): Promise<Document>;
   update(id: UUID, patch: Partial<Document>): Promise<Document>;
+  delete(id: UUID): Promise<void>;
 }
 
 export interface ReminderRepository {
@@ -53,6 +78,7 @@ export interface ReminderRepository {
     item: Omit<Reminder, "id" | "createdAt" | "updatedAt">,
   ): Promise<Reminder>;
   update(id: UUID, patch: Partial<Reminder>): Promise<Reminder>;
+  delete(id: UUID): Promise<void>;
 }
 
 export interface Repositories {

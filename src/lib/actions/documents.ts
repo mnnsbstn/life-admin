@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 
 import { getAppSession } from "@/lib/auth/session";
+import { assertEntityInHousehold } from "@/lib/actions/entity-guard";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
 import {
   documentSchema,
@@ -98,4 +99,17 @@ export async function updateDocumentAction(id: string, formData: FormData) {
 
   revalidateLifeAdminCore();
   redirect(`/documents/${id}`);
+}
+
+export async function deleteDocumentAction(id: string) {
+  const { householdId } = await getAppSession();
+  const repos = getRepositories();
+  await assertEntityInHousehold(
+    (entityId) => repos.documents.getById(entityId),
+    id,
+    householdId,
+  );
+  await repos.documents.delete(id);
+  revalidateLifeAdminCore();
+  redirect("/documents");
 }
