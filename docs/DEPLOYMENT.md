@@ -1,6 +1,6 @@
 # Deployment (Life Admin)
 
-Life Admin is a **Next.js 16** App Router project. The **full app** (Auth, Supabase, CRUD) needs a **Node host**. For a **free demo URL without a custom domain**, use **GitHub Pages** (read-only) or a free **\*.vercel.app** subdomain (full app).
+Life Admin is a **Next.js 16** App Router project. The **full app** (Auth, Supabase, CRUD) needs a **Node-capable host** (Server Actions, **middleware**, and optional **Supabase** — not plain static hosting unless you pre-render everything without server features). For a **free demo URL without a custom domain**, use **GitHub Pages** (read-only) or a free **\*.vercel.app** subdomain (full app).
 
 ## Option 0 — GitHub Pages (read-only demo, no domain)
 
@@ -34,8 +34,7 @@ npx serve out
 Restore removed files with:
 
 ```bash
-git checkout -- src/middleware.ts src/app/auth/callback/route.ts 'src/app/(app)/documents/[id]/download/route.ts' src/lib/actions/
-rm -rf .gh-pages-actions-backup
+bash scripts/restore-gh-pages-export.sh
 ```
 
 after testing locally.
