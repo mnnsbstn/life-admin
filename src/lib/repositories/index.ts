@@ -44,12 +44,20 @@ export function getRepositories(): Repositories {
   return mockRepositories;
 }
 
+function moduleBackend(supabase: boolean): "supabase" | "mock" {
+  return supabase && shouldUseSupabaseBackend() ? "supabase" : "mock";
+}
+
 export function getRepositoryDiagnostics() {
+  const supabase = shouldUseSupabaseBackend();
+
   return {
     configuredSource: getConfiguredDataSource(),
     runtimeBackend: getRuntimeDataBackend(),
     supabaseEnvPresent: isSupabaseEnvConfigured(),
-    homeItemsBackend: shouldUseSupabaseBackend() ? "supabase" : "mock",
-    otherModulesBackend: "mock",
+    homeItemsBackend: moduleBackend(supabase),
+    contractsBackend: moduleBackend(supabase),
+    documentsBackend: "mock" as const,
+    remindersBackend: "mock" as const,
   };
 }

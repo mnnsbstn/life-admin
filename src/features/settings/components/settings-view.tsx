@@ -5,17 +5,11 @@ import {
   DetailSection,
 } from "@/components/domain/detail-section";
 import { getRepositoryDiagnostics } from "@/lib/repositories";
-import type { RuntimeDataBackend } from "@/lib/supabase/env";
+import { getRuntimeDataBackendLabel } from "@/lib/supabase/env";
 
 interface SettingsViewProps {
   householdName: string;
 }
-
-const backendLabels: Record<RuntimeDataBackend, string> = {
-  mock: "Mock (In-Memory)",
-  "supabase-hybrid": "Supabase — Home + Auth; andere Module Mock",
-  "supabase-missing-env": "Supabase (Env unvollständig)",
-};
 
 export function SettingsView({ householdName }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
@@ -49,21 +43,17 @@ export function SettingsView({ householdName }: SettingsViewProps) {
               </Badge>
             }
           />
-          <DetailField
-            label="Laufzeit"
-            value={backendLabels[diagnostics.runtimeBackend]}
-          />
+          <DetailField label="Laufzeit" value={getRuntimeDataBackendLabel()} />
           <DetailField
             label="Supabase Env"
             value={diagnostics.supabaseEnvPresent ? "Vorhanden" : "Nicht gesetzt"}
           />
+          <DetailField label="Home" value={diagnostics.homeItemsBackend} />
+          <DetailField label="Verträge" value={diagnostics.contractsBackend} />
+          <DetailField label="Dokumente" value={diagnostics.documentsBackend} />
           <DetailField
-            label="Home Items"
-            value={diagnostics.homeItemsBackend}
-          />
-          <DetailField
-            label="Verträge/Dokumente/Erinnerungen"
-            value={diagnostics.otherModulesBackend}
+            label="Erinnerungen"
+            value={diagnostics.remindersBackend}
           />
         </DetailFieldList>
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
