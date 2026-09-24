@@ -20,7 +20,7 @@ export interface NavItem {
 export const primaryNavItems: NavItem[] = [
   {
     id: "today",
-    label: "Today",
+    label: "Heute",
     href: "/today",
     icon: CalendarDays,
     mobilePrimary: true,
@@ -34,21 +34,21 @@ export const primaryNavItems: NavItem[] = [
   },
   {
     id: "contracts",
-    label: "Contracts",
+    label: "Verträge",
     href: "/contracts",
     icon: FileSignature,
     mobilePrimary: true,
   },
   {
     id: "documents",
-    label: "Documents",
+    label: "Dokumente",
     href: "/documents",
     icon: FileText,
     mobilePrimary: true,
   },
   {
     id: "reminders",
-    label: "Reminders",
+    label: "Erinnerungen",
     href: "/reminders",
     icon: Bell,
     mobilePrimary: true,
@@ -58,14 +58,35 @@ export const primaryNavItems: NavItem[] = [
 export const secondaryNavItems: NavItem[] = [
   {
     id: "settings",
-    label: "Settings",
+    label: "Einstellungen",
     href: "/settings",
     icon: Settings,
   },
   {
     id: "profile",
-    label: "Profile",
+    label: "Profil",
     href: "/profile",
     icon: User,
   },
 ];
+
+const allNavItems = [...primaryNavItems, ...secondaryNavItems];
+
+export function getNavTitle(pathname: string): string {
+  const exact = allNavItems.find((item) => item.href === pathname);
+  if (exact) return exact.label;
+
+  const section = primaryNavItems.find(
+    (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+  );
+  if (section) return section.label;
+
+  return "Life Admin";
+}
+
+export function isNavActive(pathname: string, href: string): boolean {
+  if (href === "/today") {
+    return pathname === "/today";
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}

@@ -4,7 +4,7 @@ import { ModulePlaceholder } from "@/components/shell/module-placeholder";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 
 export const metadata: Metadata = {
-  title: "Documents",
+  title: "Dokumente",
 };
 
 export default async function DocumentsPage() {
