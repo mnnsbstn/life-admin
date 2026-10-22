@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT"
 
-git checkout -- src/middleware.ts \
+git checkout -- src/proxy.ts \
   src/app/auth/callback/route.ts \
   "src/app/(app)/documents/[id]/download/route.ts" 2>/dev/null || true
 

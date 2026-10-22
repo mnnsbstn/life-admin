@@ -12,7 +12,7 @@ remove_if_exists() {
   fi
 }
 
-remove_if_exists "src/middleware.ts"
+remove_if_exists "src/proxy.ts"
 remove_if_exists "src/app/auth/callback/route.ts"
 remove_if_exists "src/app/(app)/documents/[id]/download/route.ts"
 

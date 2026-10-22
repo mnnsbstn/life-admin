@@ -24,7 +24,7 @@ export async function createSupabaseServerClient() {
               cookieStore.set(name, value, options);
             });
           } catch {
-            // Called from a Server Component — cookie writes happen in middleware/route handlers.
+            // Called from a Server Component — cookie writes happen in proxy/route handlers.
           }
         },
       },
