@@ -58,7 +58,7 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 
 - Backend: [docs/SUPABASE.md](docs/SUPABASE.md) (Migrationen, Auth, Storage)
 - Go-live: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (Übersicht)
-- **Vercel + Supabase (volle App):** [docs/VERCEL_SUPABASE.md](docs/VERCEL_SUPABASE.md)
+- **Vercel + Supabase (volle App):** [docs/VERCEL_SUPABASE.md](docs/VERCEL_SUPABASE.md) · [V1 Setup (SBSTN-55)](docs/V1_PRODUCTION_SETUP.md)
 - Status in der App unter **Einstellungen**
 
 ## Bewusst noch nicht drin
