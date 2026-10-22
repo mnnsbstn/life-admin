@@ -1,5 +1,7 @@
 # Vercel + Supabase (volle Life Admin App)
 
+> **V1-Projekt (SBSTN-55):** Supabase **life-admin** ist vorbereitet — siehe [V1_PRODUCTION_SETUP.md](./V1_PRODUCTION_SETUP.md) für Dashboard-Link und die verbleibenden Vercel-Schritte.
+
 Ziel: **Login, CRUD, Storage, Haushalt** auf einer kostenlosen **`*.vercel.app`**-URL — ohne eigene Domain.
 
 Geschätzter Aufwand: Supabase-Projekt anlegen, fünf SQL-Dateien ausführen, Repo in Vercel importieren, drei Env-Vars setzen, Auth-URLs eintragen.
