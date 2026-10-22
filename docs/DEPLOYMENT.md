@@ -1,6 +1,6 @@
 # Deployment (Life Admin)
 
-Life Admin is a **Next.js 16** App Router project. The **full app** (Auth, Supabase, CRUD) needs a **Node-capable host** (Server Actions, **middleware**, and optional **Supabase** — not plain static hosting unless you pre-render everything without server features). For a **free demo URL without a custom domain**, use **GitHub Pages** (read-only) or a free **\*.vercel.app** subdomain (full app).
+Life Admin is a **Next.js 16** App Router project. The **full app** (Auth, Supabase, CRUD) needs a **Node-capable host** (Server Actions, **proxy** (auth), and optional **Supabase** — not plain static hosting unless you pre-render everything without server features). For a **free demo URL without a custom domain**, use **GitHub Pages** (read-only) or a free **\*.vercel.app** subdomain (full app).
 
 ## Option 0 — GitHub Pages (read-only demo, no domain)
 
@@ -25,7 +25,7 @@ What does **not** work: Login, Supabase, forms, uploads, invites, delete — no 
 Local preview:
 
 ```bash
-bash scripts/prepare-gh-pages-export.sh   # removes middleware & route handlers temporarily
+bash scripts/prepare-gh-pages-export.sh   # removes proxy & route handlers temporarily
 npm run build:gh-pages
 npx serve out
 # open http://localhost:3000/life-admin/ (serve may need -s for SPA; use `npx serve out -l 3000`)

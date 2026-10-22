@@ -81,8 +81,7 @@ Ausführliche Schritte (Vercel, Hostinger, Checkliste): [DEPLOYMENT.md](./DEPLOY
 
 ## Nächste Schritte
 
-1. Optional: Middleware → Proxy (Next.js Hinweis)  
-2. E2E-Tests gegen ein Test-Projekt  
+1. E2E-Tests gegen ein Test-Projekt  
 
 ## Mock vs. Supabase
 
