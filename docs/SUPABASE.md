@@ -51,7 +51,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
 4. App: `/login` — Registrierung legt Profil + Haushalt per Trigger an.
 
-5. **Supabase-Modus:** User, Household, **Home Items**, **Verträge**, **Erinnerungen** und **Dokumente** (Metadaten in Postgres, Dateien in Storage).
+5. Migration `20260924120400_household_demo_seed.sql`: neue Haushalte erhalten **Beispieldaten** (wie Mock-Demo), damit Dashboard und Module nicht leer starten. Einladungen in bestehende Haushalte werden nicht erneut befüllt.
+
+6. **Supabase-Modus:** User, Household, **Home Items**, **Verträge**, **Erinnerungen** und **Dokumente** (Metadaten in Postgres, Dateien in Storage).
 
 ## Dokumente & Storage
 
@@ -79,9 +81,8 @@ Ausführliche Schritte (Vercel, Hostinger, Checkliste): [DEPLOYMENT.md](./DEPLOY
 
 ## Nächste Schritte
 
-1. Optional: Demo-Seed SQL für neue Haushalte  
-2. Optional: Middleware → Proxy (Next.js Hinweis)  
-3. E2E-Tests gegen ein Test-Projekt  
+1. Optional: Middleware → Proxy (Next.js Hinweis)  
+2. E2E-Tests gegen ein Test-Projekt  
 
 ## Mock vs. Supabase
 

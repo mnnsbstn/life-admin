@@ -2,7 +2,7 @@
 
 Ziel: **Login, CRUD, Storage, Haushalt** auf einer kostenlosen **`*.vercel.app`**-URL — ohne eigene Domain.
 
-Geschätzter Aufwand: Supabase-Projekt anlegen, vier SQL-Dateien ausführen, Repo in Vercel importieren, drei Env-Vars setzen, Auth-URLs eintragen.
+Geschätzter Aufwand: Supabase-Projekt anlegen, fünf SQL-Dateien ausführen, Repo in Vercel importieren, drei Env-Vars setzen, Auth-URLs eintragen.
 
 ---
 
@@ -25,8 +25,11 @@ Geschätzter Aufwand: Supabase-Projekt anlegen, vier SQL-Dateien ausführen, Rep
 | 2 | `supabase/migrations/20260924120100_on_auth_user_created.sql` |
 | 3 | `supabase/migrations/20260924120200_documents_storage.sql` |
 | 4 | `supabase/migrations/20260924120300_household_management.sql` |
+| 5 | `supabase/migrations/20260924120400_household_demo_seed.sql` |
 
 Bei Fehlern: Meldung lesen (oft „already exists“ = ok, wenn du erneut klickst).
+
+**Hinweis:** Migration 5 ersetzt `handle_new_user()` und legt bei **neuer Registrierung** Beispieldaten an (Home, Verträge, Dokumente, Erinnerungen). Bestehende Projekte: nur Datei 5 ausführen, wenn Sign-ups bisher leere Haushalte hatten.
 
 ### Auth (Supabase Dashboard)
 
@@ -92,7 +95,7 @@ Speichern. Kein Redeploy nötig, wenn Env-Vars schon gesetzt waren.
 | Login loop / kein Callback | Redirect URL exakt `/auth/callback`, HTTPS, keine trailing slash |
 | „Kein Haushalt“ nach Sign-up | Migration `20260924120100_on_auth_user_created.sql` ausgeführt? |
 | Upload/Download fehlgeschlagen | Migration `20260924120200_documents_storage.sql`, Bucket `life-admin-documents` |
-| RLS / permission errors | Alle vier Migrationen? Eingeloggt als der User, der die Daten anlegt? |
+| RLS / permission errors | Alle fünf Migrationen? Eingeloggt als der User, der die Daten anlegt? |
 
 ---
 
