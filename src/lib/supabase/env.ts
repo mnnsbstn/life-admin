@@ -6,11 +6,28 @@ function trimEnv(value: string | undefined): string | undefined {
 }
 
 export function getSupabaseProjectUrl(): string | undefined {
-  return trimEnv(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  return (
+    trimEnv(process.env.SUPABASE_URL) ??
+    trimEnv(process.env.NEXT_PUBLIC_SUPABASE_URL)
+  );
 }
 
 export function getSupabaseAnonKey(): string | undefined {
-  return trimEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  return (
+    trimEnv(process.env.SUPABASE_ANON_KEY) ??
+    trimEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
+  );
+}
+
+/** Safe hint for login errors (host only, no secrets). */
+export function getSupabaseEnvHint(): string {
+  const url = getSupabaseProjectUrl();
+  if (!url) return "Supabase-URL fehlt in Vercel (NEXT_PUBLIC_SUPABASE_URL).";
+  try {
+    return `Supabase-Host: ${new URL(url).host}`;
+  } catch {
+    return "Supabase-URL ist ungültig.";
+  }
 }
 
 export function getConfiguredDataSource(): DataSourceMode {

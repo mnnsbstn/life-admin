@@ -3,7 +3,10 @@
 import { redirect } from "next/navigation";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { shouldUseSupabaseBackend } from "@/lib/supabase/env";
+import {
+  getSupabaseEnvHint,
+  shouldUseSupabaseBackend,
+} from "@/lib/supabase/env";
 
 export async function signInAction(formData: FormData) {
   if (!shouldUseSupabaseBackend()) {
@@ -21,10 +24,19 @@ export async function signInAction(formData: FormData) {
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) {
-    redirect(`/login?error=${encodeURIComponent(error.message)}&next=${encodeURIComponent(next)}`);
+    redirect(
+      `/login?error=${encodeURIComponent(formatAuthError(error.message))}&next=${encodeURIComponent(next)}`,
+    );
   }
 
   redirect(next);
+}
+
+function formatAuthError(message: string): string {
+  if (/invalid api key/i.test(message)) {
+    return `${message} — ${getSupabaseEnvHint()}. In Vercel: anon-Key von Projekt oxnyvzsvrvnncorsgyjo (Settings → API), nicht service_role.`;
+  }
+  return message;
 }
 
 export async function signUpAction(formData: FormData) {
@@ -51,7 +63,9 @@ export async function signUpAction(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/login?error=${encodeURIComponent(error.message)}&next=${encodeURIComponent(next)}`);
+    redirect(
+      `/login?error=${encodeURIComponent(formatAuthError(error.message))}&next=${encodeURIComponent(next)}`,
+    );
   }
 
   redirect(next);
