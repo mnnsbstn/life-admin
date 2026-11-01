@@ -1,15 +1,25 @@
 export type DataSourceMode = "mock" | "supabase";
 
+function trimEnv(value: string | undefined): string | undefined {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : undefined;
+}
+
+export function getSupabaseProjectUrl(): string | undefined {
+  return trimEnv(process.env.NEXT_PUBLIC_SUPABASE_URL);
+}
+
+export function getSupabaseAnonKey(): string | undefined {
+  return trimEnv(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+}
+
 export function getConfiguredDataSource(): DataSourceMode {
-  const value = process.env.NEXT_PUBLIC_DATA_SOURCE?.toLowerCase();
+  const value = trimEnv(process.env.NEXT_PUBLIC_DATA_SOURCE)?.toLowerCase();
   return value === "supabase" ? "supabase" : "mock";
 }
 
 export function isSupabaseEnvConfigured(): boolean {
-  return Boolean(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  );
+  return Boolean(getSupabaseProjectUrl() && getSupabaseAnonKey());
 }
 
 export function shouldUseSupabaseBackend(): boolean {
