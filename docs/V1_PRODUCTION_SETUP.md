@@ -6,7 +6,7 @@ Stand: Supabase-Projekt **life-admin** (Region **eu-central-1**) ist angelegt; a
 
 | Variable | Wert (Quelle) |
 |----------|----------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | **Project Settings → API → Project URL** (`https://oxnyvzsvrvnncorsgyjo.supabase.co`) |
+| `NEXT_PUBLIC_SUPABASE_URL` | **Project Settings → API → Project URL** (`https://oxnyvzsvrvnncorsgyjo.supabase.co`) — **nur** diese Adresse, **nicht** die Dashboard-URL aus der Browser-Leiste (sonst Login-Fehler *Invalid path specified in request URL*) |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | **Project Settings → API → anon** oder **publishable** key — **nie** `service_role` |
 
 Keys **nicht** ins Git committen; nur in Vercel (und lokal `.env.local`) setzen.
