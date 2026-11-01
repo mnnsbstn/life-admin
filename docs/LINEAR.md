@@ -2,7 +2,7 @@
 
 **Projekt:** [Life Admin](https://linear.app/mnnsbstn/project/life-admin-f1ba6d229b25) (Team `mnnsbstn`)
 
-**V1-Ziel:** 5. Nov. 2026 — siehe [SBSTN-55](https://linear.app/mnnsbstn/issue/SBSTN-55/deploy-vercel-supabase-production-volle-app)
+**V1-Release-Ziel:** 8. Nov. 2026 — Sprint [SBSTN-97](https://linear.app/mnnsbstn/issue/SBSTN-97/v1-release-erster-go-live-sign-off) (Deploy: [SBSTN-55](https://linear.app/mnnsbstn/issue/SBSTN-55/deploy-vercel-supabase-production-volle-app) Done)
 
 ## Regel: Erledigtes immer in Linear
 
