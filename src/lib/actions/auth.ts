@@ -36,6 +36,13 @@ function formatAuthError(message: string): string {
   if (/invalid api key/i.test(message)) {
     return `${message} — ${getSupabaseEnvHint()}. In Vercel: anon-Key von Projekt oxnyvzsvrvnncorsgyjo (Settings → API), nicht service_role.`;
   }
+  if (/invalid path|requested path is invalid/i.test(message)) {
+    return (
+      "Supabase-URL in Vercel ist falsch (Browser-Link oder Pfad wie /settings/api). " +
+      "Setze NEXT_PUBLIC_SUPABASE_URL exakt auf https://oxnyvzsvrvnncorsgyjo.supabase.co — nur diese Zeile, ohne weiteren Pfad. " +
+      getSupabaseEnvHint()
+    );
+  }
   return message;
 }
 

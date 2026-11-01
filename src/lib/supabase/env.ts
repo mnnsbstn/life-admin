@@ -5,11 +5,36 @@ function trimEnv(value: string | undefined): string | undefined {
   return trimmed ? trimmed : undefined;
 }
 
+/** Project API base URL only — strips accidental paths (e.g. `/settings/api`). */
+export function normalizeSupabaseProjectUrl(
+  raw: string | undefined,
+): string | undefined {
+  const trimmed = trimEnv(raw);
+  if (!trimmed) return undefined;
+
+  try {
+    const parsed = new URL(trimmed);
+
+    if (parsed.hostname.endsWith(".supabase.co")) {
+      return parsed.origin;
+    }
+
+    if (parsed.hostname === "supabase.com") {
+      const ref = parsed.pathname.match(/\/project\/([a-z0-9]+)/i)?.[1];
+      if (ref) return `https://${ref.toLowerCase()}.supabase.co`;
+    }
+  } catch {
+    return undefined;
+  }
+
+  return trimmed;
+}
+
 export function getSupabaseProjectUrl(): string | undefined {
-  return (
+  const raw =
     trimEnv(process.env.SUPABASE_URL) ??
-    trimEnv(process.env.NEXT_PUBLIC_SUPABASE_URL)
-  );
+    trimEnv(process.env.NEXT_PUBLIC_SUPABASE_URL);
+  return normalizeSupabaseProjectUrl(raw);
 }
 
 export function getSupabaseAnonKey(): string | undefined {
