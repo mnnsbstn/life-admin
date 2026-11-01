@@ -19,10 +19,15 @@ export async function signInAction(formData: FormData) {
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
-    throw new Error("Supabase ist nicht konfiguriert.");
+    redirect(
+      `/login?error=${encodeURIComponent("Supabase ist nicht konfiguriert.")}&next=${encodeURIComponent(next)}`,
+    );
   }
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
   if (error) {
     redirect(
       `/login?error=${encodeURIComponent(formatAuthError(error.message))}&next=${encodeURIComponent(next)}`,
@@ -58,7 +63,9 @@ export async function signUpAction(formData: FormData) {
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
-    throw new Error("Supabase ist nicht konfiguriert.");
+    redirect(
+      `/login?error=${encodeURIComponent("Supabase ist nicht konfiguriert.")}&next=${encodeURIComponent(next)}`,
+    );
   }
 
   const { error } = await supabase.auth.signUp({
