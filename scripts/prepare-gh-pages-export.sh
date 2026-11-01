@@ -15,6 +15,7 @@ remove_if_exists() {
 remove_if_exists "src/proxy.ts"
 remove_if_exists "src/app/auth/callback/route.ts"
 remove_if_exists "src/app/(app)/documents/[id]/download/route.ts"
+remove_if_exists "src/app/api/health/supabase/route.ts"
 
 STUBS_DIR="$ROOT/scripts/gh-pages-export/actions"
 ACTIONS_DIR="$ROOT/src/lib/actions"
