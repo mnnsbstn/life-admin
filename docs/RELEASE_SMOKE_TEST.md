@@ -38,7 +38,8 @@ Voraussetzung Auth: [SBSTN-101](https://linear.app/mnnsbstn/issue/SBSTN-101/rele
 | PR #28 Login/Session-Fix | **Merged** (1. Nov. 2026) |
 | Vercel Env / Supabase API | **OK** — Health: `ok:true`, Host `oxnyvzsvrvnncorsgyjo.supabase.co` |
 | Auth-Gate | **OK** — `/today` → `/login?next=…` |
-| GitHub Pages Deploy | **OK** — Workflow nach main grün |
+| GitHub Pages Deploy | **OK** — Workflow grün; `/today/` Mock read-only (200) |
+| GitHub Pages (SBSTN-102) | **Verifiziert** — siehe `npm run release:smoke` |
 | Registrierung neuer User | **Blockiert** — Login-Fehler *Email not confirmed*; Bestätigungsmail kam für Test-Adresse nicht an |
 
 **Blocker für vollständigen Smoke-Test:** In Supabase **Authentication → Providers → Email** für V1 entweder **Confirm email deaktivieren** (empfohlen für schnellen Go-live) **oder** SMTP/Custom SMTP konfigurieren. Danach Registrierung erneut testen.

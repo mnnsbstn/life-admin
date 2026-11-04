@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 interface LoginPageProps {
-  searchParams: Promise<{ next?: string; error?: string }>;
+  searchParams: Promise<{ next?: string; error?: string; info?: string }>;
 }
 
 export default async function LoginPage({ searchParams }: LoginPageProps) {
@@ -18,7 +18,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     redirect("/today");
   }
 
-  const { next, error } = isStaticExportBuild()
+  const { next, error, info } = isStaticExportBuild()
     ? {}
     : await searchParams;
 
@@ -26,6 +26,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
     <LoginForm
       nextPath={next ?? "/today"}
       errorMessage={error ? decodeURIComponent(error) : undefined}
+      infoMessage={info ? decodeURIComponent(info) : undefined}
     />
   );
 }
