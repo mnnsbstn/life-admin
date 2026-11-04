@@ -45,6 +45,8 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 
 ## Architektur
 
+Vollständige Referenz: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (Domain-first, Repositories, Dashboard-Engine, Supabase/Mock).
+
 | Schicht | Pfad |
 |--------|------|
 | UI / Routing | `src/app/(app)/…` |
@@ -52,7 +54,7 @@ NEXT_PUBLIC_DATA_SOURCE=mock
 | Domain | `src/lib/domain` |
 | Services | `src/lib/services` |
 | Server Actions | `src/lib/actions` |
-| Mock Data | `src/lib/repositories/mock` |
+| Mock / Supabase | `src/lib/repositories/` |
 
 ## Supabase & Deployment
 
