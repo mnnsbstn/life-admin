@@ -18,10 +18,13 @@
 
 **Authentication → Providers → Email**
 
+- Dashboard: [Email provider](https://supabase.com/dashboard/project/oxnyvzsvrvnncorsgyjo/auth/providers?provider=Email)
 - Für V1 ohne SMTP: **Confirm email** ausschalten (sonst Registrierung ohne Login).
 - Optional später: Custom SMTP unter Project Settings → Auth.
 
 **Authentication → URL configuration**
+
+- Dashboard: [URL configuration](https://supabase.com/dashboard/project/oxnyvzsvrvnncorsgyjo/auth/url-configuration)
 
 | Feld | Wert |
 |------|------|

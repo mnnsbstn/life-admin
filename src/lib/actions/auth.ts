@@ -38,6 +38,12 @@ export async function signInAction(formData: FormData) {
 }
 
 function formatAuthError(message: string): string {
+  if (/email not confirmed/i.test(message)) {
+    return (
+      "E-Mail noch nicht bestätigt. Prüfe Postfach und Spam. " +
+      "Kommt keine Mail, ist die Bestätigung in Supabase noch aktiv — siehe docs/DEINE-LIVE-URL.md (Confirm email für V1 ausschalten)."
+    );
+  }
   if (/invalid api key/i.test(message)) {
     return `${message} — ${getSupabaseEnvHint()}. In Vercel: anon-Key von Projekt oxnyvzsvrvnncorsgyjo (Settings → API), nicht service_role.`;
   }
@@ -68,7 +74,7 @@ export async function signUpAction(formData: FormData) {
     );
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -82,7 +88,15 @@ export async function signUpAction(formData: FormData) {
     );
   }
 
-  redirect(next);
+  if (data.session) {
+    redirect(next);
+  }
+
+  redirect(
+    `/login?info=${encodeURIComponent(
+      "Konto angelegt. Bitte bestätige deine E-Mail und melde dich dann an.",
+    )}&next=${encodeURIComponent(next)}`,
+  );
 }
 
 export async function signOutAction() {

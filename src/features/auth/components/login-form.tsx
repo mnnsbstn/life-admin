@@ -10,9 +10,14 @@ import { Label } from "@/components/ui/label";
 interface LoginFormProps {
   nextPath: string;
   errorMessage?: string;
+  infoMessage?: string;
 }
 
-export function LoginForm({ nextPath, errorMessage }: LoginFormProps) {
+export function LoginForm({
+  nextPath,
+  errorMessage,
+  infoMessage,
+}: LoginFormProps) {
   const [mode, setMode] = useState<"signin" | "signup">("signin");
 
   return (
@@ -23,6 +28,12 @@ export function LoginForm({ nextPath, errorMessage }: LoginFormProps) {
           {mode === "signin" ? "Melde dich an" : "Erstelle dein Konto"}
         </p>
       </div>
+
+      {infoMessage ? (
+        <p className="rounded-lg border border-border/60 bg-muted/40 px-3 py-2 text-sm text-foreground">
+          {infoMessage}
+        </p>
+      ) : null}
 
       {errorMessage ? (
         <p className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
