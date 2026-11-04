@@ -16,6 +16,11 @@
 
 ## Supabase Auth — exakt eintragen
 
+**Authentication → Providers → Email**
+
+- Für V1 ohne SMTP: **Confirm email** ausschalten (sonst Registrierung ohne Login).
+- Optional später: Custom SMTP unter Project Settings → Auth.
+
 **Authentication → URL configuration**
 
 | Feld | Wert |

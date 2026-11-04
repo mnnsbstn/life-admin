@@ -38,7 +38,11 @@ Keys **nicht** ins Git committen; nur in Vercel (und lokal `.env.local`) setzen.
 | **Redirect URLs** | `https://DEINE-VERCEL-URL.vercel.app/auth/callback` |
 | | `http://localhost:3000/auth/callback` |
 
-**Authentication → Providers → Email:** aktiv. Für schnellen Test oft **Confirm email** deaktivieren.
+**Authentication → Providers → Email:** aktiv.
+
+**Wichtig für V1 (Nov. 2026):** **Confirm email** deaktivieren, solange kein SMTP eingerichtet ist — sonst können sich neue Nutzer registrieren, aber **nicht einloggen** (*Email not confirmed*). Smoke-Test: [RELEASE_SMOKE_TEST.md](./RELEASE_SMOKE_TEST.md).
+
+**Site URL (Production):** `https://life-admin-sand-nu.vercel.app` — Details: [DEINE-LIVE-URL.md](./DEINE-LIVE-URL.md)
 
 ---
 
