@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { ReminderForm } from "@/features/reminders/components/reminder-form";
+import { ReminderFormNewClient } from "@/features/reminders/components/reminder-form-new-client";
 import { emptyReminderFormValues } from "@/features/reminders/lib/map-form";
 import { getHouseholdContextData } from "@/lib/data/household-data";
 import { ReadOnlyDemoNotice } from "@/components/domain/read-only-demo-notice";
@@ -20,7 +20,7 @@ export default async function NewReminderPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-semibold tracking-tight">Erinnerung anlegen</h1>
-      <ReminderForm
+      <ReminderFormNewClient
         defaultValues={emptyReminderFormValues}
         homeItems={homeItems}
         contracts={contracts}

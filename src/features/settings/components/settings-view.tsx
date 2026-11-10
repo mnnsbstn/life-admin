@@ -26,6 +26,7 @@ interface SettingsViewProps {
   memberRole: HouseholdMemberRole;
   appOrigin: string;
   invitationEmailEnabled: boolean;
+  smartCaptureLlmEnabled: boolean;
 }
 
 const roleLabels: Record<HouseholdMemberRole, string> = {
@@ -43,6 +44,7 @@ export function SettingsView({
   memberRole,
   appOrigin,
   invitationEmailEnabled,
+  smartCaptureLlmEnabled,
 }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
   const isOwner = memberRole === "owner";
@@ -131,6 +133,10 @@ export function SettingsView({
           <DetailField
             label="Einladungs-E-Mail"
             value={invitationEmailEnabled ? "Resend aktiv" : "Nicht konfiguriert"}
+          />
+          <DetailField
+            label="Smart Capture"
+            value={smartCaptureLlmEnabled ? "KI (LLM)" : "Heuristik"}
           />
         </DetailFieldList>
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
