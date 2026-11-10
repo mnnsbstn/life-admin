@@ -4,6 +4,9 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
+import {
+  writeActiveHouseholdId,
+} from "@/lib/auth/active-household";
 import { getAppSession } from "@/lib/auth/session";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
 import { getRepositories } from "@/lib/repositories";
@@ -75,6 +78,23 @@ export async function acceptHouseholdInvitationAction(token: string) {
     userId,
   );
 
+  await writeActiveHouseholdId(householdId);
   revalidateLifeAdminCore();
   redirect(`/settings?joined=${householdId}`);
+}
+
+export async function switchActiveHouseholdAction(householdId: string) {
+  const repos = getRepositories();
+  const user = await repos.users.getCurrentUser();
+  const households = await repos.households.getForUser(user.id);
+
+  if (!households.some((h) => h.id === householdId)) {
+    throw new Error("Du bist nicht Mitglied dieses Haushalts.");
+  }
+
+  await writeActiveHouseholdId(householdId);
+  revalidateLifeAdminCore();
+  revalidatePath("/settings");
+  revalidatePath("/", "layout");
+  redirect("/today");
 }

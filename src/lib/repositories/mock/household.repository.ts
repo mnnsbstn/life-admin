@@ -9,54 +9,64 @@ function mapInvitation(row: HouseholdInvitation): HouseholdInvitation {
 
 export const mockHouseholdRepository: HouseholdRepository = {
   async getById(id) {
-    const { household } = getMockStore();
-    return household.id === id ? household : null;
+    return getMockStore().households.find((h) => h.id === id) ?? null;
   },
 
   async getForUser(userId) {
     const store = getMockStore();
-    if (store.householdMember.userId !== userId) {
-      return [];
-    }
-    return [store.household];
+    const householdIds = store.householdMembers
+      .filter((m) => m.userId === userId)
+      .map((m) => m.householdId);
+    return store.households.filter((h) => householdIds.includes(h.id));
   },
 
   async update(id, patch) {
     const store = getMockStore();
-    if (store.household.id !== id) {
+    const index = store.households.findIndex((h) => h.id === id);
+    if (index === -1) {
       throw new Error(`Household not found: ${id}`);
     }
     if (patch.name !== undefined) {
-      store.household = { ...store.household, name: patch.name };
+      store.households[index] = {
+        ...store.households[index],
+        name: patch.name,
+      };
     }
-    return store.household;
+    return store.households[index];
   },
 
   async getMemberRole(householdId, userId) {
     const store = getMockStore();
-    if (
-      store.household.id !== householdId ||
-      store.householdMember.userId !== userId
-    ) {
-      return null;
-    }
-    return store.householdMember.role;
+    const member = store.householdMembers.find(
+      (m) => m.householdId === householdId && m.userId === userId,
+    );
+    return member?.role ?? null;
   },
 
   async listMembers(householdId) {
     const store = getMockStore();
-    if (store.household.id !== householdId) return [];
+    const members = store.householdMembers.filter(
+      (m) => m.householdId === householdId,
+    );
+    if (members.length === 0) return [];
 
-    return [
-      {
-        id: store.householdMember.id,
-        userId: store.user.id,
-        role: store.householdMember.role,
-        email: store.user.email,
-        displayName: store.user.displayName,
-        joinedAt: store.householdMember.joinedAt,
-      },
-    ];
+    return members.map((member) => {
+      const user =
+        member.userId === store.user.id
+          ? store.user
+          : {
+              email: "partner@example.com",
+              displayName: "Partner",
+            };
+      return {
+        id: member.id,
+        userId: member.userId,
+        role: member.role,
+        email: user.email,
+        displayName: user.displayName,
+        joinedAt: member.joinedAt,
+      };
+    });
   },
 
   async listInvitations(householdId) {
@@ -68,13 +78,13 @@ export const mockHouseholdRepository: HouseholdRepository = {
 
   async createInvitation({ householdId, email, role, createdByUserId }) {
     const store = getMockStore();
-    if (store.household.id !== householdId) {
-      throw new Error("Household not found");
-    }
-    if (store.householdMember.userId !== createdByUserId) {
-      throw new Error("Only owners can invite");
-    }
-    if (store.householdMember.role !== "owner") {
+    const owner = store.householdMembers.find(
+      (m) =>
+        m.householdId === householdId &&
+        m.userId === createdByUserId &&
+        m.role === "owner",
+    );
+    if (!owner) {
       throw new Error("Only owners can invite");
     }
 
@@ -104,9 +114,12 @@ export const mockHouseholdRepository: HouseholdRepository = {
     if (!inv) return null;
     if (new Date(inv.expiresAt).getTime() < Date.now()) return null;
 
+    const household = store.households.find((h) => h.id === inv.householdId);
+    if (!household) return null;
+
     return {
       invitation: inv,
-      householdName: store.household.name,
+      householdName: household.name,
     };
   },
 

@@ -17,3 +17,7 @@ export async function revokeHouseholdInvitationAction(_invitationId: string) {
 export async function acceptHouseholdInvitationAction(_token: string) {
   return blocked();
 }
+
+export async function switchActiveHouseholdAction(_householdId: string) {
+  return blocked();
+}

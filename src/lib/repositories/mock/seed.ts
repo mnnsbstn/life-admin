@@ -1,4 +1,8 @@
-import { DEMO_HOUSEHOLD_ID, DEMO_USER_ID } from "@/lib/constants";
+import {
+  DEMO_HOUSEHOLD_ID,
+  DEMO_SECOND_HOUSEHOLD_ID,
+  DEMO_USER_ID,
+} from "@/lib/constants";
 import type {
   Contract,
   Document,
@@ -24,19 +28,35 @@ export const seedUser: User = {
   createdAt: "2024-01-15T10:00:00.000Z",
 };
 
-export const seedHousehold: Household = {
-  id: DEMO_HOUSEHOLD_ID,
-  name: "Wohnung Musterstraße 12",
-  createdAt: "2024-01-15T10:00:00.000Z",
-};
+export const seedHouseholds: Household[] = [
+  {
+    id: DEMO_HOUSEHOLD_ID,
+    name: "Wohnung Musterstraße 12",
+    createdAt: "2024-01-15T10:00:00.000Z",
+  },
+  {
+    id: DEMO_SECOND_HOUSEHOLD_ID,
+    name: "Ferienhaus Am See",
+    createdAt: "2024-06-01T10:00:00.000Z",
+  },
+];
 
-export const seedHouseholdMember: HouseholdMember = {
-  id: SEED_IDS.householdMember,
-  householdId: DEMO_HOUSEHOLD_ID,
-  userId: DEMO_USER_ID,
-  role: "owner",
-  joinedAt: "2024-01-15T10:00:00.000Z",
-};
+export const seedHouseholdMembers: HouseholdMember[] = [
+  {
+    id: SEED_IDS.householdMember,
+    householdId: DEMO_HOUSEHOLD_ID,
+    userId: DEMO_USER_ID,
+    role: "owner",
+    joinedAt: "2024-01-15T10:00:00.000Z",
+  },
+  {
+    id: SEED_IDS.secondHouseholdMember,
+    householdId: DEMO_SECOND_HOUSEHOLD_ID,
+    userId: DEMO_USER_ID,
+    role: "owner",
+    joinedAt: "2024-06-01T10:00:00.000Z",
+  },
+];
 
 export const seedHomeItems: HomeItem[] = [
   {
@@ -304,8 +324,8 @@ export const seedFamilyMembers: FamilyMember[] = [
 
 export interface MockSeedData {
   user: User;
-  household: Household;
-  householdMember: HouseholdMember;
+  households: Household[];
+  householdMembers: HouseholdMember[];
   invitations: HouseholdInvitation[];
   homeItems: HomeItem[];
   contracts: Contract[];
@@ -319,8 +339,8 @@ export interface MockSeedData {
 export function createSeedData(): MockSeedData {
   return {
     user: structuredClone(seedUser),
-    household: structuredClone(seedHousehold),
-    householdMember: structuredClone(seedHouseholdMember),
+    households: structuredClone(seedHouseholds),
+    householdMembers: structuredClone(seedHouseholdMembers),
     invitations: [
       {
         id: "88888888-8888-8888-8888-888888888801",
