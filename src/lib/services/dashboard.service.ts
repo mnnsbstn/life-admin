@@ -11,6 +11,7 @@ import {
   UPCOMING_MAX_ITEMS,
   UPCOMING_WINDOW_DAYS,
 } from "@/lib/constants";
+import { resolveNextCancellationDate } from "@/lib/domain/contract-dates";
 import { withDerivedReminderStatus } from "@/lib/domain/reminder-status";
 import type {
   AttentionItem,
@@ -86,20 +87,18 @@ export function buildAttentionItems(input: DashboardInput): AttentionItem[] {
   }
 
   for (const contract of input.contracts) {
+    const cancellationDate = resolveNextCancellationDate(contract);
     if (
-      contract.nextCancellationDate &&
-      withinAttentionWindow(contract.nextCancellationDate, referenceDate)
+      cancellationDate &&
+      withinAttentionWindow(cancellationDate, referenceDate)
     ) {
-      const urgencyDays = daysUntil(
-        contract.nextCancellationDate,
-        referenceDate,
-      );
+      const urgencyDays = daysUntil(cancellationDate, referenceDate);
       items.push({
         id: `cancellation:${contract.id}`,
         kind: "cancellation",
         title: `Kündigungsfenster: ${contract.name}`,
         subtitle: contract.provider,
-        dueDate: contract.nextCancellationDate,
+        dueDate: cancellationDate,
         urgencyDays,
         href: `/contracts/${contract.id}`,
         entityType: "contract",
@@ -203,9 +202,10 @@ export function buildUpcomingItems(input: DashboardInput): UpcomingItem[] {
   }
 
   for (const contract of input.contracts) {
-    if (contract.nextCancellationDate) {
+    const cancellationDate = resolveNextCancellationDate(contract);
+    if (cancellationDate) {
       push(
-        contract.nextCancellationDate,
+        cancellationDate,
         `upcoming-cancel:${contract.id}`,
         contract.name,
         "Kündigung möglich",

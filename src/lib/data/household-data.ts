@@ -1,8 +1,8 @@
-import { getDemoSession } from "@/lib/auth/demo-session";
+import { getAppSession } from "@/lib/auth/session";
 import { getRepositories } from "@/lib/repositories";
 
 export async function getHouseholdContextData() {
-  const session = await getDemoSession();
+  const session = await getAppSession();
   const repos = getRepositories();
 
   const [homeItems, contracts, documents, reminders] = await Promise.all([

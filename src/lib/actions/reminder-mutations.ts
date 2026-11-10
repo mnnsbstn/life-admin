@@ -2,7 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { getDemoSession } from "@/lib/auth/demo-session";
+import { getAppSession } from "@/lib/auth/session";
+import { assertEntityInHousehold } from "@/lib/actions/entity-guard";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
 import {
   reminderSchema,
@@ -46,7 +47,7 @@ function toEntity(values: ReminderFormValues, householdId: string) {
 
 export async function createReminderAction(values: ReminderFormValues) {
   const parsed = reminderSchema.parse(values);
-  const { householdId } = await getDemoSession();
+  const { householdId } = await getAppSession();
   const created = await getRepositories().reminders.create(
     toEntity(parsed, householdId),
   );
@@ -59,10 +60,14 @@ export async function updateReminderAction(
   values: ReminderFormValues,
 ) {
   const parsed = reminderSchema.parse(values);
-  await getRepositories().reminders.update(
+  const { householdId } = await getAppSession();
+  const repos = getRepositories();
+  await assertEntityInHousehold(
+    (entityId) => repos.reminders.getById(entityId),
     id,
-    toEntity(parsed, (await getDemoSession()).householdId),
+    householdId,
   );
+  await repos.reminders.update(id, toEntity(parsed, householdId));
   revalidateLifeAdminCore();
   redirect(`/reminders/${id}`);
 }

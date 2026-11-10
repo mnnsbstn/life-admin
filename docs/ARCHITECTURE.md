@@ -219,8 +219,8 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 
 **Architektur-Nacharbeiten (Backlog):**
 
-- Pure Functions für Vertrags-Kündigungstermine (`lib/domain/contract-meta.ts` erweitern)
-- Einheitlich `getAppSession` in `household-data` (deprecated `getDemoSession`-Alias entfernen)
+- ~~Vertrags-Kündigungstermine~~ → `lib/domain/contract-dates.ts`
+- ~~Einheitlich `getAppSession`~~ (`demo-session.ts` entfernt)
 - Optional: Realtime / React Query für optimistic UI
 - Neue Module: Vehicles, Money, Family — Registry + Repositories + Routes
 
