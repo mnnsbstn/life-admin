@@ -19,7 +19,7 @@ Canonical reference for the Life Admin codebase. Ursprünglich als **Step 1** im
 | **Server-first UI** | App Router, Server Components für Listen/Layouts; Client Islands für Forms, Dialoge, Quick Add. |
 
 **Kernmodule ( aktiv ):** Today, Home, Contracts, Documents, Reminders  
-**Registry ( deaktiviert ):** Vehicles, Money, Family — siehe `src/lib/modules/registry.ts`
+**Registry (V0.3 aktiv):** Vehicles, Money, Family — siehe `src/lib/modules/registry.ts`
 
 ---
 
@@ -222,7 +222,8 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 - ~~Vertrags-Kündigungstermine~~ → `lib/domain/contract-dates.ts`
 - ~~Einheitlich `getAppSession`~~ (`demo-session.ts` entfernt)
 - Optional: Realtime / React Query für optimistic UI
-- Neue Module: Vehicles, Money, Family — Registry + Repositories + Routes
+- ~~Neue Module: Vehicles, Money, Family~~ — V0.3 CRUD + Migration `20261110120000_v03_modules.sql`
+- E2E: `docs/E2E.md` (Playwright mock + optional Supabase)
 
 ---
 
