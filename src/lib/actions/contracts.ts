@@ -9,6 +9,7 @@ import {
   contractSchema,
   type ContractFormValues,
 } from "@/features/contracts/schemas/contract.schema";
+import { resolveNextCancellationDate } from "@/lib/domain/contract-dates";
 import type { PaymentInterval } from "@/lib/domain/types";
 import {
   emptyToUndefined,
@@ -23,6 +24,17 @@ function toEntity(values: ContractFormValues, householdId: string) {
     ? (values.paymentInterval as PaymentInterval)
     : undefined;
 
+  const startDate = emptyToUndefined(values.startDate);
+  const minimumTermMonths = parseOptionalInt(values.minimumTermMonths);
+  const noticePeriodDays = parseOptionalInt(values.noticePeriodDays);
+  const nextCancellationDate =
+    emptyToUndefined(values.nextCancellationDate) ??
+    resolveNextCancellationDate({
+      startDate,
+      minimumTermMonths,
+      noticePeriodDays,
+    });
+
   return {
     householdId,
     name: values.name,
@@ -31,10 +43,10 @@ function toEntity(values: ContractFormValues, householdId: string) {
     costCents,
     currency: costCents ? ("EUR" as const) : undefined,
     paymentInterval,
-    startDate: emptyToUndefined(values.startDate),
-    minimumTermMonths: parseOptionalInt(values.minimumTermMonths),
-    noticePeriodDays: parseOptionalInt(values.noticePeriodDays),
-    nextCancellationDate: emptyToUndefined(values.nextCancellationDate),
+    startDate,
+    minimumTermMonths,
+    noticePeriodDays,
+    nextCancellationDate,
     contractEndDate: emptyToUndefined(values.contractEndDate),
     autoRenewal: values.autoRenewal,
     notes: emptyToUndefined(values.notes),

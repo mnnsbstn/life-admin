@@ -12,6 +12,7 @@ import { LinkedItemsList } from "@/components/domain/linked-items-list";
 import { contractCategoryLabels } from "@/config/categories";
 import { paymentIntervalLabels } from "@/config/payment-intervals";
 import { documentTypeLabels } from "@/config/document-types";
+import { resolveNextCancellationDate } from "@/lib/domain/contract-dates";
 import {
   getContractCostLabel,
   getContractListMeta,
@@ -97,11 +98,10 @@ export function ContractDetailView({
           />
           <DetailField
             label="Kündigung ab"
-            value={
-              contract.nextCancellationDate
-                ? formatDisplayDate(contract.nextCancellationDate)
-                : undefined
-            }
+            value={(() => {
+              const date = resolveNextCancellationDate(contract);
+              return date ? formatDisplayDate(date) : undefined;
+            })()}
           />
           <DetailField
             label="Vertragsende"

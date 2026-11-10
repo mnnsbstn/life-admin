@@ -1,3 +1,4 @@
+import { resolveNextCancellationDate } from "@/lib/domain/contract-dates";
 import type { Contract } from "@/lib/domain/types";
 import { formatEuroFromCents } from "@/lib/format/currency";
 import { formatDisplayDate } from "@/lib/format/date";
@@ -13,8 +14,9 @@ export function getContractCostLabel(contract: Contract): string | undefined {
 }
 
 export function getContractListMeta(contract: Contract): string | undefined {
-  if (contract.nextCancellationDate) {
-    return `Kündigung möglich ab ${formatDisplayDate(contract.nextCancellationDate)}`;
+  const cancellationDate = resolveNextCancellationDate(contract);
+  if (cancellationDate) {
+    return `Kündigung möglich ab ${formatDisplayDate(cancellationDate)}`;
   }
   if (contract.contractEndDate) {
     return `Vertragsende: ${formatDisplayDate(contract.contractEndDate)}`;
