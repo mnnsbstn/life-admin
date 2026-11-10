@@ -73,6 +73,7 @@ Full reference: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (domain-first, 
 
 - Unit tests: `npm test`
 - E2E (Playwright, mock backend): `npm run e2e` — see [docs/E2E.md](docs/E2E.md)
+- GitHub Pages CI/stubs: [docs/GITHUB_PAGES_CI.md](docs/GITHUB_PAGES_CI.md) · `npm run check:gh-pages-stubs`
 
 ## Deliberately not in V1
 

@@ -1,7 +1,10 @@
 name: Deploy GitHub Pages
 
+# Run only after CI on main succeeds (avoids duplicate failure emails when export breaks).
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -16,9 +19,14 @@ concurrency:
 
 jobs:
   build:
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - uses: actions/setup-node@v4
         with:
@@ -36,6 +44,9 @@ jobs:
         env:
           NEXT_PUBLIC_GITHUB_PAGES_ORIGIN: https://${{ github.repository_owner }}.github.io/life-admin
 
+      - name: Restore sources after export prep
+        run: bash scripts/restore-gh-pages-export.sh
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -43,6 +54,9 @@ jobs:
 
   deploy:
     needs: build
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
