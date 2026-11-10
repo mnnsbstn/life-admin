@@ -24,4 +24,13 @@ export const SEED_IDS = {
     electricityCheck: "77777777-7777-7777-7777-777777777702",
     warrantyExpiry: "77777777-7777-7777-7777-777777777703",
   },
+  vehicles: {
+    familyCar: "88888888-8888-8888-8888-888888888401",
+  },
+  financialAccounts: {
+    checking: "99999999-9999-9999-9999-999999999901",
+  },
+  familyMembers: {
+    partner: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaa01",
+  },
 } as const;

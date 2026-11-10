@@ -2,12 +2,15 @@ import { DEMO_HOUSEHOLD_ID, DEMO_USER_ID } from "@/lib/constants";
 import type {
   Contract,
   Document,
+  FamilyMember,
+  FinancialAccount,
   HomeItem,
   Household,
   HouseholdInvitation,
   HouseholdMember,
   Reminder,
   User,
+  Vehicle,
 } from "@/lib/domain/types";
 import { SEED_IDS } from "@/lib/repositories/mock/ids";
 import { STATIC_INVITE_DEMO_TOKEN } from "@/lib/static-export-params";
@@ -252,6 +255,53 @@ export const seedReminders: Reminder[] = [
   },
 ];
 
+export const seedVehicles: Vehicle[] = [
+  {
+    id: SEED_IDS.vehicles.familyCar,
+    householdId: DEMO_HOUSEHOLD_ID,
+    name: "Familienauto",
+    kind: "car",
+    make: "VW",
+    model: "Golf 8",
+    licensePlate: "M-LA 1234",
+    year: 2022,
+    nextInspectionAt: "2027-03-15",
+    insuranceEndsAt: "2026-12-01",
+    notes: "Allwetterreifen im Keller.",
+    createdAt: now,
+    updatedAt: now,
+  },
+];
+
+export const seedFinancialAccounts: FinancialAccount[] = [
+  {
+    id: SEED_IDS.financialAccounts.checking,
+    householdId: DEMO_HOUSEHOLD_ID,
+    name: "Haushaltskonto",
+    accountType: "checking",
+    institution: "Sparkasse München",
+    ibanLast4: "4821",
+    notes: "Gemeinsames Girokonto.",
+    createdAt: now,
+    updatedAt: now,
+  },
+];
+
+export const seedFamilyMembers: FamilyMember[] = [
+  {
+    id: SEED_IDS.familyMembers.partner,
+    householdId: DEMO_HOUSEHOLD_ID,
+    name: "Jamie Muster",
+    relationship: "partner",
+    email: "jamie@example.com",
+    phone: "+49 170 1234567",
+    birthday: "1990-04-12",
+    notes: "Notfallkontakt.",
+    createdAt: now,
+    updatedAt: now,
+  },
+];
+
 export interface MockSeedData {
   user: User;
   household: Household;
@@ -261,6 +311,9 @@ export interface MockSeedData {
   contracts: Contract[];
   documents: Document[];
   reminders: Reminder[];
+  vehicles: Vehicle[];
+  financialAccounts: FinancialAccount[];
+  familyMembers: FamilyMember[];
 }
 
 export function createSeedData(): MockSeedData {
@@ -283,5 +336,8 @@ export function createSeedData(): MockSeedData {
     contracts: structuredClone(seedContracts),
     documents: structuredClone(seedDocuments),
     reminders: structuredClone(seedReminders),
+    vehicles: structuredClone(seedVehicles),
+    financialAccounts: structuredClone(seedFinancialAccounts),
+    familyMembers: structuredClone(seedFamilyMembers),
   };
 }

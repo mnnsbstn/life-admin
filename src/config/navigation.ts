@@ -1,12 +1,15 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  Bell,
   CalendarDays,
+  Car,
+  FileSignature,
   FileText,
   Home,
-  Bell,
-  FileSignature,
   Settings,
   User,
+  Users,
+  Wallet,
 } from "lucide-react";
 
 export interface NavItem {
@@ -52,6 +55,24 @@ export const primaryNavItems: NavItem[] = [
     href: "/reminders",
     icon: Bell,
     mobilePrimary: true,
+  },
+  {
+    id: "vehicles",
+    label: "Fahrzeuge",
+    href: "/vehicles",
+    icon: Car,
+  },
+  {
+    id: "money",
+    label: "Finanzen",
+    href: "/money",
+    icon: Wallet,
+  },
+  {
+    id: "family",
+    label: "Familie",
+    href: "/family",
+    icon: Users,
   },
 ];
 

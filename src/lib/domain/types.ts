@@ -191,3 +191,69 @@ export interface UpcomingItem {
   subtitle?: string;
   href: string;
 }
+
+export type VehicleKind =
+  | "car"
+  | "motorcycle"
+  | "bicycle"
+  | "camper"
+  | "other";
+
+export interface Vehicle {
+  id: UUID;
+  householdId: UUID;
+  name: string;
+  kind: VehicleKind;
+  make?: string;
+  model?: string;
+  licensePlate?: string;
+  year?: number;
+  nextInspectionAt?: string;
+  insuranceEndsAt?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type FinancialAccountType =
+  | "checking"
+  | "savings"
+  | "investment"
+  | "credit"
+  | "cash"
+  | "other";
+
+export interface FinancialAccount {
+  id: UUID;
+  householdId: UUID;
+  name: string;
+  accountType: FinancialAccountType;
+  institution?: string;
+  ibanLast4?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type FamilyRelationship =
+  | "partner"
+  | "child"
+  | "parent"
+  | "sibling"
+  | "relative"
+  | "friend"
+  | "other";
+
+/** Household contact (not an auth user). */
+export interface FamilyMember {
+  id: UUID;
+  householdId: UUID;
+  name: string;
+  relationship: FamilyRelationship;
+  email?: string;
+  phone?: string;
+  birthday?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}

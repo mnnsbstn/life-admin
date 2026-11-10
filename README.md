@@ -69,6 +69,11 @@ Full reference: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (domain-first, 
 - Live URL cheat sheet: [docs/DEINE-LIVE-URL.md](docs/DEINE-LIVE-URL.md)
 - Runtime status in the app under **Settings**
 
+## Quality
+
+- Unit tests: `npm test`
+- E2E (Playwright, mock backend): `npm run e2e` — see [docs/E2E.md](docs/E2E.md)
+
 ## Deliberately not in V1
 
-AI input, banking/calendar/email integrations, Vehicles/Money/Family modules, sending invitation emails (copy link only).
+AI input, banking/calendar/email integrations, real banking hooks, sending invitation emails (copy link only). **V0.3** adds Vehicles, Money, and Family modules (manual data only).
