@@ -27,6 +27,9 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: Check GitHub Pages action stubs
+        run: bash scripts/check-gh-pages-stubs.sh
+
       - name: Lint
         run: npm run lint
 

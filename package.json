@@ -11,6 +11,7 @@
     "e2e": "playwright test --project=mock",
     "e2e:supabase": "playwright test --project=supabase",
     "e2e:ui": "playwright test --ui",
+    "check:gh-pages-stubs": "bash scripts/check-gh-pages-stubs.sh",
     "release:smoke": "bash scripts/release-smoke.sh",
     "build:gh-pages": "GITHUB_PAGES=1 NEXT_PUBLIC_GITHUB_PAGES=true NEXT_PUBLIC_DATA_SOURCE=mock NEXT_PUBLIC_GITHUB_PAGES_ORIGIN=https://mnnsbstn.github.io/life-admin next build"
   },
