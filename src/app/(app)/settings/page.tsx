@@ -11,6 +11,7 @@ import {
 } from "@/lib/deployment-mode";
 import { isInvitationEmailConfigured } from "@/lib/email/invitation-mailer";
 import { isSmartCaptureLlmConfigured } from "@/lib/smart-capture/llm";
+import { buildHouseholdCalendarEvents } from "@/lib/calendar/household-feed";
 
 export const metadata: Metadata = {
   title: "Einstellungen",
@@ -19,12 +20,16 @@ export const metadata: Metadata = {
 export default async function SettingsPage() {
   const session = await getAppSession();
   const repos = getRepositories();
-  const [members, invitations] = await Promise.all([
+  const [members, invitations, reminders, contracts] = await Promise.all([
     repos.households.listMembers(session.householdId),
     session.role === "owner"
       ? repos.households.listInvitations(session.householdId)
       : Promise.resolve([]),
+    repos.reminders.list({ householdId: session.householdId }),
+    repos.contracts.list({ householdId: session.householdId }),
   ]);
+
+  const calendarEvents = buildHouseholdCalendarEvents(reminders, contracts);
 
   const appOrigin = isStaticExportBuild()
     ? githubPagesAppOrigin()
@@ -41,6 +46,7 @@ export default async function SettingsPage() {
       appOrigin={appOrigin}
       invitationEmailEnabled={isInvitationEmailConfigured()}
       smartCaptureLlmEnabled={isSmartCaptureLlmConfigured()}
+      calendarEvents={calendarEvents}
     />
   );
 }

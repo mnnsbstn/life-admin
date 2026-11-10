@@ -57,6 +57,16 @@ test.describe("Mock backend smoke", () => {
     await expect(page).toHaveURL(/\/family$/);
   });
 
+  test("settings household calendar export", async ({ page }) => {
+    await page.goto("/settings");
+    await expect(
+      page.getByRole("heading", { name: "Kalender & Integrationen", level: 2 }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Kalenderdatei (.ics)" }),
+    ).toBeEnabled();
+  });
+
   test("switches active household", async ({ page }) => {
     await page.goto("/settings");
     await expect(page.getByText("Aktiver Haushalt")).toBeVisible();

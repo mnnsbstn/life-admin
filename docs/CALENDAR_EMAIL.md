@@ -15,6 +15,8 @@ Contract exports use **Kündigung ab** (`resolveNextCancellationDate`) and **Ver
 
 Implementation: `src/lib/calendar/` (`google-calendar-url.ts`, `ics.ts`, `event-builders.ts`).
 
+**Haushalts-Export:** Einstellungen → **Kalender & Integrationen** → `Kalenderdatei (.ics)` — alle offenen Erinnerungen plus Vertrags-Kündigung/Ende (`household-feed.ts`).
+
 ## E-Mail
 
 | Flow | Behavior |
