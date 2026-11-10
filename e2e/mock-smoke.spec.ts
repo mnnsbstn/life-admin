@@ -65,6 +65,9 @@ test.describe("Mock backend smoke", () => {
     await expect(
       page.getByRole("button", { name: "Kalenderdatei (.ics)" }),
     ).toBeEnabled();
+    await expect(
+      page.getByRole("button", { name: "webcal kopieren" }),
+    ).toBeVisible();
   });
 
   test("switches active household", async ({ page }) => {

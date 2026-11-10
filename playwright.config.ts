@@ -41,6 +41,7 @@ export default defineConfig({
         }
       : {
           NEXT_PUBLIC_DATA_SOURCE: "mock",
+          CALENDAR_FEED_SIGNING_SECRET: "playwright-feed-secret",
         },
   },
 });

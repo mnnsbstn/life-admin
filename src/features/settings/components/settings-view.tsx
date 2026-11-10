@@ -31,6 +31,9 @@ interface SettingsViewProps {
   invitationEmailEnabled: boolean;
   smartCaptureLlmEnabled: boolean;
   calendarEvents: CalendarEventInput[];
+  feedHttpsUrl: string | null;
+  feedWebcalUrl: string | null;
+  calendarFeedSubscribeConfigured: boolean;
 }
 
 const roleLabels: Record<HouseholdMemberRole, string> = {
@@ -50,6 +53,9 @@ export function SettingsView({
   invitationEmailEnabled,
   smartCaptureLlmEnabled,
   calendarEvents,
+  feedHttpsUrl,
+  feedWebcalUrl,
+  calendarFeedSubscribeConfigured,
 }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
   const isOwner = memberRole === "owner";
@@ -121,12 +127,14 @@ export function SettingsView({
               <HouseholdCalendarExport
                 householdName={householdName}
                 events={calendarEvents}
+                feedHttpsUrl={feedHttpsUrl}
+                feedWebcalUrl={feedWebcalUrl}
               />
             }
           />
           <DetailField
             label="Google / Microsoft Sync"
-            value="OAuth — geplant (SBSTN-111)"
+            value="OAuth — Backlog"
           />
           <DetailField
             label="E-Mail-Inbox"
@@ -140,6 +148,17 @@ export function SettingsView({
             }
           />
         </DetailFieldList>
+        {!readOnlyDemo && !calendarFeedSubscribeConfigured ? (
+          <p className="mt-4 text-xs text-muted-foreground">
+            Abo-Link: setze{" "}
+            <code className="rounded bg-muted px-1">
+              CALENDAR_FEED_SIGNING_SECRET
+            </code>
+            {` (und bei Supabase zusätzlich `}
+            <code className="rounded bg-muted px-1">SUPABASE_SERVICE_ROLE_KEY</code>
+            {` nur serverseitig).`}
+          </p>
+        ) : null}
       </DetailSection>
 
       <DetailSection title="Daten & Backend">
