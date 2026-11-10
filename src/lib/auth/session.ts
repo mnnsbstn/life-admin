@@ -96,6 +96,7 @@ export async function getAppSession() {
     loginRedirect(
       "Kein Haushalt gefunden. Bitte erneut anmelden oder Support kontaktieren.",
     );
+    throw new Error("unreachable");
   }
 
   const role =
