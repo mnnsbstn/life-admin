@@ -44,6 +44,8 @@ Voraussetzung Auth: [SBSTN-101](https://linear.app/mnnsbstn/issue/SBSTN-101/rele
 
 **Blocker für vollständigen Smoke-Test:** In Supabase **Authentication → Providers → Email** für V1 entweder **Confirm email deaktivieren** (empfohlen für schnellen Go-live) **oder** SMTP/Custom SMTP konfigurieren. Danach Registrierung erneut testen.
 
+**Rate limits (Nov. 2026):** Mehrere Registrierungen in kurzer Zeit liefern `email rate limit exceeded` — **15 Min. pausieren** oder Testuser im [Supabase Auth Users](https://supabase.com/dashboard/project/oxnyvzsvrvnncorsgyjo/auth/users)-Panel manuell anlegen/bestätigen.
+
 Screenshot: siehe Agent-Artefakt `release-smoke-login.png` (Cloud Run Nov. 2026).
 
 ---

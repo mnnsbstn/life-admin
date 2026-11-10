@@ -2,9 +2,9 @@
 
 Life Admin ist das zentrale Dashboard für die Organisation des privaten Lebens — Haushalt, Verträge, Dokumente, Erinnerungen und mehr.
 
-**Roadmap & Status:** [Linear — Life Admin](https://linear.app/mnnsbstn/project/life-admin-f1ba6d229b25) · [Sync-Regel](docs/LINEAR.md)
+**Roadmap & Status:** [Linear — Life Admin](https://linear.app/mnnsbstn/project/life-admin-f1ba6d229b25) · [Sync-Regel](docs/LINEAR.md) · [V1 Release](docs/RELEASE_V1.md)
 
-## V0.2 — Was funktioniert
+## V1.0 — Was funktioniert
 
 - **Heute:** Begrüßung, Attention Cards, Demnächst-Timeline (aus Mock-Daten generiert)
 - **Home / Verträge / Dokumente / Erinnerungen:** Listen, Detailansichten, Anlegen & Bearbeiten
