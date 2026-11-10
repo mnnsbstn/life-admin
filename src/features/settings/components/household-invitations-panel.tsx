@@ -19,17 +19,20 @@ import type { HouseholdInvitation } from "@/lib/domain/types";
 import {
   createHouseholdInvitationAction,
   revokeHouseholdInvitationAction,
+  sendHouseholdInvitationEmailAction,
 } from "@/lib/actions/household";
 import { formatDisplayDate } from "@/lib/format/date";
 
 interface HouseholdInvitationsPanelProps {
   appOrigin: string;
   invitations: HouseholdInvitation[];
+  invitationEmailEnabled: boolean;
 }
 
 export function HouseholdInvitationsPanel({
   appOrigin,
   invitations,
+  invitationEmailEnabled,
 }: HouseholdInvitationsPanelProps) {
   const [pending, startTransition] = useTransition();
   const [inviteRole, setInviteRole] = useState<"member" | "viewer">("member");
@@ -48,8 +51,18 @@ export function HouseholdInvitationsPanel({
         action={(formData) => {
           startTransition(async () => {
             try {
-              await createHouseholdInvitationAction(formData);
-              toast.success("Einladung erstellt.");
+              const result = await createHouseholdInvitationAction(formData);
+              if (result.emailSent) {
+                toast.success("Einladung erstellt und E-Mail versendet.");
+              } else if (invitationEmailEnabled) {
+                toast.success(
+                  "Einladung erstellt. E-Mail-Versand fehlgeschlagen — Link kopieren.",
+                );
+              } else {
+                toast.success(
+                  "Einladung erstellt. E-Mail nicht konfiguriert — Link kopieren.",
+                );
+              }
             } catch {
               toast.error("Einladung fehlgeschlagen.");
             }
@@ -117,6 +130,26 @@ export function HouseholdInvitationsPanel({
                   <Copy className="size-4" />
                   Link kopieren
                 </Button>
+                {invitationEmailEnabled ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    disabled={pending}
+                    onClick={() => {
+                      startTransition(async () => {
+                        try {
+                          await sendHouseholdInvitationEmailAction(inv.id);
+                          toast.success("E-Mail versendet.");
+                        } catch {
+                          toast.error("E-Mail konnte nicht gesendet werden.");
+                        }
+                      });
+                    }}
+                  >
+                    E-Mail senden
+                  </Button>
+                ) : null}
                 <Button
                   type="button"
                   variant="ghost"
@@ -141,8 +174,8 @@ export function HouseholdInvitationsPanel({
         </ul>
       ) : (
         <p className="text-sm text-muted-foreground">
-          Keine offenen Einladungen. Erstelle einen Link für weitere Personen im
-          Haushalt.
+          Keine offenen Einladungen. Neue Einladungen werden per E-Mail versendet,
+          wenn Resend in Vercel konfiguriert ist — sonst Link kopieren.
         </p>
       )}
     </div>

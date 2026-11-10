@@ -25,6 +25,7 @@ interface SettingsViewProps {
   invitations: HouseholdInvitation[];
   memberRole: HouseholdMemberRole;
   appOrigin: string;
+  invitationEmailEnabled: boolean;
 }
 
 const roleLabels: Record<HouseholdMemberRole, string> = {
@@ -41,6 +42,7 @@ export function SettingsView({
   invitations,
   memberRole,
   appOrigin,
+  invitationEmailEnabled,
 }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
   const isOwner = memberRole === "owner";
@@ -99,6 +101,7 @@ export function SettingsView({
           <HouseholdInvitationsPanel
             appOrigin={appOrigin}
             invitations={invitations}
+            invitationEmailEnabled={invitationEmailEnabled}
           />
         </DetailSection>
       ) : null}
@@ -124,6 +127,10 @@ export function SettingsView({
           <DetailField
             label="Erinnerungen"
             value={diagnostics.remindersBackend}
+          />
+          <DetailField
+            label="Einladungs-E-Mail"
+            value={invitationEmailEnabled ? "Resend aktiv" : "Nicht konfiguriert"}
           />
         </DetailFieldList>
         <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
