@@ -225,6 +225,7 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 - ~~Neue Module: Vehicles, Money, Family~~ — V0.3 CRUD + Migration `20261110120000_v03_modules.sql`
 - E2E: `docs/E2E.md` (Playwright mock + optional Supabase)
 - ~~Multi-Haushalt~~ — Cookie `la_active_household`, Switcher in Einstellungen (SBSTN-60)
+- ~~Einladungs-E-Mails~~ — Resend (`docs/INVITATION_EMAIL.md`, SBSTN-59)
 
 ---
 

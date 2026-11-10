@@ -2,14 +2,29 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { z } from "zod";
 
+import { resolveAppOrigin } from "@/lib/app-origin";
 import {
   writeActiveHouseholdId,
 } from "@/lib/auth/active-household";
 import { getAppSession } from "@/lib/auth/session";
 import { revalidateLifeAdminCore } from "@/lib/actions/revalidate";
+import {
+  githubPagesAppOrigin,
+  isStaticExportBuild,
+} from "@/lib/deployment-mode";
+import {
+  invitationEmailPayload,
+  isInvitationEmailConfigured,
+  sendHouseholdInvitationEmail,
+} from "@/lib/email/invitation-mailer";
 import { getRepositories } from "@/lib/repositories";
+
+export type CreateInvitationResult = {
+  emailSent: boolean;
+};
 
 const householdNameSchema = z.object({
   name: z.string().trim().min(1, "Name erforderlich").max(120),
@@ -45,22 +60,93 @@ export async function updateHouseholdNameAction(formData: FormData) {
   revalidatePath("/settings");
 }
 
-export async function createHouseholdInvitationAction(formData: FormData) {
+async function deliverInvitationEmail(
+  invitation: { email: string; token: string; role: "member" | "viewer"; expiresAt: string },
+  householdName: string,
+  inviterDisplayName: string,
+) {
+  if (!isInvitationEmailConfigured()) {
+    return false;
+  }
+
+  const appOrigin = isStaticExportBuild()
+    ? githubPagesAppOrigin()
+    : resolveAppOrigin(await headers());
+
+  await sendHouseholdInvitationEmail(
+    invitationEmailPayload({
+      to: invitation.email,
+      appOrigin,
+      token: invitation.token,
+      householdName,
+      inviterDisplayName,
+      role: invitation.role,
+      expiresAt: invitation.expiresAt,
+    }),
+  );
+  return true;
+}
+
+export async function createHouseholdInvitationAction(
+  formData: FormData,
+): Promise<CreateInvitationResult> {
   const parsed = invitationSchema.parse({
     email: formData.get("email"),
     role: formData.get("role"),
   });
-  const { householdId, userId } = await getAppSession();
+  const session = await getAppSession();
+  const { householdId, userId } = session;
   await requireOwner(householdId, userId);
 
-  await getRepositories().households.createInvitation({
+  const invitation = await getRepositories().households.createInvitation({
     householdId,
     email: parsed.email,
     role: parsed.role,
     createdByUserId: userId,
   });
 
+  let emailSent = false;
+  try {
+    emailSent = await deliverInvitationEmail(
+      invitation,
+      session.household.name,
+      session.user.displayName,
+    );
+  } catch (error) {
+    console.error("[life-admin] invitation email failed:", error);
+  }
+
   revalidatePath("/settings");
+  return { emailSent };
+}
+
+export async function sendHouseholdInvitationEmailAction(
+  invitationId: string,
+): Promise<{ emailSent: boolean }> {
+  const session = await getAppSession();
+  await requireOwner(session.householdId, session.userId);
+
+  const invitations = await getRepositories().households.listInvitations(
+    session.householdId,
+  );
+  const invitation = invitations.find((inv) => inv.id === invitationId);
+  if (!invitation) {
+    throw new Error("Einladung nicht gefunden.");
+  }
+
+  let emailSent = false;
+  try {
+    emailSent = await deliverInvitationEmail(
+      invitation,
+      session.household.name,
+      session.user.displayName,
+    );
+  } catch (error) {
+    console.error("[life-admin] invitation email resend failed:", error);
+    throw error;
+  }
+
+  return { emailSent };
 }
 
 export async function revokeHouseholdInvitationAction(invitationId: string) {

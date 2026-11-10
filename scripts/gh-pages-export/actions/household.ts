@@ -7,6 +7,10 @@ export async function updateHouseholdNameAction(_formData: FormData) {
 }
 
 export async function createHouseholdInvitationAction(_formData: FormData) {
+  await blocked();
+}
+
+export async function sendHouseholdInvitationEmailAction(_invitationId: string) {
   return blocked();
 }
 

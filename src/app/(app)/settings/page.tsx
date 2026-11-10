@@ -2,23 +2,18 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 
 import { SettingsView } from "@/features/settings/components/settings-view";
+import { resolveAppOrigin } from "@/lib/app-origin";
 import { getAppSession } from "@/lib/auth/session";
 import { getRepositories } from "@/lib/repositories";
 import {
   githubPagesAppOrigin,
   isStaticExportBuild,
 } from "@/lib/deployment-mode";
+import { isInvitationEmailConfigured } from "@/lib/email/invitation-mailer";
 
 export const metadata: Metadata = {
   title: "Einstellungen",
 };
-
-function resolveAppOrigin(headerStore: Headers): string {
-  const host =
-    headerStore.get("x-forwarded-host") ?? headerStore.get("host") ?? "localhost:3000";
-  const proto = headerStore.get("x-forwarded-proto") ?? "http";
-  return `${proto}://${host}`;
-}
 
 export default async function SettingsPage() {
   const session = await getAppSession();
@@ -43,6 +38,7 @@ export default async function SettingsPage() {
       invitations={invitations}
       memberRole={session.role}
       appOrigin={appOrigin}
+      invitationEmailEnabled={isInvitationEmailConfigured()}
     />
   );
 }

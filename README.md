@@ -76,4 +76,4 @@ Full reference: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (domain-first, 
 
 ## Deliberately not in V1
 
-AI input, banking/calendar/email integrations, real banking hooks, sending invitation emails (copy link only). **V0.3** adds Vehicles, Money, and Family modules (manual data only).
+AI input, banking/calendar/email integrations, real banking hooks. **V0.3** adds Vehicles, Money, and Family modules. Household invite **emails** via Resend: [docs/INVITATION_EMAIL.md](docs/INVITATION_EMAIL.md).
