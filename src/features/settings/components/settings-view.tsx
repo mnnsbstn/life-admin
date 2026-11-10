@@ -151,7 +151,7 @@ export function SettingsView({
           <DetailField label="Version" value="V0.3" />
           <DetailField
             label="Als Nächstes"
-            value="Einladungs-E-Mails, Smart Capture, Kalender"
+            value="OAuth-Kalender, echte Inbox-Anbindung"
           />
         </DetailFieldList>
       </DetailSection>

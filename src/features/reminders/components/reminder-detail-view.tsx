@@ -15,6 +15,11 @@ import { ReminderStatusActions } from "@/features/reminders/components/reminder-
 import type { Reminder } from "@/lib/domain/types";
 import type { ResolvedLink } from "@/lib/data/resolve-links";
 import { withDerivedReminderStatus } from "@/lib/domain/reminder-status";
+import { CalendarExportActions } from "@/components/domain/calendar-export-actions";
+import {
+  reminderCalendarEvent,
+  reminderShareEmail,
+} from "@/lib/calendar/event-builders";
 import { formatDisplayDate } from "@/lib/format/date";
 
 interface ReminderDetailViewProps {
@@ -56,7 +61,24 @@ export function ReminderDetailView({ reminder, link }: ReminderDetailViewProps) 
         <DetailFieldList>
           <DetailField
             label="Fällig am"
-            value={formatDisplayDate(reminder.dueDate)}
+            value={
+              <div className="space-y-3">
+                <span>{formatDisplayDate(reminder.dueDate)}</span>
+                <CalendarExportActions
+                  compact
+                  event={reminderCalendarEvent(reminder)}
+                  icsFileName={`erinnerung-${reminder.id}`}
+                  email={reminderShareEmail(reminder)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  E-Mail-Text kannst du unter{" "}
+                  <Link href="/capture" className="underline underline-offset-2">
+                    Smart Capture
+                  </Link>{" "}
+                  erfassen.
+                </p>
+              </div>
+            }
           />
           <DetailField
             label="Bezug"

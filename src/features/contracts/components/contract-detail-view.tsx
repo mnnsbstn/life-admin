@@ -19,6 +19,11 @@ import {
 } from "@/lib/domain/contract-meta";
 import type { Contract, Document, Reminder } from "@/lib/domain/types";
 import { withDerivedReminderStatus } from "@/lib/domain/reminder-status";
+import { CalendarExportActions } from "@/components/domain/calendar-export-actions";
+import {
+  contractCalendarExports,
+  contractShareEmail,
+} from "@/lib/calendar/event-builders";
 import { formatDisplayDate } from "@/lib/format/date";
 
 interface ContractDetailViewProps {
@@ -116,6 +121,44 @@ export function ContractDetailView({
             value={contract.autoRenewal ? "Ja" : "Nein"}
           />
         </DetailFieldList>
+      </DetailSection>
+
+      <DetailSection title="Kalender & E-Mail">
+        {(() => {
+          const exports = contractCalendarExports(contract);
+          return exports.length > 0 ? (
+            <ul className="space-y-4">
+              {exports.map((item) => (
+                <li key={item.id} className="space-y-2">
+                  <p className="text-sm font-medium">{item.label}</p>
+                  <CalendarExportActions
+                    compact
+                    event={item.event}
+                    icsFileName={`vertrag-${contract.id}-${item.id}`}
+                  />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-sm text-muted-foreground">
+              Keine Kündigungs- oder Enddaten für Kalenderexport hinterlegt.
+            </p>
+          );
+        })()}
+        <div className="mt-4">
+          <p className="mb-2 text-sm text-muted-foreground">
+            Inhalt per E-Mail teilen oder in der Inbox-App kopieren — zum Erfassen
+            auch{" "}
+            <a href="/capture" className="underline underline-offset-2">
+              Smart Capture
+            </a>
+            .
+          </p>
+          <CalendarExportActions
+            compact
+            email={contractShareEmail(contract)}
+          />
+        </div>
       </DetailSection>
 
       {contract.notes ? (
