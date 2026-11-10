@@ -75,6 +75,27 @@ test.describe("Mock backend smoke", () => {
     await expect(page.getByText("Heizungsanlage")).toBeVisible();
   });
 
+  test("Smart Capture navigates to reminder prefill", async ({ page }) => {
+    await page.goto("/capture");
+    await page
+      .getByRole("textbox")
+      .fill("Zahlung fällig am 15.09.2030\nBetrag 99,00 €");
+    await page.getByRole("button", { name: "Auswerten" }).click();
+    await page.getByRole("button", { name: "Als Erinnerung" }).click();
+    await expect(page).toHaveURL(/\/reminders\/new$/);
+    await expect(page.getByLabel("Fällig am")).toHaveValue("2030-09-15");
+  });
+
+  test("reminder detail shows calendar export actions", async ({ page }) => {
+    await page.goto("/reminders");
+    await page.getByRole("link", { name: "Heizung warten" }).click();
+    await expect(
+      page.getByRole("link", { name: "Google Kalender" }),
+    ).toHaveAttribute("href", /calendar\.google\.com/);
+    await expect(page.getByRole("button", { name: ".ics" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "E-Mail" })).toBeVisible();
+  });
+
   test("creates a vehicle", async ({ page }) => {
     const name = `E2E Auto ${Date.now()}`;
 

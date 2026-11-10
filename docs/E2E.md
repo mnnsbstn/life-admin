@@ -14,7 +14,7 @@ npm run e2e
 
 This is what GitHub Actions runs on every PR (`playwright test --project=mock`).
 
-**Covers:** Today dashboard, reminder CRUD, document metadata, V0.3 module navigation + vehicle create.
+**Covers:** Today dashboard, reminder CRUD, document metadata, V0.3 module navigation + vehicle create, Smart Capture → reminder prefill, calendar export buttons on reminder detail.
 
 ## Supabase (optional, test project)
 
