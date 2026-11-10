@@ -231,9 +231,9 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 
 ---
 
-## 12. Bewusst nicht im Scope (V1)
+## 12. Bewusst nicht im Scope (V1 / light V0.3)
 
-KI-Eingabe, Banking/Kalender/E-Mail, OCR, Push-Notifications, E-Mail-Versand für Einladungen (Link kopieren), vollständiges Finance-Tracking.
+Noch offen oder nur als **light** umgesetzt: OAuth-Kalender/Inbox-Sync, Banking-Anbindung, OCR/PDF-Ingest, Push-Notifications, vollständiges Finance-Tracking. Erledigt als light V0.3: Smart Capture, Resend-Einladungen, Google-/.ics-Export, `mailto`-Share (`docs/SMART_CAPTURE.md`, `docs/INVITATION_EMAIL.md`, `docs/CALENDAR_EMAIL.md`).
 
 ---
 

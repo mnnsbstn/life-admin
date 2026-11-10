@@ -16,6 +16,9 @@ import type {
 import { getRepositoryDiagnostics } from "@/lib/repositories";
 import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { getRuntimeDataBackendLabel } from "@/lib/supabase/env";
+import { HouseholdCalendarExport } from "@/features/settings/components/household-calendar-export";
+import type { CalendarEventInput } from "@/lib/calendar/types";
+import Link from "next/link";
 
 interface SettingsViewProps {
   households: Household[];
@@ -27,6 +30,7 @@ interface SettingsViewProps {
   appOrigin: string;
   invitationEmailEnabled: boolean;
   smartCaptureLlmEnabled: boolean;
+  calendarEvents: CalendarEventInput[];
 }
 
 const roleLabels: Record<HouseholdMemberRole, string> = {
@@ -45,6 +49,7 @@ export function SettingsView({
   appOrigin,
   invitationEmailEnabled,
   smartCaptureLlmEnabled,
+  calendarEvents,
 }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
   const isOwner = memberRole === "owner";
@@ -107,6 +112,35 @@ export function SettingsView({
           />
         </DetailSection>
       ) : null}
+
+      <DetailSection title="Kalender & Integrationen">
+        <DetailFieldList>
+          <DetailField
+            label="Kalender-Export"
+            value={
+              <HouseholdCalendarExport
+                householdName={householdName}
+                events={calendarEvents}
+              />
+            }
+          />
+          <DetailField
+            label="Google / Microsoft Sync"
+            value="OAuth — geplant (SBSTN-111)"
+          />
+          <DetailField
+            label="E-Mail-Inbox"
+            value={
+              <span>
+                Text einfügen in{" "}
+                <Link href="/capture" className="underline underline-offset-2">
+                  Smart Capture
+                </Link>
+              </span>
+            }
+          />
+        </DetailFieldList>
+      </DetailSection>
 
       <DetailSection title="Daten & Backend">
         <DetailFieldList>
