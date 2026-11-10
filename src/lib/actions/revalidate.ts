@@ -6,4 +6,7 @@ export function revalidateLifeAdminCore() {
   revalidatePath("/contracts", "layout");
   revalidatePath("/documents", "layout");
   revalidatePath("/reminders", "layout");
+  revalidatePath("/vehicles", "layout");
+  revalidatePath("/money", "layout");
+  revalidatePath("/family", "layout");
 }

@@ -1,6 +1,8 @@
 import type {
   Contract,
   Document,
+  FamilyMember,
+  FinancialAccount,
   HomeItem,
   Household,
   HouseholdInvitation,
@@ -9,6 +11,7 @@ import type {
   Reminder,
   User,
   UUID,
+  Vehicle,
 } from "@/lib/domain/types";
 
 export interface ListFilters {
@@ -81,6 +84,36 @@ export interface ReminderRepository {
   delete(id: UUID): Promise<void>;
 }
 
+export interface VehicleRepository {
+  list(filters: ListFilters): Promise<Vehicle[]>;
+  getById(id: UUID): Promise<Vehicle | null>;
+  create(
+    item: Omit<Vehicle, "id" | "createdAt" | "updatedAt">,
+  ): Promise<Vehicle>;
+  update(id: UUID, patch: Partial<Vehicle>): Promise<Vehicle>;
+  delete(id: UUID): Promise<void>;
+}
+
+export interface FinancialAccountRepository {
+  list(filters: ListFilters): Promise<FinancialAccount[]>;
+  getById(id: UUID): Promise<FinancialAccount | null>;
+  create(
+    item: Omit<FinancialAccount, "id" | "createdAt" | "updatedAt">,
+  ): Promise<FinancialAccount>;
+  update(id: UUID, patch: Partial<FinancialAccount>): Promise<FinancialAccount>;
+  delete(id: UUID): Promise<void>;
+}
+
+export interface FamilyMemberRepository {
+  list(filters: ListFilters): Promise<FamilyMember[]>;
+  getById(id: UUID): Promise<FamilyMember | null>;
+  create(
+    item: Omit<FamilyMember, "id" | "createdAt" | "updatedAt">,
+  ): Promise<FamilyMember>;
+  update(id: UUID, patch: Partial<FamilyMember>): Promise<FamilyMember>;
+  delete(id: UUID): Promise<void>;
+}
+
 export interface Repositories {
   users: UserRepository;
   households: HouseholdRepository;
@@ -88,4 +121,7 @@ export interface Repositories {
   contracts: ContractRepository;
   documents: DocumentRepository;
   reminders: ReminderRepository;
+  vehicles: VehicleRepository;
+  financialAccounts: FinancialAccountRepository;
+  familyMembers: FamilyMemberRepository;
 }

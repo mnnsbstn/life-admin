@@ -16,6 +16,18 @@ export function staticReminderParams() {
   return Object.values(SEED_IDS.reminders).map((id) => ({ id }));
 }
 
+export function staticVehicleParams() {
+  return Object.values(SEED_IDS.vehicles).map((id) => ({ id }));
+}
+
+export function staticFinancialAccountParams() {
+  return Object.values(SEED_IDS.financialAccounts).map((id) => ({ id }));
+}
+
+export function staticFamilyMemberParams() {
+  return Object.values(SEED_IDS.familyMembers).map((id) => ({ id }));
+}
+
 /** Demo invite token pre-rendered for GitHub Pages static export. */
 export const STATIC_INVITE_DEMO_TOKEN = "github-pages-demo";
 

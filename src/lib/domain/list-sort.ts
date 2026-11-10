@@ -1,6 +1,13 @@
 import { parseISO } from "date-fns";
 
-import type { Contract, HomeItem, Reminder } from "@/lib/domain/types";
+import type {
+  Contract,
+  FamilyMember,
+  FinancialAccount,
+  HomeItem,
+  Reminder,
+  Vehicle,
+} from "@/lib/domain/types";
 import { withDerivedReminderStatus } from "@/lib/domain/reminder-status";
 
 function nextRelevantDate(item: HomeItem): number | null {
@@ -29,6 +36,31 @@ export function sortContracts(items: Contract[]): Contract[] {
     if (bDate) return 1;
     return a.name.localeCompare(b.name, "de");
   });
+}
+
+function nextVehicleRelevantDate(vehicle: Vehicle): number | null {
+  const dates = [vehicle.nextInspectionAt, vehicle.insuranceEndsAt].filter(Boolean);
+  if (dates.length === 0) return null;
+  return Math.min(...dates.map((d) => parseISO(d!).getTime()));
+}
+
+export function sortVehicles(items: Vehicle[]): Vehicle[] {
+  return [...items].sort((a, b) => {
+    const aDate = nextVehicleRelevantDate(a);
+    const bDate = nextVehicleRelevantDate(b);
+    if (aDate != null && bDate != null && aDate !== bDate) return aDate - bDate;
+    if (aDate != null && bDate == null) return -1;
+    if (aDate == null && bDate != null) return 1;
+    return a.name.localeCompare(b.name, "de");
+  });
+}
+
+export function sortFinancialAccounts(items: FinancialAccount[]): FinancialAccount[] {
+  return [...items].sort((a, b) => a.name.localeCompare(b.name, "de"));
+}
+
+export function sortFamilyMembers(items: FamilyMember[]): FamilyMember[] {
+  return [...items].sort((a, b) => a.name.localeCompare(b.name, "de"));
 }
 
 export function sortReminders(items: Reminder[]): Reminder[] {
