@@ -1,19 +1,21 @@
 # Life Admin
 
-Life Admin ist das zentrale Dashboard für die Organisation des privaten Lebens — Haushalt, Verträge, Dokumente, Erinnerungen und mehr.
+Life Admin is a central dashboard for organizing your private life — household, contracts, documents, reminders, and more.
 
-**Roadmap & Status:** [Linear — Life Admin](https://linear.app/mnnsbstn/project/life-admin-f1ba6d229b25) · [Sync-Regel](docs/LINEAR.md) · [V1 Release](docs/RELEASE_V1.md)
+**Roadmap & status:** [Linear — Life Admin](https://linear.app/mnnsbstn/project/life-admin-f1ba6d229b25) · [Linear sync](docs/LINEAR.md) · [V1 release playbook](docs/RELEASE_V1.md)
 
-## V1.0 — Was funktioniert
+**Production:** [life-admin-sand-nu.vercel.app](https://life-admin-sand-nu.vercel.app) · **Read-only demo:** [GitHub Pages](https://mnnsbstn.github.io/life-admin/)
 
-- **Heute:** Begrüßung, Attention Cards, Demnächst-Timeline (aus Mock-Daten generiert)
-- **Home / Verträge / Dokumente / Erinnerungen:** Listen, Detailansichten, Anlegen & Bearbeiten
-- **Quick Add:** ⌘/Ctrl+K oder „Hinzufügen“
-- **Daten:** Standard Mock; optional **Supabase** (Auth, alle Module, Dokument-Storage)
-- **Haushalt:** Name ändern, Mitgliederliste, Einladungslinks (Owner)
-- **Löschen:** Home, Verträge, Dokumente, Erinnerungen (Detailansicht)
+## V1.0 — What works
 
-## Lokal starten
+- **Today:** Greeting, attention cards, upcoming timeline (derived from your data)
+- **Home / Contracts / Documents / Reminders:** Lists, detail views, create & edit
+- **Quick Add:** ⌘/Ctrl+K or **Add**
+- **Data:** Mock by default; optional **Supabase** (auth, all modules, document storage)
+- **Household:** Rename, member list, invite links (owner)
+- **Delete:** Home, contracts, documents, reminders (from detail view)
+
+## Run locally
 
 ```bash
 npm install
@@ -22,47 +24,51 @@ npm run dev
 
 → [http://localhost:3000/today](http://localhost:3000/today)
 
-**Demo ohne Domain:** [GitHub Pages](https://mnnsbstn.github.io/life-admin/) (read-only Mock)
+For Supabase mode, copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_DATA_SOURCE=supabase` plus your project URL and anon key (see [docs/SUPABASE.md](docs/SUPABASE.md)).
 
-> **Pages noch 404?** Einmalig **Settings → Pages → Source: GitHub Actions** — Anleitung: [docs/GITHUB_PAGES_SETUP.md](docs/GITHUB_PAGES_SETUP.md)
+**Demo without a domain:** [GitHub Pages](https://mnnsbstn.github.io/life-admin/) (read-only mock)
 
-## Skripte
+> **Pages still 404?** One-time: **Settings → Pages → Source: GitHub Actions** — see [docs/GITHUB_PAGES_SETUP.md](docs/GITHUB_PAGES_SETUP.md)
 
-| Befehl | Beschreibung |
-|--------|----------------|
-| `npm run dev` | Entwicklungsserver |
-| `npm run build` | Production Build |
-| `npm run start` | Production Server |
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Development server |
+| `npm run build` | Production build |
+| `npm run start` | Production server |
 | `npm run lint` | ESLint |
-| `npm run test` | Unit-Tests (Dashboard, Mapper) |
-| `npm run build:gh-pages` | Statischer Export für GitHub Pages |
+| `npm run test` | Unit tests (dashboard, mappers) |
+| `npm run release:smoke` | HTTP checks for production + GitHub Pages |
+| `npm run build:gh-pages` | Static export for GitHub Pages |
 
-## Konfiguration
+## Configuration
 
 ```env
 NEXT_PUBLIC_DATA_SOURCE=mock
 ```
 
-## Architektur
+## Architecture
 
-Vollständige Referenz: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (Domain-first, Repositories, Dashboard-Engine, Supabase/Mock).
+Full reference: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** (domain-first, repositories, dashboard engine, Supabase/mock).
 
-| Schicht | Pfad |
-|--------|------|
-| UI / Routing | `src/app/(app)/…` |
+| Layer | Path |
+|-------|------|
+| UI / routing | `src/app/(app)/…` |
 | Features | `src/features/*` |
 | Domain | `src/lib/domain` |
 | Services | `src/lib/services` |
 | Server Actions | `src/lib/actions` |
 | Mock / Supabase | `src/lib/repositories/` |
 
-## Supabase & Deployment
+## Supabase & deployment
 
-- Backend: [docs/SUPABASE.md](docs/SUPABASE.md) (Migrationen, Auth, Storage)
-- Go-live: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) (Übersicht)
-- **Vercel + Supabase (volle App):** [docs/VERCEL_SUPABASE.md](docs/VERCEL_SUPABASE.md) · [V1 Setup (SBSTN-55)](docs/V1_PRODUCTION_SETUP.md)
-- Status in der App unter **Einstellungen**
+- Backend: [docs/SUPABASE.md](docs/SUPABASE.md) (migrations, auth, storage)
+- Overview: [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)
+- **Vercel + Supabase (full app):** [docs/VERCEL_SUPABASE.md](docs/VERCEL_SUPABASE.md) · [V1 setup](docs/V1_PRODUCTION_SETUP.md)
+- Live URL cheat sheet: [docs/DEINE-LIVE-URL.md](docs/DEINE-LIVE-URL.md)
+- Runtime status in the app under **Settings**
 
-## Bewusst noch nicht drin
+## Deliberately not in V1
 
-KI-Eingabe, Banking/Kalender/E-Mail, Vehicles/Money/Family, E-Mail-Versand für Einladungen (nur Link kopieren)
+AI input, banking/calendar/email integrations, Vehicles/Money/Family modules, sending invitation emails (copy link only).
