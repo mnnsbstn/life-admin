@@ -7,6 +7,7 @@ export const lifeAdminModules = [
   { id: "vehicles", label: "Vehicles", enabled: true },
   { id: "money", label: "Money", enabled: true },
   { id: "family", label: "Family", enabled: true },
+  { id: "capture", label: "Smart Capture", enabled: true },
 ] as const;
 
 export type LifeAdminModuleId = (typeof lifeAdminModules)[number]["id"];

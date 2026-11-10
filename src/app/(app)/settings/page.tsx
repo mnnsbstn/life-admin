@@ -10,6 +10,7 @@ import {
   isStaticExportBuild,
 } from "@/lib/deployment-mode";
 import { isInvitationEmailConfigured } from "@/lib/email/invitation-mailer";
+import { isSmartCaptureLlmConfigured } from "@/lib/smart-capture/llm";
 
 export const metadata: Metadata = {
   title: "Einstellungen",
@@ -39,6 +40,7 @@ export default async function SettingsPage() {
       memberRole={session.role}
       appOrigin={appOrigin}
       invitationEmailEnabled={isInvitationEmailConfigured()}
+      smartCaptureLlmEnabled={isSmartCaptureLlmConfigured()}
     />
   );
 }

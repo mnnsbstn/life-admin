@@ -226,6 +226,7 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 - E2E: `docs/E2E.md` (Playwright mock + optional Supabase)
 - ~~Multi-Haushalt~~ — Cookie `la_active_household`, Switcher in Einstellungen (SBSTN-60)
 - ~~Einladungs-E-Mails~~ — Resend (`docs/INVITATION_EMAIL.md`, SBSTN-59)
+- ~~Smart Capture~~ — `/capture`, Heuristik + optional LLM (`docs/SMART_CAPTURE.md`, SBSTN-64)
 
 ---
 

@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Plus } from "lucide-react";
+import { Plus, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -86,9 +86,18 @@ export function QuickAdd() {
             ))}
           </CommandGroup>
           <CommandSeparator />
-          <CommandGroup heading="Hinweis">
-            <CommandItem disabled value="ai-später">
-              KI-Eingabe — geplant für eine spätere Version
+          <CommandGroup heading="Smart Capture">
+            <CommandItem
+              value="Smart Capture KI Text Rechnung"
+              onSelect={() => runAction("/capture")}
+            >
+              <Sparkles className="size-4" />
+              <span className="flex flex-col gap-0.5">
+                <span>Smart Capture</span>
+                <span className="text-xs text-muted-foreground">
+                  Text oder Rechnung — Vorschläge für Dokument &amp; mehr
+                </span>
+              </span>
             </CommandItem>
           </CommandGroup>
         </CommandList>
