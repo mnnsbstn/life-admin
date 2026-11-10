@@ -1,23 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useSyncExternalStore } from "react";
 
 import { readSmartCapturePrefill } from "@/lib/smart-capture/prefill-session";
+
+function emptySubscribe() {
+  return () => {};
+}
 
 export function useSmartCapturePrefill<T extends Record<string, unknown>>(
   sessionKey: string,
   defaultValues: T,
 ): { values: T; ready: boolean } {
-  const [values, setValues] = useState(defaultValues);
-  const [ready, setReady] = useState(false);
+  const ready = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
-  useEffect(() => {
+  const values = useMemo(() => {
+    if (!ready) return defaultValues;
     const prefill = readSmartCapturePrefill<T>(sessionKey);
-    if (prefill) {
-      setValues((current) => ({ ...current, ...prefill }));
-    }
-    setReady(true);
-  }, [sessionKey]);
+    return prefill ? { ...defaultValues, ...prefill } : defaultValues;
+  }, [ready, sessionKey, defaultValues]);
 
   return { values, ready };
 }

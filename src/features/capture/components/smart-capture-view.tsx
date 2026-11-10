@@ -8,10 +8,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { parseSmartCaptureAction } from "@/lib/actions/smart-capture";
-import {
-  readSmartCapturePrefill,
-  writeSmartCapturePrefill,
-} from "@/lib/smart-capture/prefill-session";
+import { writeSmartCapturePrefill } from "@/lib/smart-capture/prefill-session";
 import {
   SMART_CAPTURE_SESSION_KEYS,
   type SmartCaptureResult,
@@ -70,7 +67,8 @@ export function SmartCaptureView({ mode }: SmartCaptureViewProps) {
         <p className="text-sm text-muted-foreground">
           {mode === "llm"
             ? "KI extrahiert Vorschläge für Dokument, Vertrag oder Erinnerung."
-            : "Regelbasierte Erkennung (ohne API-Key) — für KI optional SMART_CAPTURE_API_KEY setzen."}
+            : "Regelbasierte Erkennung (ohne API-Key) — für KI optional SMART_CAPTURE_API_KEY setzen."}{" "}
+          E-Mail- und Rechnungstext aus der Inbox einfach hier einfügen.
         </p>
       </header>
 
