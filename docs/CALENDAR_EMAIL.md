@@ -17,6 +17,8 @@ Implementation: `src/lib/calendar/` (`google-calendar-url.ts`, `ics.ts`, `event-
 
 **Haushalts-Export:** Einstellungen → **Kalender & Integrationen** → `Kalenderdatei (.ics)` — alle offenen Erinnerungen plus Vertrags-Kündigung/Ende (`household-feed.ts`).
 
+**Abo-Feed (webcal/HTTPS):** Mit `CALENDAR_FEED_SIGNING_SECRET` erzeugt die App einen persönlichen Link `GET /api/calendar/{householdId}/{token}` (ICS, 5 min Cache). Bei **Supabase** zusätzlich `SUPABASE_SERVICE_ROLE_KEY` nur auf dem Server (RLS-Bypass für token-geschützte Route). Nicht auf GitHub Pages (kein API-Export).
+
 ## E-Mail
 
 | Flow | Behavior |

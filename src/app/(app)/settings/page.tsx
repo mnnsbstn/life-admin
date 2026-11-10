@@ -12,6 +12,12 @@ import {
 import { isInvitationEmailConfigured } from "@/lib/email/invitation-mailer";
 import { isSmartCaptureLlmConfigured } from "@/lib/smart-capture/llm";
 import { buildHouseholdCalendarEvents } from "@/lib/calendar/household-feed";
+import {
+  buildCalendarFeedHttpsUrl,
+  buildCalendarWebcalUrl,
+  createCalendarFeedToken,
+  isCalendarFeedSubscribeAvailable,
+} from "@/lib/calendar/feed-token";
 
 export const metadata: Metadata = {
   title: "Einstellungen",
@@ -35,6 +41,17 @@ export default async function SettingsPage() {
     ? githubPagesAppOrigin()
     : resolveAppOrigin(await headers());
 
+  const feedToken = isCalendarFeedSubscribeAvailable()
+    ? createCalendarFeedToken(session.householdId)
+    : null;
+  const feedHttpsUrl =
+    feedToken && !isStaticExportBuild()
+      ? buildCalendarFeedHttpsUrl(appOrigin, session.householdId, feedToken)
+      : null;
+  const feedWebcalUrl = feedHttpsUrl
+    ? buildCalendarWebcalUrl(feedHttpsUrl)
+    : null;
+
   return (
     <SettingsView
       households={session.households}
@@ -47,6 +64,9 @@ export default async function SettingsPage() {
       invitationEmailEnabled={isInvitationEmailConfigured()}
       smartCaptureLlmEnabled={isSmartCaptureLlmConfigured()}
       calendarEvents={calendarEvents}
+      feedHttpsUrl={feedHttpsUrl}
+      feedWebcalUrl={feedWebcalUrl}
+      calendarFeedSubscribeConfigured={isCalendarFeedSubscribeAvailable()}
     />
   );
 }

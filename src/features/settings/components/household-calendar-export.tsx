@@ -3,17 +3,22 @@
 import { Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { CalendarFeedSubscribe } from "@/features/settings/components/calendar-feed-subscribe";
 import { buildIcsFeed } from "@/lib/calendar/ics";
 import type { CalendarEventInput } from "@/lib/calendar/types";
 
 interface HouseholdCalendarExportProps {
   householdName: string;
   events: CalendarEventInput[];
+  feedHttpsUrl?: string | null;
+  feedWebcalUrl?: string | null;
 }
 
 export function HouseholdCalendarExport({
   householdName,
   events,
+  feedHttpsUrl,
+  feedWebcalUrl,
 }: HouseholdCalendarExportProps) {
   const download = () => {
     const safeName = householdName.replace(/[^\wäöüÄÖÜß -]+/g, "").trim() || "haushalt";
@@ -47,6 +52,9 @@ export function HouseholdCalendarExport({
         <Download className="size-4" />
         Kalenderdatei (.ics)
       </Button>
+      {feedHttpsUrl && feedWebcalUrl ? (
+        <CalendarFeedSubscribe httpsUrl={feedHttpsUrl} webcalUrl={feedWebcalUrl} />
+      ) : null}
     </div>
   );
 }
