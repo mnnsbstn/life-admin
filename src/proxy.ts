@@ -66,6 +66,13 @@ export async function proxy(request: NextRequest) {
   }
 
   if (user && pathname === "/login") {
+    // Stay on login when showing auth/household errors (avoids redirect loop).
+    if (
+      request.nextUrl.searchParams.has("error") ||
+      request.nextUrl.searchParams.has("info")
+    ) {
+      return supabaseResponse;
+    }
     const next = request.nextUrl.searchParams.get("next") || "/today";
     return NextResponse.redirect(new URL(next, request.url));
   }

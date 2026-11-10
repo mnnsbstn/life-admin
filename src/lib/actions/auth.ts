@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -34,6 +35,7 @@ export async function signInAction(formData: FormData) {
     );
   }
 
+  revalidatePath("/", "layout");
   redirect(next);
 }
 
@@ -89,6 +91,7 @@ export async function signUpAction(formData: FormData) {
   }
 
   if (data.session) {
+    revalidatePath("/", "layout");
     redirect(next);
   }
 
