@@ -36,6 +36,8 @@ export default async function SettingsPage() {
 
   return (
     <SettingsView
+      households={session.households}
+      activeHouseholdId={session.householdId}
       householdName={session.household.name}
       members={members}
       invitations={invitations}

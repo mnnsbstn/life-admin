@@ -57,6 +57,24 @@ test.describe("Mock backend smoke", () => {
     await expect(page).toHaveURL(/\/family$/);
   });
 
+  test("switches active household", async ({ page }) => {
+    await page.goto("/settings");
+    await expect(page.getByText("Aktiver Haushalt")).toBeVisible();
+    await page.getByRole("combobox", { name: "Aktiver Haushalt" }).click();
+    await page.getByRole("option", { name: "Ferienhaus Am See" }).click();
+    await expect(page).toHaveURL(/\/today/);
+
+    await page.goto("/home");
+    await expect(page.getByText("Noch keine Home Items")).toBeVisible();
+
+    await page.goto("/settings");
+    await page.getByRole("combobox", { name: "Aktiver Haushalt" }).click();
+    await page.getByRole("option", { name: "Wohnung Musterstraße 12" }).click();
+    await expect(page).toHaveURL(/\/today/);
+    await page.goto("/home");
+    await expect(page.getByText("Heizungsanlage")).toBeVisible();
+  });
+
   test("creates a vehicle", async ({ page }) => {
     const name = `E2E Auto ${Date.now()}`;
 

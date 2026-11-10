@@ -1,6 +1,10 @@
 /** Demo household scope for V0.1 */
 export const DEMO_HOUSEHOLD_ID = "22222222-2222-2222-2222-222222222222";
 
+/** Second demo household (multi-household UI / mock E2E) */
+export const DEMO_SECOND_HOUSEHOLD_ID =
+  "22222222-2222-4222-8222-222222222223";
+
 export const DEMO_USER_ID = "11111111-1111-1111-1111-111111111111";
 
 export const ATTENTION_WINDOW_DAYS = 30;

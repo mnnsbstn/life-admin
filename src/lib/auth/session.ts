@@ -1,5 +1,9 @@
 import { redirect } from "next/navigation";
 
+import {
+  readActiveHouseholdId,
+  resolveActiveHousehold,
+} from "@/lib/auth/active-household";
 import { DEMO_HOUSEHOLD_ID, DEMO_USER_ID } from "@/lib/constants";
 import { getRepositories } from "@/lib/repositories";
 import type { User } from "@/lib/domain/types";
@@ -53,11 +57,16 @@ async function loadCurrentUser(): Promise<User> {
 export async function getAppSession() {
   const repos = getRepositories();
 
+  const preferredHouseholdId = await readActiveHouseholdId();
+
   if (!shouldUseSupabaseBackend()) {
     const user = await repos.users.getCurrentUser();
     const households = await repos.households.getForUser(user.id);
-    const household =
-      households.find((h) => h.id === DEMO_HOUSEHOLD_ID) ?? households[0];
+    const household = resolveActiveHousehold(
+      households,
+      preferredHouseholdId,
+      DEMO_HOUSEHOLD_ID,
+    );
 
     if (!household) {
       throw new Error("No household found for demo user.");
@@ -69,6 +78,7 @@ export async function getAppSession() {
     return {
       user,
       household,
+      households,
       userId: DEMO_USER_ID,
       householdId: household.id,
       role,
@@ -80,12 +90,13 @@ export async function getAppSession() {
   await ensureSupabaseHousehold(user.id);
 
   const households = await repos.households.getForUser(user.id);
-  const household = households[0];
+  const household = resolveActiveHousehold(households, preferredHouseholdId);
 
   if (!household) {
     loginRedirect(
       "Kein Haushalt gefunden. Bitte erneut anmelden oder Support kontaktieren.",
     );
+    throw new Error("unreachable");
   }
 
   const role =
@@ -94,6 +105,7 @@ export async function getAppSession() {
   return {
     user,
     household,
+    households,
     userId: user.id,
     householdId: household.id,
     role,

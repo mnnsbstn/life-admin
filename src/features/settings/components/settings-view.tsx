@@ -6,7 +6,9 @@ import {
 } from "@/components/domain/detail-section";
 import { HouseholdInvitationsPanel } from "@/features/settings/components/household-invitations-panel";
 import { HouseholdNameForm } from "@/features/settings/components/household-name-form";
+import { HouseholdSwitcher } from "@/features/settings/components/household-switcher";
 import type {
+  Household,
   HouseholdInvitation,
   HouseholdMemberRole,
   HouseholdMemberView,
@@ -16,6 +18,8 @@ import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { getRuntimeDataBackendLabel } from "@/lib/supabase/env";
 
 interface SettingsViewProps {
+  households: Household[];
+  activeHouseholdId: string;
   householdName: string;
   members: HouseholdMemberView[];
   invitations: HouseholdInvitation[];
@@ -30,6 +34,8 @@ const roleLabels: Record<HouseholdMemberRole, string> = {
 };
 
 export function SettingsView({
+  households,
+  activeHouseholdId,
   householdName,
   members,
   invitations,
@@ -50,6 +56,14 @@ export function SettingsView({
       </div>
 
       <DetailSection title="Haushalt">
+        {!readOnlyDemo ? (
+          <div className="mb-6">
+            <HouseholdSwitcher
+              households={households}
+              activeHouseholdId={activeHouseholdId}
+            />
+          </div>
+        ) : null}
         <HouseholdNameForm
           defaultName={householdName}
           disabled={!isOwner || readOnlyDemo}
@@ -121,10 +135,10 @@ export function SettingsView({
 
       <DetailSection title="Produkt">
         <DetailFieldList>
-          <DetailField label="Version" value="V0.2" />
+          <DetailField label="Version" value="V0.3" />
           <DetailField
             label="Als Nächstes"
-            value="Deployment, E2E-Tests, weitere Life-Module"
+            value="Einladungs-E-Mails, Smart Capture, Kalender"
           />
         </DetailFieldList>
       </DetailSection>
