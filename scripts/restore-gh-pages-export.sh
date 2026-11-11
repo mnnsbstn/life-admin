@@ -7,7 +7,12 @@ cd "$ROOT"
 git checkout -- src/proxy.ts \
   src/app/auth/callback/route.ts \
   "src/app/(app)/documents/[id]/download/route.ts" \
-  src/app/api/health/supabase/route.ts 2>/dev/null || true
+  src/app/api/health/supabase/route.ts \
+  "src/app/api/calendar/[householdId]/[token]/route.ts" \
+  src/app/api/integrations/google/calendar/connect/route.ts \
+  src/app/api/integrations/google/calendar/callback/route.ts \
+  src/app/api/inbox/capture/route.ts \
+  2>/dev/null || true
 
 BACKUP_DIR="$ROOT/.gh-pages-actions-backup"
 ACTIONS_DIR="$ROOT/src/lib/actions"

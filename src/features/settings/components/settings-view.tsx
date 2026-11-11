@@ -155,11 +155,17 @@ export function SettingsView({
           <DetailField
             label="E-Mail-Inbox"
             value={
-              <span>
-                Text einfügen in{" "}
+              <span className="text-sm text-muted-foreground">
+                UI:{" "}
                 <Link href="/capture" className="underline underline-offset-2">
                   Smart Capture
                 </Link>
+                . Automation:{" "}
+                <code className="rounded bg-muted px-1 text-xs">
+                  POST /api/inbox/capture
+                </code>{" "}
+                (<code className="rounded bg-muted px-1 text-xs">INBOX_WEBHOOK_SECRET</code>
+                ) — <code className="text-xs">docs/INBOX_WEBHOOK.md</code>
               </span>
             }
           />

@@ -35,5 +35,6 @@ Manual redeploy: **Actions → Deploy GitHub Pages → Run workflow**.
 | `Module not found: @/lib/actions/...` | Missing stub file |
 | `Property 'x' does not exist on type 'void'` | Stub return type does not match real action |
 | `couldn't be rendered statically because it used cookies()` | Guard with `isStaticExportBuild()` or avoid cookies in static paths |
+| `output: export` on `/api/.../route` | Add route path to `scripts/prepare-gh-pages-export.sh` (server-only APIs are not in the static bundle) |
 
 See also `scripts/prepare-gh-pages-export.sh` and `scripts/restore-gh-pages-export.sh`.
