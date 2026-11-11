@@ -36,4 +36,4 @@ See [GOOGLE_CALENDAR_OAUTH.md](./GOOGLE_CALENDAR_OAUTH.md) — connect in settin
 
 - Microsoft OAuth
 - Two-way calendar sync + event updates
-- Dedicated inbox forwarding address + parsing webhooks
+- Resend/raw MIME inbound — see [INBOX_WEBHOOK.md](./INBOX_WEBHOOK.md) (Bearer webhook live)
