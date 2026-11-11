@@ -17,6 +17,7 @@ import { getRepositoryDiagnostics } from "@/lib/repositories";
 import { isGitHubPagesPreview } from "@/lib/deployment-mode";
 import { getRuntimeDataBackendLabel } from "@/lib/supabase/env";
 import { GoogleCalendarPanel } from "@/features/settings/components/google-calendar-panel";
+import { MicrosoftCalendarPanel } from "@/features/settings/components/microsoft-calendar-panel";
 import { HouseholdCalendarExport } from "@/features/settings/components/household-calendar-export";
 import type { UserCalendarConnection } from "@/lib/domain/types";
 import type { CalendarEventInput } from "@/lib/calendar/types";
@@ -39,6 +40,8 @@ interface SettingsViewProps {
   googleCalendarOAuthConfigured: boolean;
   googleOAuthStateConfigured: boolean;
   googleCalendarConnection: UserCalendarConnection | null;
+  microsoftCalendarOAuthConfigured: boolean;
+  microsoftCalendarConnection: UserCalendarConnection | null;
 }
 
 const roleLabels: Record<HouseholdMemberRole, string> = {
@@ -64,6 +67,8 @@ export function SettingsView({
   googleCalendarOAuthConfigured,
   googleOAuthStateConfigured,
   googleCalendarConnection,
+  microsoftCalendarOAuthConfigured,
+  microsoftCalendarConnection,
 }: SettingsViewProps) {
   const diagnostics = getRepositoryDiagnostics();
   const isOwner = memberRole === "owner";
@@ -151,7 +156,17 @@ export function SettingsView({
               />
             }
           />
-          <DetailField label="Microsoft Kalender" value="Geplant — Backlog" />
+          <DetailField
+            label="Microsoft Kalender"
+            value={
+              <MicrosoftCalendarPanel
+                configured={microsoftCalendarOAuthConfigured}
+                stateSigningConfigured={googleOAuthStateConfigured}
+                connection={microsoftCalendarConnection}
+                readOnly={readOnlyDemo}
+              />
+            }
+          />
           <DetailField
             label="E-Mail-Inbox"
             value={
@@ -231,7 +246,7 @@ export function SettingsView({
           <DetailField label="Version" value="V0.3" />
           <DetailField
             label="Als Nächstes"
-            value="Microsoft OAuth, echte Inbox-Anbindung"
+            value="Zwei-Wege-Sync, Resend-Raw-Inbox"
           />
         </DetailFieldList>
       </DetailSection>

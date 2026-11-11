@@ -12,6 +12,8 @@ git checkout -- src/proxy.ts \
   src/app/api/integrations/google/calendar/connect/route.ts \
   src/app/api/integrations/google/calendar/callback/route.ts \
   src/app/api/inbox/capture/route.ts \
+  src/app/api/integrations/microsoft/calendar/connect/route.ts \
+  src/app/api/integrations/microsoft/calendar/callback/route.ts \
   2>/dev/null || true
 
 BACKUP_DIR="$ROOT/.gh-pages-actions-backup"

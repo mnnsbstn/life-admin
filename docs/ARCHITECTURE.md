@@ -229,9 +229,10 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 - ~~Smart Capture~~ — `/capture`, Heuristik + optional LLM (`docs/SMART_CAPTURE.md`, SBSTN-64)
 - ~~Kalender & E-Mail (light)~~ — Google/.ics + mailto + Capture für Inbox (`docs/CALENDAR_EMAIL.md`, SBSTN-65)
 - ~~Kalender-Abo-Feed~~ — signierte ICS-URL (`docs/CALENDAR_EMAIL.md`, SBSTN-113)
-- Google Calendar OAuth (Push) — `docs/GOOGLE_CALENDAR_OAUTH.md`, SBSTN-114
+- ~~Google Calendar OAuth (Push)~~ — `docs/GOOGLE_CALENDAR_OAUTH.md`, SBSTN-114
+- Microsoft Calendar OAuth (Push) — `docs/MICROSOFT_CALENDAR_OAUTH.md`, SBSTN-117
 - ~~Inbox Webhook (parse)~~ — `docs/INBOX_WEBHOOK.md`, SBSTN-116
-- Inbox Webhook **auto-apply** — `apply` + `householdId` / `INBOX_WEBHOOK_HOUSEHOLD_ID`
+- ~~Inbox Webhook auto-apply~~ — `apply` + `householdId` / `INBOX_WEBHOOK_HOUSEHOLD_ID`, SBSTN-118
 
 ---
 

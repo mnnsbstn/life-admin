@@ -20,6 +20,8 @@ remove_if_exists "src/app/api/calendar/[householdId]/[token]/route.ts"
 remove_if_exists "src/app/api/integrations/google/calendar/connect/route.ts"
 remove_if_exists "src/app/api/integrations/google/calendar/callback/route.ts"
 remove_if_exists "src/app/api/inbox/capture/route.ts"
+remove_if_exists "src/app/api/integrations/microsoft/calendar/connect/route.ts"
+remove_if_exists "src/app/api/integrations/microsoft/calendar/callback/route.ts"
 
 STUBS_DIR="$ROOT/scripts/gh-pages-export/actions"
 ACTIONS_DIR="$ROOT/src/lib/actions"

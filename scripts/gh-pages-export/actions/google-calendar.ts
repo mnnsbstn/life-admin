@@ -12,3 +12,4 @@ export async function syncGoogleCalendarAction(): Promise<{
 }> {
   return blocked();
 }
+
