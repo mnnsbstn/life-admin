@@ -165,6 +165,11 @@ export function SettingsView({
                   POST /api/inbox/capture
                 </code>{" "}
                 (<code className="rounded bg-muted px-1 text-xs">INBOX_WEBHOOK_SECRET</code>
+                , optional{" "}
+                <code className="rounded bg-muted px-1 text-xs">apply</code> +{" "}
+                <code className="rounded bg-muted px-1 text-xs">
+                  INBOX_WEBHOOK_HOUSEHOLD_ID
+                </code>
                 ) — <code className="text-xs">docs/INBOX_WEBHOOK.md</code>
               </span>
             }
