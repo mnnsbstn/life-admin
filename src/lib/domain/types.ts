@@ -257,3 +257,28 @@ export interface FamilyMember {
   createdAt: string;
   updatedAt: string;
 }
+
+export type CalendarProvider = "google";
+
+export interface UserCalendarConnection {
+  id: UUID;
+  userId: UUID;
+  provider: CalendarProvider;
+  accountEmail?: string;
+  refreshToken: string;
+  accessToken?: string;
+  accessTokenExpiresAt?: string;
+  calendarId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CalendarSyncedEvent {
+  id: UUID;
+  userId: UUID;
+  provider: CalendarProvider;
+  sourceKind: string;
+  sourceId: string;
+  externalEventId: string;
+  createdAt: string;
+}

@@ -68,6 +68,7 @@ test.describe("Mock backend smoke", () => {
     await expect(
       page.getByRole("button", { name: "webcal kopieren" }),
     ).toBeVisible();
+    await expect(page.getByText("GOOGLE_CALENDAR_CLIENT_ID")).toBeVisible();
   });
 
   test("switches active household", async ({ page }) => {

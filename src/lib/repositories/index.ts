@@ -3,6 +3,7 @@ import { mockDocumentRepository } from "@/lib/repositories/mock/document.reposit
 import { mockFamilyMemberRepository } from "@/lib/repositories/mock/family-member.repository";
 import { mockFinancialAccountRepository } from "@/lib/repositories/mock/financial-account.repository";
 import { mockHomeItemRepository } from "@/lib/repositories/mock/home-item.repository";
+import { mockCalendarIntegrationRepository } from "@/lib/repositories/mock/calendar-integration.repository";
 import { mockHouseholdRepository } from "@/lib/repositories/mock/household.repository";
 import { mockReminderRepository } from "@/lib/repositories/mock/reminder.repository";
 import { mockUserRepository } from "@/lib/repositories/mock/user.repository";
@@ -22,6 +23,7 @@ function createMockRepositories(): Repositories {
   return {
     users: mockUserRepository,
     households: mockHouseholdRepository,
+    calendarIntegrations: mockCalendarIntegrationRepository,
     homeItems: mockHomeItemRepository,
     contracts: mockContractRepository,
     documents: mockDocumentRepository,
