@@ -1,4 +1,6 @@
 import type {
+  CalendarProvider,
+  CalendarSyncedEvent,
   Contract,
   Document,
   FamilyMember,
@@ -10,6 +12,7 @@ import type {
   HouseholdMemberView,
   Reminder,
   User,
+  UserCalendarConnection,
   UUID,
   Vehicle,
 } from "@/lib/domain/types";
@@ -114,9 +117,38 @@ export interface FamilyMemberRepository {
   delete(id: UUID): Promise<void>;
 }
 
+export interface CalendarIntegrationRepository {
+  getConnection(
+    userId: UUID,
+    provider: CalendarProvider,
+  ): Promise<UserCalendarConnection | null>;
+  upsertConnection(
+    connection: Omit<UserCalendarConnection, "id" | "createdAt" | "updatedAt"> & {
+      id?: UUID;
+    },
+  ): Promise<UserCalendarConnection>;
+  deleteConnection(userId: UUID, provider: CalendarProvider): Promise<void>;
+  updateAccessToken(
+    userId: UUID,
+    provider: CalendarProvider,
+    accessToken: string,
+    expiresAt: string,
+  ): Promise<void>;
+  getSyncedEvent(
+    userId: UUID,
+    provider: CalendarProvider,
+    sourceKind: string,
+    sourceId: string,
+  ): Promise<CalendarSyncedEvent | null>;
+  recordSyncedEvent(
+    row: Omit<CalendarSyncedEvent, "id" | "createdAt"> & { id?: UUID },
+  ): Promise<CalendarSyncedEvent>;
+}
+
 export interface Repositories {
   users: UserRepository;
   households: HouseholdRepository;
+  calendarIntegrations: CalendarIntegrationRepository;
   homeItems: HomeItemRepository;
   contracts: ContractRepository;
   documents: DocumentRepository;

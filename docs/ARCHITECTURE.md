@@ -228,6 +228,8 @@ Erkennung: `lib/deployment-mode.ts` (`NEXT_PUBLIC_GITHUB_PAGES`).
 - ~~Einladungs-E-Mails~~ — Resend (`docs/INVITATION_EMAIL.md`, SBSTN-59)
 - ~~Smart Capture~~ — `/capture`, Heuristik + optional LLM (`docs/SMART_CAPTURE.md`, SBSTN-64)
 - ~~Kalender & E-Mail (light)~~ — Google/.ics + mailto + Capture für Inbox (`docs/CALENDAR_EMAIL.md`, SBSTN-65)
+- ~~Kalender-Abo-Feed~~ — signierte ICS-URL (`docs/CALENDAR_EMAIL.md`, SBSTN-113)
+- Google Calendar OAuth (Push) — `docs/GOOGLE_CALENDAR_OAUTH.md`, SBSTN-114
 
 ---
 

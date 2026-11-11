@@ -1,3 +1,4 @@
+import { supabaseCalendarIntegrationRepository } from "@/lib/repositories/supabase/calendar-integration.repository";
 import { supabaseContractRepository } from "@/lib/repositories/supabase/contract.repository";
 import { supabaseDocumentRepository } from "@/lib/repositories/supabase/document.repository";
 import { supabaseFamilyMemberRepository } from "@/lib/repositories/supabase/family-member.repository";
@@ -13,6 +14,7 @@ export function createSupabaseRepositories(): Repositories {
   return {
     users: supabaseUserRepository,
     households: supabaseHouseholdRepository,
+    calendarIntegrations: supabaseCalendarIntegrationRepository,
     homeItems: supabaseHomeItemRepository,
     contracts: supabaseContractRepository,
     documents: supabaseDocumentRepository,

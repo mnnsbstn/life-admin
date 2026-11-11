@@ -28,7 +28,12 @@ Implementation: `src/lib/calendar/` (`google-calendar-url.ts`, `ics.ts`, `event-
 
 Outbound transactional mail remains **Resend invites only** (`docs/INVITATION_EMAIL.md`).
 
+## Google OAuth (V0.4)
+
+See [GOOGLE_CALENDAR_OAUTH.md](./GOOGLE_CALENDAR_OAUTH.md) — connect in settings, manual sync to Google Calendar.
+
 ## Later (backlog)
 
-- Google/Microsoft OAuth + two-way calendar sync
+- Microsoft OAuth
+- Two-way calendar sync + event updates
 - Dedicated inbox forwarding address + parsing webhooks
