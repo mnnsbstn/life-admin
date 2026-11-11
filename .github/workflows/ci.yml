@@ -49,8 +49,16 @@ jobs:
       - name: Install
         run: npm ci
 
+      # ubuntu-latest already includes Chromium system libs; --with-deps pulls extra
+      # fonts via apt and has flaked when azure.archive.ubuntu.com was unreachable.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ hashFiles('package-lock.json') }}
+
       - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: E2E smoke (mock)
         run: npm run e2e
