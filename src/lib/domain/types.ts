@@ -258,7 +258,7 @@ export interface FamilyMember {
   updatedAt: string;
 }
 
-export type CalendarProvider = "google";
+export type CalendarProvider = "google" | "microsoft";
 
 export interface UserCalendarConnection {
   id: UUID;

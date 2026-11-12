@@ -13,6 +13,7 @@ import { isInvitationEmailConfigured } from "@/lib/email/invitation-mailer";
 import { isSmartCaptureLlmConfigured } from "@/lib/smart-capture/llm";
 import { buildHouseholdCalendarEvents } from "@/lib/calendar/household-feed";
 import { isGoogleCalendarOAuthConfigured } from "@/lib/integrations/google-calendar/config";
+import { isMicrosoftCalendarOAuthConfigured } from "@/lib/integrations/microsoft-calendar/config";
 import { isGoogleOAuthStateSigningConfigured } from "@/lib/integrations/google-calendar/oauth-state";
 import {
   buildCalendarFeedHttpsUrl,
@@ -39,8 +40,11 @@ export default async function SettingsPage() {
 
   const calendarEvents = buildHouseholdCalendarEvents(reminders, contracts);
 
-  const googleCalendarConnection =
-    await repos.calendarIntegrations.getConnection(session.userId, "google");
+  const [googleCalendarConnection, microsoftCalendarConnection] =
+    await Promise.all([
+      repos.calendarIntegrations.getConnection(session.userId, "google"),
+      repos.calendarIntegrations.getConnection(session.userId, "microsoft"),
+    ]);
 
   const appOrigin = isStaticExportBuild()
     ? githubPagesAppOrigin()
@@ -75,6 +79,8 @@ export default async function SettingsPage() {
       googleCalendarOAuthConfigured={isGoogleCalendarOAuthConfigured()}
       googleOAuthStateConfigured={isGoogleOAuthStateSigningConfigured()}
       googleCalendarConnection={googleCalendarConnection}
+      microsoftCalendarOAuthConfigured={isMicrosoftCalendarOAuthConfigured()}
+      microsoftCalendarConnection={microsoftCalendarConnection}
     />
   );
 }
